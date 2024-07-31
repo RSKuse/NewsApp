@@ -10,31 +10,31 @@ import UIKit
 
 class NewsAppTableViewCell: UITableViewCell {
     
+    var likesCount = 0
+    
     lazy var newsAppImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 8
+        imageView.layer.cornerRadius = 10
+        imageView.layer.masksToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.backgroundColor = .red
         return imageView
     }()
     
     lazy var newsCompanyNameLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
-        label.text = "Design Boom"
-        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.regular)
+        label.textColor = .darkGray
+        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     lazy var timeStampLabel: UILabel = {
        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.regular)
+        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         label.textColor = UIColor.gray
         label.textAlignment = .right
-        label.text = "3h"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -49,139 +49,113 @@ class NewsAppTableViewCell: UITableViewCell {
         return stackView
     }()
     
-    lazy var newsBulletinDetailLabel: UILabel = {
+    lazy var newsTitleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.text = "Greek 'villa earth' emerges from the mediterranean coast like a futuristic yacht"
         label.numberOfLines = 0
-        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)
+        label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-
     lazy var newsBulletinImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 10
+        imageView.layer.masksToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.backgroundColor = .cyan
         return imageView
     }()
     
     lazy var likeImageButton: UIButton = {
         let button = UIButton()
-        let icon = UIImage(named: "like_icon")
+        let icon = UIImage(systemName: "heart")
         button.setImage(icon, for: .normal)
         button.imageView?.contentMode = .scaleAspectFit
+        button.tintColor = .gray
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(handleLikeButtonTapped), for: .touchUpInside)
         return button
     }()
     
     lazy var likeCommentReadLabel: UILabel = {
         let label = UILabel()
         label.textColor = .lightGray
-        label.text = "4"
-        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.regular)
+        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "0 Likes"
         return label
     }()
     
-//    lazy var commentCountLabel: UILabel = {
-//        let label = UILabel()
-//        label.textColor = .lightGray
-//        label.text = "2"
-//        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.regular)
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//    }()
-//
-//    lazy var readCountLabel: UILabel = {
-//        let label = UILabel()
-//        label.textColor = .lightGray
-//        label.text = "1226"
-//        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.regular)
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//    }()
-    
-//    lazy var likeCommentReadViewStackView: UIStackView = {
-//        let stackView = UIStackView(arrangedSubviews: [likeCountLabel, commentCountLabel, readCountLabel])
-//        stackView.alignment = .leading
-//        stackView.distribution = .fillProportionally
-//        stackView.axis = .horizontal
-//        stackView.spacing = 4
-//        stackView.translatesAutoresizingMaskIntoConstraints = false
-//
-////        let dotSeparator1 = UILabel()
-////        dotSeparator1.textColor = .lightGray
-////        dotSeparator1.text = "•"
-////        dotSeparator1.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.bold)
-////
-////        stackView.addArrangedSubview(likeCountLabel)
-////        stackView.addArrangedSubview(dotSeparator1)
-////        stackView.addArrangedSubview(commentCountLabel)
-////
-////        let dotSeparator2 = UILabel()
-////        dotSeparator2.textColor = .lightGray
-////        dotSeparator2.text = "•"
-////        dotSeparator2.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.bold)
-////
-////        stackView.addArrangedSubview(dotSeparator2)
-////        stackView.addArrangedSubview(readCountLabel)
-//        return stackView
-//    }()
-    
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: UITableViewCell.CellStyle.default, reuseIdentifier: reuseIdentifier)
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
-    }
-    func setupUI() {
-        addSubview(newsAppImageView)
-        addSubview(companyNameTimeStampViewStackView)
-        addSubview(newsBulletinImageView)
-        addSubview(newsBulletinImageView)
-        addSubview(newsBulletinDetailLabel)
-        addSubview(likeImageButton)
-        addSubview(likeCommentReadLabel)
-        
-        
-        newsAppImageView.leftAnchor.constraint(equalTo: leftAnchor, constant: 20).isActive = true
-        newsAppImageView.heightAnchor.constraint(equalToConstant: 25).isActive = true
-        newsAppImageView.widthAnchor.constraint(equalToConstant: 25).isActive = true
-        newsAppImageView.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
-        
-        companyNameTimeStampViewStackView.leftAnchor.constraint(equalTo: newsAppImageView.rightAnchor, constant: 10).isActive = true
-        companyNameTimeStampViewStackView.centerYAnchor.constraint(equalTo: newsAppImageView.centerYAnchor).isActive = true
-        
-        newsBulletinImageView.rightAnchor.constraint(equalTo: rightAnchor, constant: -20).isActive = true
-        newsBulletinImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        newsBulletinImageView.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        newsBulletinImageView.widthAnchor.constraint(equalToConstant: 80).isActive = true
-        
-        newsBulletinDetailLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 22.5).isActive = true
-        newsBulletinDetailLabel.topAnchor.constraint(equalTo: newsAppImageView.bottomAnchor, constant: 10).isActive = true
-        newsBulletinDetailLabel.rightAnchor.constraint(equalTo: newsBulletinImageView.leftAnchor, constant: -20).isActive = true
-        
-        
-        likeImageButton.leftAnchor.constraint(equalTo: leftAnchor, constant: 22.5).isActive = true
-        likeImageButton.heightAnchor.constraint(equalToConstant: 25).isActive = true
-        likeImageButton.widthAnchor.constraint(equalToConstant: 25).isActive = true
-        likeImageButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10).isActive = true
-        
-        likeCommentReadLabel.leftAnchor.constraint(equalTo: likeImageButton.rightAnchor, constant: 5).isActive = true
-        likeCommentReadLabel.centerYAnchor.constraint(equalTo: likeImageButton.centerYAnchor).isActive = true
-        likeCommentReadLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15).isActive = true
-        likeCommentReadLabel.topAnchor.constraint(equalTo: newsBulletinDetailLabel.bottomAnchor, constant: 10).isActive = true
-        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func setupUI() {
+        addSubview(newsAppImageView)
+        addSubview(companyNameTimeStampViewStackView)
+        addSubview(newsBulletinImageView)
+        addSubview(newsTitleLabel)
+        addSubview(likeImageButton)
+        addSubview(likeCommentReadLabel)
+        
+        NSLayoutConstraint.activate([
+            newsAppImageView.leftAnchor.constraint(equalTo: leftAnchor, constant: 20),
+            newsAppImageView.heightAnchor.constraint(equalToConstant: 25),
+            newsAppImageView.widthAnchor.constraint(equalToConstant: 25),
+            newsAppImageView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            
+            companyNameTimeStampViewStackView.leftAnchor.constraint(equalTo: newsAppImageView.rightAnchor, constant: 10),
+            companyNameTimeStampViewStackView.centerYAnchor.constraint(equalTo: newsAppImageView.centerYAnchor),
+            
+            newsBulletinImageView.rightAnchor.constraint(equalTo: rightAnchor, constant: -20),
+            newsBulletinImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            newsBulletinImageView.heightAnchor.constraint(equalToConstant: 80),
+            newsBulletinImageView.widthAnchor.constraint(equalToConstant: 80),
+            
+            newsTitleLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 22.5),
+            newsTitleLabel.topAnchor.constraint(equalTo: newsAppImageView.bottomAnchor, constant: 10),
+            newsTitleLabel.rightAnchor.constraint(equalTo: newsBulletinImageView.leftAnchor, constant: -20),
+            
+            likeImageButton.leftAnchor.constraint(equalTo: leftAnchor, constant: 22.5),
+            likeImageButton.heightAnchor.constraint(equalToConstant: 25),
+            likeImageButton.widthAnchor.constraint(equalToConstant: 25),
+            likeImageButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
+            
+            likeCommentReadLabel.leftAnchor.constraint(equalTo: likeImageButton.rightAnchor, constant: 5),
+            likeCommentReadLabel.centerYAnchor.constraint(equalTo: likeImageButton.centerYAnchor),
+            likeCommentReadLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
+            likeCommentReadLabel.topAnchor.constraint(equalTo: newsTitleLabel.bottomAnchor, constant: 10)
+        ])
+    }
     
+    func configure(with article: Article) {
+        newsTitleLabel.text = article.title
+        newsCompanyNameLabel.text = article.source?.name
+        timeStampLabel.text = article.publishedAt?.formattedRelativeDate()
+        likeCommentReadLabel.text = "\(article.likesCount ?? 0) Likes"
+        
+        if let imageUrl = article.urlToImage, let url = URL(string: imageUrl) {
+        
+            let data = try? Data(contentsOf: url)
+            if let imageData = data {
+                newsAppImageView.image = UIImage(data: imageData)
+                newsBulletinImageView.image = UIImage(data: imageData)
+            }
+        }
+    }
+    
+    @objc func handleLikeButtonTapped() {
+        print("Like button tapped")
+        likesCount += 1
+        likeCommentReadLabel.text = "\(likesCount) Likes"
+        likeImageButton.tintColor = .systemRed
+        
+    }
 }
-
