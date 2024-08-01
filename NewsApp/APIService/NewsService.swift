@@ -8,13 +8,29 @@
 import Foundation
 
 class NewsService {
+    
+    // Singleton
     static let shared = NewsService()
     
     private init() {}
     
-    func fetchNews(completion: @escaping (Result<[Article], Error>) -> Void) {
-        var request = URLRequest(url: URL(string: "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=7fcc5fd64d5f428aa1c7c7176527023b")!, timeoutInterval: Double.infinity)
-        request.httpMethod = "GET"
+    /**
+     - Generic API call
+     */
+    func fetchData<Model: Decodable>(method: HTTPMethods,
+                                     baseURl: URLCenter,
+                                     path: String,
+                                     model: Model.Type,
+                                     completion: @escaping (Result<Model, Error>) -> Void) {
+        
+        let urlString = baseURl.buildURL(withPath: path)
+        guard let url = URL(string: urlString) else {
+            // completion(.failure(Error))
+            return
+        }
+        
+        var request = URLRequest(url: url, timeoutInterval: Double.infinity)
+        request.httpMethod = method.rawValue
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
@@ -35,8 +51,8 @@ class NewsService {
                     print("Unable to convert data to JSON object")
                 }
                 
-                let news = try JSONDecoder().decode(NewsModel.self, from: data)
-                completion(.success(news.articles ?? []))
+                let apiData = try JSONDecoder().decode(Model.self, from: data)
+                completion(.success(apiData))
             } catch {
                 print("Decoding error: \(error.localizedDescription)")
                 completion(.failure(error))
@@ -45,4 +61,5 @@ class NewsService {
         
         task.resume()
     }
+    
 }
