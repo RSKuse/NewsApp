@@ -7,18 +7,10 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+class NewsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
 
-    var articles: [Article]? {
-        didSet {
-            guard let _ = articles else { return }
-            filteredArticles = articles
-            newsTableView.reloadData()
-        }
-    }
+    let viewModel = NewsViewModel()
     
-    var filteredArticles: [Article]?
-
     lazy var newsTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.delegate = self
@@ -36,6 +28,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         searchBar.delegate = self
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         searchBar.placeholder = "Search news..."
+        searchBar.isHidden = true
         return searchBar
     }()
     
@@ -45,24 +38,44 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return indicator
     }()
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent // or .darkContent
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        setupNavigationBar()
         handleRegisterCell()
         fetchNews()
+        listenForNewsArticlesFetched()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setupNavigationBar()
+    }
+    
+    func setupNavigationBar() {
+        self.title = "News"
+        self.navigationController?.navigationBar.backgroundColor = .white
+        self.navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.prefersLargeTitles = false
+        navigationController?.setStatusBar(backgroundColor: .white)
+    }
+    
     
     func setupUI() {
         view.addSubview(newsTableView)
         view.addSubview(loadingIndicator)
-        view.addSubview(searchBar)
+//        view.addSubview(searchBar)
         
         NSLayoutConstraint.activate([
-            searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            searchBar.leftAnchor.constraint(equalTo: view.leftAnchor),
-            searchBar.rightAnchor.constraint(equalTo: view.rightAnchor),
+//            searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+//            searchBar.leftAnchor.constraint(equalTo: view.leftAnchor),
+//            searchBar.rightAnchor.constraint(equalTo: view.rightAnchor),
             
-            newsTableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
+            newsTableView.topAnchor.constraint(equalTo: view.topAnchor),
             newsTableView.rightAnchor.constraint(equalTo: view.rightAnchor),
             newsTableView.leftAnchor.constraint(equalTo: view.leftAnchor),
             newsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -75,54 +88,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func handleRegisterCell() {
-        newsTableView.register(NewsAppTableViewCell.self, forCellReuseIdentifier: "NewsAppTableViewCellID")
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredArticles?.count ?? 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let newsCell = tableView.dequeueReusableCell(withIdentifier: "NewsAppTableViewCellID", for: indexPath) as? NewsAppTableViewCell, let articles = filteredArticles else {
-            return UITableViewCell()
-        }
-        
-        let newsArticle = articles[indexPath.row]
-        newsCell.configure(with: newsArticle)
-        newsCell.likeImageButton.tag = indexPath.row
-        newsCell.likeImageButton.addTarget(self, action: #selector(handleLikeButtonTapped(sender:)), for: .touchUpInside)
-        return newsCell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let articles = filteredArticles else { return }
-        let article = articles[indexPath.row]
-        if let urlString = article.url, let url = URL(string: urlString) {
-            UIApplication.shared.open(url)
-        }
-    }
-    
-    @objc func fetchNews() {
-        loadingIndicator.startAnimating()
-        NewsService.shared.fetchNews { [weak self] result in
-            DispatchQueue.main.async {
-                self?.loadingIndicator.stopAnimating()
-                self?.refreshControl.endRefreshing()
-                switch result {
-                case .success(let articles):
-                    self?.articles = articles
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
-        }
+        newsTableView.register(NewsAppTableViewCell.self, forCellReuseIdentifier: NewsAppTableViewCell.cellID)
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        /*
         guard let articles = articles else { return }
         
         if searchText.isEmpty {
@@ -132,12 +102,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         
         newsTableView.reloadData()
-    }
-    
-    @objc func handleLikeButtonTapped(sender: UIButton) {
-        let articleIndex = sender.tag
-        filteredArticles?[articleIndex].likesCount? += 1
-        newsTableView.reloadData()
+        */
     }
 }
 

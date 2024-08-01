@@ -11,6 +11,7 @@
 //   let newsApp = try? JSONDecoder().decode(NewsApp.self, from: jsonData)
 
 import Foundation
+import UIKit
 
 struct NewsModel: Codable {
     var status: String?
@@ -27,6 +28,13 @@ struct Article: Codable {
     var publishedAt: String?
     var content: String?
     var likesCount: Int? = 0
+    
+    func getNewsSourceImage() -> UIImage? {
+        if source?.id == "google-news" {
+            return UIImage(named: "design_boom")
+        }
+        return nil
+    }
 }
 
 struct Source: Codable {
