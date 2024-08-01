@@ -10,4 +10,5 @@ import Foundation
 enum NewsType: String {
     case everything
     case topHeadlines = "top-headlines"
+
 }

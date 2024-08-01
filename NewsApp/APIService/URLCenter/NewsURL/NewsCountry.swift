@@ -11,4 +11,9 @@ enum NewsCountry: String {
     case za
     case us
     case ca
+    case ch
+    case fr
+    case ru
+    case gb
+    
 }

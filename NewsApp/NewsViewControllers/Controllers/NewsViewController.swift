@@ -7,9 +7,28 @@
 
 import UIKit
 
-class NewsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
-
+class NewsViewController: UIViewController {
+    
     let viewModel = NewsViewModel()
+    let categories: [NewsCategories] = [.business, .sports, .politics, .technology, .health, .science, .entertainment, .general]
+    let countries: [NewsCountry] = [.za, .us, .gb, .ca, .ch, .fr, .ru]
+    
+    lazy var categoryCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.itemSize = CGSize(width: 100, height: 40)
+        layout.minimumLineSpacing = 15
+        layout.sectionInset = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.backgroundColor = .clear
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.cellID)
+        return collectionView
+    }()
     
     lazy var newsTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -18,19 +37,11 @@ class NewsViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.allowsSelection = true
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.refreshControl = refreshControl
+        tableView.backgroundColor = .white
         return tableView
     }()
     
     let refreshControl = UIRefreshControl()
-    
-    lazy var searchBar: UISearchBar = {
-        let searchBar = UISearchBar()
-        searchBar.delegate = self
-        searchBar.translatesAutoresizingMaskIntoConstraints = false
-        searchBar.placeholder = "Search news..."
-        searchBar.isHidden = true
-        return searchBar
-    }()
     
     lazy var loadingIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .large)
@@ -39,13 +50,17 @@ class NewsViewController: UIViewController, UITableViewDelegate, UITableViewData
     }()
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent // or .darkContent
+        return .lightContent
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .always
+        
         setupUI()
         setupNavigationBar()
+        setupFilterButton()
         handleRegisterCell()
         fetchNews()
         listenForNewsArticlesFetched()
@@ -58,51 +73,72 @@ class NewsViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func setupNavigationBar() {
         self.title = "News"
+        guard let navigationBar = navigationController?.navigationBar else { return }
         self.navigationController?.navigationBar.backgroundColor = .white
         self.navigationController?.navigationBar.isTranslucent = false
-        self.navigationController?.navigationBar.prefersLargeTitles = false
+        self.navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.setStatusBar(backgroundColor: .white)
+        
+        // Custom title styling
+        let titleAttributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 24, weight: .bold),
+            .foregroundColor: UIColor.black
+        ]
+        navigationBar.titleTextAttributes = titleAttributes
+        navigationBar.largeTitleTextAttributes = titleAttributes
     }
     
-    
     func setupUI() {
+        view.backgroundColor = .white
+        view.addSubview(categoryCollectionView)
         view.addSubview(newsTableView)
         view.addSubview(loadingIndicator)
-//        view.addSubview(searchBar)
         
-        NSLayoutConstraint.activate([
-//            searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-//            searchBar.leftAnchor.constraint(equalTo: view.leftAnchor),
-//            searchBar.rightAnchor.constraint(equalTo: view.rightAnchor),
-            
-            newsTableView.topAnchor.constraint(equalTo: view.topAnchor),
-            newsTableView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            newsTableView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            newsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            loadingIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            loadingIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
         
-        refreshControl.addTarget(self, action: #selector(fetchNews), for: .valueChanged)
+        categoryCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5).isActive = true
+        categoryCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5).isActive = true
+        categoryCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5).isActive = true
+        categoryCollectionView.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        
+        newsTableView.topAnchor.constraint(equalTo: categoryCollectionView.bottomAnchor, constant: 5).isActive = true
+        newsTableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        newsTableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        newsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
+        loadingIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        loadingIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        
+        
+        refreshControl.addTarget(self, action: #selector(refreshNews), for: .valueChanged)
+    }
+    
+    func setupFilterButton() {
+        let filterButton = UIBarButtonItem(title: "Filter", style: .plain, target: self, action: #selector(showFilterOptions))
+        navigationItem.rightBarButtonItem = filterButton
     }
     
     func handleRegisterCell() {
         newsTableView.register(NewsAppTableViewCell.self, forCellReuseIdentifier: NewsAppTableViewCell.cellID)
     }
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        /*
-        guard let articles = articles else { return }
+    @objc func refreshNews() {
+        let selectedCategory = categories[categoryCollectionView.indexPathsForSelectedItems?.first?.item ?? 0]
+        fetchNewsForCategory(selectedCategory)
+    }
+    
+    @objc func showFilterOptions() {
+        // Present filter options
+        let alertController = UIAlertController(title: "Filter", message: "Choose a country", preferredStyle: .actionSheet)
         
-        if searchText.isEmpty {
-            filteredArticles = articles
-        } else {
-            filteredArticles = articles.filter { $0.title?.lowercased().contains(searchText.lowercased()) == true }
+        for country in countries {
+            alertController.addAction(UIAlertAction(title: country.rawValue.uppercased(), style: .default, handler: { [weak self] _ in
+                self?.fetchNewsForCountry(country)
+            }))
         }
         
-        newsTableView.reloadData()
-        */
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(alertController, animated: true, completion: nil)
     }
 }
 
