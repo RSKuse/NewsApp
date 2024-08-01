@@ -411,7 +411,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Simphiwe.News;
 				PRODUCT_NAME = "Goofy News";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -443,7 +443,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Simphiwe.News;
 				PRODUCT_NAME = "Goofy News";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
