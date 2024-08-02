@@ -9,6 +9,20 @@ import UIKit
 
 class CategoryCollectionViewCell: UICollectionViewCell {
     
+    override var isSelected: Bool {
+        didSet {
+            animateSelection()
+        }
+    }
+    
+    override var isHighlighted: Bool {
+        didSet {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.contentView.transform = self.isHighlighted ? CGAffineTransform(scaleX: 0.9, y: 0.9) : .identity
+                self.layoutSubviews()
+            })
+        }
+    }
     
     lazy var categoryLabel: UILabel = {
         let label = UILabel()
@@ -31,7 +45,6 @@ class CategoryCollectionViewCell: UICollectionViewCell {
     private func setupUI() {
         contentView.addSubview(categoryLabel)
         
-        categoryLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         categoryLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
         categoryLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8).isActive = true
         categoryLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8).isActive = true
@@ -49,12 +62,6 @@ class CategoryCollectionViewCell: UICollectionViewCell {
         contentView.layer.shadowRadius = 4
     }
     
-    override var isSelected: Bool {
-        didSet {
-            animateSelection()
-        }
-    }
-    
     func configure(with category: NewsCategories) {
         categoryLabel.text = category.rawValue.capitalized
         contentView.backgroundColor = CategoryColors.color(for: category)
@@ -64,7 +71,7 @@ class CategoryCollectionViewCell: UICollectionViewCell {
         UIView.animate(withDuration: 0.3, animations: {
             self.contentView.transform = self.isSelected ? CGAffineTransform(scaleX: 1.05, y: 1.05) : .identity
             self.categoryLabel.textColor = self.isSelected ? .white : .black
-            
+            self.layoutSubviews()
         })
     }
 }

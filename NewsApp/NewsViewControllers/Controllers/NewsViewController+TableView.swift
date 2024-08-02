@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import SafariServices
 
 extension NewsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -27,8 +28,18 @@ extension NewsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let articles = viewModel.articles else { return }
         let article = articles[indexPath.row]
+        /*
+        
         if let urlString = article.url, let url = URL(string: urlString) {
             UIApplication.shared.open(url)
         }
+        */
+        
+        guard let urlString = article.url,
+                  let url = URL(string: urlString) else { return }
+        let safariController = SFSafariViewController(url: url as URL)
+        safariController.preferredControlTintColor = UIColor.black
+        present(safariController, animated: true, completion: nil)
+        
     }
 }

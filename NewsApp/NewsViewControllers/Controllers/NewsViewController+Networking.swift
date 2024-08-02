@@ -26,4 +26,10 @@ extension NewsViewController {
     func listenForErrorReturned() {
         
     }
+    
+    func fetchNewsForCountry(_ country: NewsCountry) {
+        loadingIndicator.startAnimating()
+        let selectedCategory = categories[categoryCollectionView.indexPathsForSelectedItems?.first?.item ?? 0]
+        viewModel.fetchTopHeadlinesNewsData(category: selectedCategory, country: country)
+    }
 }

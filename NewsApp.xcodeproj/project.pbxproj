@@ -73,8 +73,8 @@
 			isa = PBXGroup;
 			children = (
 				F34B8B512C5BA3680001FF4A /* ViewModel */,
-				F34B8B412C5B87100001FF4A /* Cell */,
 				F34B8B402C5B86CD0001FF4A /* Controllers */,
+				F34B8B412C5B87100001FF4A /* Cell */,
 			);
 			path = NewsViewControllers;
 			sourceTree = "<group>";

@@ -18,8 +18,7 @@ class NewsViewController: UIViewController {
         layout.scrollDirection = .horizontal
         layout.itemSize = CGSize(width: 100, height: 40)
         layout.minimumLineSpacing = 15
-        layout.sectionInset = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
-        
+        layout.sectionInset = UIEdgeInsets(top: 5, left: 20, bottom: 5, right: 20)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -95,9 +94,9 @@ class NewsViewController: UIViewController {
         view.addSubview(loadingIndicator)
         
         
-        categoryCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5).isActive = true
-        categoryCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5).isActive = true
-        categoryCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5).isActive = true
+        categoryCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        categoryCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        categoryCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         categoryCollectionView.heightAnchor.constraint(equalToConstant: 60).isActive = true
         
         newsTableView.topAnchor.constraint(equalTo: categoryCollectionView.bottomAnchor, constant: 5).isActive = true
@@ -141,49 +140,3 @@ class NewsViewController: UIViewController {
         present(alertController, animated: true, completion: nil)
     }
 }
-
-/*
- //    let newsBulletinDatabase = NewsBulletinDatabase()
-let news = newsBulletinDatabase.newsArray[indexPath.row]
-
-newsCell.newsAppImageView.image = news.newsCompanyImage
-newsCell.newsCompanyNameLabel.text = news.newsCompanyName
-newsCell.timeStampLabel.text = news.lastBulletinNewsTimeStamp
-newsCell.newsBulletinImageView.image = news.newsBulletinImage
-newsCell.newsBulletinDetailLabel.text = news.newsBulletin
-
-var likeCommentRead = ""
-
-if news.likesCount == 0 {
-    likeCommentRead = ""
-    
-} else if news.likesCount == 1 {
-    likeCommentRead = "\(news.likesCount) like"
-    
-} else {
-    likeCommentRead += "\(news.likesCount) likes"
-}
-
-if news.commentCount == 0 {
-    //likeCommentRead = "\(news.likesCount) likes"
-    
-} else if news.commentCount == 1 {
-    likeCommentRead += " • \(news.commentCount) comment"
-    
-} else {
-    likeCommentRead += " • \(news.commentCount) comments"
-
-}
-
-if news.readCount == 0 {
-    likeCommentRead += ""
-    
-} else if news.readCount == 1 {
-    likeCommentRead += " • \(news.readCount) read"
-        
-} else {
-    likeCommentRead += " • \(news.readCount) reads"
-}
-
-newsCell.likeCommentReadLabel.text = likeCommentRead
-*/
