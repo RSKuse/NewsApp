@@ -8,12 +8,7 @@
 import Foundation
 import UIKit
 
-extension NewsViewController {
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
-    }
-    
+extension NewsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.articles?.count ?? 0
     }
@@ -36,6 +31,4 @@ extension NewsViewController {
             UIApplication.shared.open(url)
         }
     }
-
 }
-
