@@ -10,8 +10,17 @@ import UIKit
 class NewsViewController: UIViewController {
     
     let viewModel = NewsViewModel()
-    let categories: [NewsCategories] = [.business, .sports, .politics, .technology, .health, .science, .entertainment, .general]
-    let countries: [NewsCountry] = [.za, .us, .gb, .ca, .ch, .fr, .ru]
+    
+    lazy var searchController: UISearchController = {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchBar.placeholder = "search by transaction or date"
+        searchController.searchBar.delegate = self
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.backgroundColor = UIColor.groupTableViewBackground
+        searchController.searchBar.tintColor = UIColor.black
+        searchController.hidesNavigationBarDuringPresentation = true
+        return searchController
+    }()
     
     lazy var categoryCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -75,7 +84,8 @@ class NewsViewController: UIViewController {
         guard let navigationBar = navigationController?.navigationBar else { return }
         self.navigationController?.navigationBar.backgroundColor = .white
         self.navigationController?.navigationBar.isTranslucent = false
-        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationController?.navigationBar.prefersLargeTitles = false
+        navigationItem.searchController = searchController
         navigationController?.setStatusBar(backgroundColor: .white)
         
         // Custom title styling
@@ -121,7 +131,7 @@ class NewsViewController: UIViewController {
     }
     
     @objc func refreshNews() {
-        let selectedCategory = categories[categoryCollectionView.indexPathsForSelectedItems?.first?.item ?? 0]
+        let selectedCategory = viewModel.categories[categoryCollectionView.indexPathsForSelectedItems?.first?.item ?? 0]
         fetchNewsForCategory(selectedCategory)
     }
     
@@ -129,7 +139,7 @@ class NewsViewController: UIViewController {
         // Present filter options
         let alertController = UIAlertController(title: "Filter", message: "Choose a country", preferredStyle: .actionSheet)
         
-        for country in countries {
+        for country in viewModel.countries {
             alertController.addAction(UIAlertAction(title: country.rawValue.uppercased(), style: .default, handler: { [weak self] _ in
                 self?.fetchNewsForCountry(country)
             }))

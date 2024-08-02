@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		453C15C52C5D173500126F01 /* NewsViewController+Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453C15C42C5D173500126F01 /* NewsViewController+Search.swift */; };
 		F34B8B462C5B8E9F0001FF4A /* HttpMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34B8B452C5B8E9F0001FF4A /* HttpMethods.swift */; };
 		F34B8B482C5B91920001FF4A /* NewsCountry.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34B8B472C5B91920001FF4A /* NewsCountry.swift */; };
 		F34B8B4B2C5B925C0001FF4A /* NewCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34B8B4A2C5B925C0001FF4A /* NewCategories.swift */; };
@@ -32,6 +33,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		453C15C42C5D173500126F01 /* NewsViewController+Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsViewController+Search.swift"; sourceTree = "<group>"; };
 		F34B8B452C5B8E9F0001FF4A /* HttpMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpMethods.swift; sourceTree = "<group>"; };
 		F34B8B472C5B91920001FF4A /* NewsCountry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCountry.swift; sourceTree = "<group>"; };
 		F34B8B4A2C5B925C0001FF4A /* NewCategories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCategories.swift; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 				F359961B2A5E004100256F6D /* NewsViewController.swift */,
 				F34B8B542C5BAB320001FF4A /* NewsViewController+Networking.swift */,
 				F392414D2C5B807B001D8B48 /* NewsViewController+TableView.swift */,
+				453C15C42C5D173500126F01 /* NewsViewController+Search.swift */,
 				F34B8B5A2C5C350C0001FF4A /* NewsViewController+CollectionView.swift */,
 				F34B8B5E2C5C435D0001FF4A /* NewsViewController+PickerView.swift */,
 			);
@@ -215,7 +218,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					F35996132A5E004100256F6D = {
 						CreatedOnToolsVersion = 14.3.1;
@@ -259,6 +262,7 @@
 			files = (
 				F359961C2A5E004100256F6D /* NewsViewController.swift in Sources */,
 				F35996182A5E004100256F6D /* AppDelegate.swift in Sources */,
+				453C15C52C5D173500126F01 /* NewsViewController+Search.swift in Sources */,
 				F34B8B4B2C5B925C0001FF4A /* NewCategories.swift in Sources */,
 				F34B8B592C5C2EF40001FF4A /* CategoryCollectionViewCell.swift in Sources */,
 				F34B8B5F2C5C435D0001FF4A /* NewsViewController+PickerView.swift in Sources */,
@@ -298,6 +302,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -330,6 +335,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -358,6 +364,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -390,6 +397,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

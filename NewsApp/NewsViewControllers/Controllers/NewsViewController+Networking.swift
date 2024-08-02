@@ -11,7 +11,7 @@ extension NewsViewController {
     
     @objc func fetchNews() {
         loadingIndicator.startAnimating()
-        viewModel.fetchTopHeadlinesNewsData(category: NewsCategories.politics)
+        viewModel.fetchTopHeadlinesNewsData(category: NewsCategories.general)
     }
     
     func listenForNewsArticlesFetched() {
@@ -29,7 +29,7 @@ extension NewsViewController {
     
     func fetchNewsForCountry(_ country: NewsCountry) {
         loadingIndicator.startAnimating()
-        let selectedCategory = categories[categoryCollectionView.indexPathsForSelectedItems?.first?.item ?? 0]
+        let selectedCategory = viewModel.categories[categoryCollectionView.indexPathsForSelectedItems?.first?.item ?? 0]
         viewModel.fetchTopHeadlinesNewsData(category: selectedCategory, country: country)
     }
 }

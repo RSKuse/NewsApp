@@ -51,6 +51,9 @@ class CategoryCollectionViewCell: UICollectionViewCell {
         
         
         contentView.layer.cornerRadius = 15
+        contentView.backgroundColor = UIColor.groupTableViewBackground
+        
+        /*
         contentView.layer.borderWidth = 1
         contentView.layer.borderColor = UIColor.lightGray.cgColor
         contentView.backgroundColor = UIColor.systemGray5
@@ -60,17 +63,18 @@ class CategoryCollectionViewCell: UICollectionViewCell {
         contentView.layer.shadowOffset = CGSize(width: 0, height: 2)
         contentView.layer.shadowOpacity = 0.3
         contentView.layer.shadowRadius = 4
+        */
     }
     
     func configure(with category: NewsCategories) {
         categoryLabel.text = category.rawValue.capitalized
-        contentView.backgroundColor = CategoryColors.color(for: category)
     }
     
     private func animateSelection() {
         UIView.animate(withDuration: 0.3, animations: {
-            self.contentView.transform = self.isSelected ? CGAffineTransform(scaleX: 1.05, y: 1.05) : .identity
             self.categoryLabel.textColor = self.isSelected ? .white : .black
+            self.contentView.backgroundColor = self.isSelected ? .black : .groupTableViewBackground
+//            contentView.backgroundColor = CategoryColors.color(for: category)
             self.layoutSubviews()
         })
     }

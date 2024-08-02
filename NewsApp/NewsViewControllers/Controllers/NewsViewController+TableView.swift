@@ -26,6 +26,7 @@ extension NewsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         guard let articles = viewModel.articles else { return }
         let article = articles[indexPath.row]
         /*
@@ -35,6 +36,7 @@ extension NewsViewController: UITableViewDelegate, UITableViewDataSource {
         }
         */
         
+        // zzzzz
         guard let urlString = article.url,
                   let url = URL(string: urlString) else { return }
         let safariController = SFSafariViewController(url: url as URL)

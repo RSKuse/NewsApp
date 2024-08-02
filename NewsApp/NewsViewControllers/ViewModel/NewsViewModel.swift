@@ -9,13 +9,18 @@ import Foundation
 
 class NewsViewModel {
     
+    let categories: [NewsCategories] = [.business, .sports, .politics, .technology, .health, .science, .entertainment, .general]
+    let countries: [NewsCountry] = [.za, .us, .gb, .ca, .ch, .fr, .ru]
+    
     var articles: [Article]? {
         didSet {
-            filteredArticles = articles
+            searchedArticles = articles
         }
     }
     
-    var filteredArticles: [Article]?
+    var isSearching = false
+    
+    var searchedArticles: [Article]?
     var didFetchArticles: (([Article]?) -> Void)?
     
     func fetchTopHeadlinesNewsData(category: NewsCategories, country: NewsCountry = .za) {
