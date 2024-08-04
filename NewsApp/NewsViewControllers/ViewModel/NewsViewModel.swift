@@ -9,18 +9,43 @@ import Foundation
 
 class NewsViewModel {
     
+    var selectedCagory: NewsCategories = .general
+    
     let categories: [NewsCategories] = [.business, .sports, .politics, .technology, .health, .science, .entertainment, .general]
     let countries: [NewsCountry] = [.za, .us, .gb, .ca, .ch, .fr, .ru]
     
-    var articles: [Article]? {
+    /**
+     - Search News Data
+     */
+    var isSearching = false
+    var searchedArticles: [Article] = []
+    var didSearchArticles: (([Article]?) -> Void)?
+    var searchQuery: String = "" {
         didSet {
-            searchedArticles = articles
+            if searchQuery.isEmpty {
+                self.isSearching = false
+                self.searchedArticles.removeAll()
+            }
+            
+            if !self.articles.isEmpty {
+                let searchedArticles = self.articles.filter(
+                    {
+                        $0.title?.lowercased() == searchQuery.lowercased()
+                    })
+                
+                print(searchedArticles.count)
+                
+                
+                self.searchedArticles = searchedArticles
+                self.didSearchArticles?(searchedArticles)
+            }
         }
     }
     
-    var isSearching = false
-    
-    var searchedArticles: [Article]?
+    /**
+     - Fetch News Data
+     */
+    var articles: [Article] = []
     var didFetchArticles: (([Article]?) -> Void)?
     
     func fetchTopHeadlinesNewsData(category: NewsCategories, country: NewsCountry = .za) {
@@ -30,7 +55,7 @@ class NewsViewModel {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let news):
-                    self.articles = news.articles
+                    self.articles = news.articles ?? []
                     self.didFetchArticles?(news.articles)
                 case .failure(let error):
                     print(error.localizedDescription)

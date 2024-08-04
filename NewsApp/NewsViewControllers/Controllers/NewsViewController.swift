@@ -13,29 +13,13 @@ class NewsViewController: UIViewController {
     
     lazy var searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
-        searchController.searchBar.placeholder = "search by transaction or date"
+        searchController.searchBar.placeholder = "search by name or source"
         searchController.searchBar.delegate = self
         searchController.searchResultsUpdater = self
-        searchController.searchBar.backgroundColor = UIColor.groupTableViewBackground
+        searchController.searchBar.backgroundColor = UIColor.white
         searchController.searchBar.tintColor = UIColor.black
         searchController.hidesNavigationBarDuringPresentation = true
         return searchController
-    }()
-    
-    lazy var categoryCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 100, height: 40)
-        layout.minimumLineSpacing = 15
-        layout.sectionInset = UIEdgeInsets(top: 5, left: 20, bottom: 5, right: 20)
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.backgroundColor = .clear
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.cellID)
-        return collectionView
     }()
     
     lazy var newsTableView: UITableView = {
@@ -43,9 +27,9 @@ class NewsViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.allowsSelection = true
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.refreshControl = refreshControl
         tableView.backgroundColor = .white
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
     
@@ -57,21 +41,15 @@ class NewsViewController: UIViewController {
         return indicator
     }()
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.largeTitleDisplayMode = .always
-        
         setupUI()
         setupNavigationBar()
         setupFilterButton()
         handleRegisterCell()
         fetchNews()
         listenForNewsArticlesFetched()
+        listenForSearchedArticles()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -80,11 +58,18 @@ class NewsViewController: UIViewController {
     }
     
     func setupNavigationBar() {
+        navigationNoLineBar()
+        navigationController?.setStatusBar(backgroundColor: UIColor.white)
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+        
+        setNavigationTitle(withTitle: "Goofy News")
+        
+        /*
         self.title = "News"
         guard let navigationBar = navigationController?.navigationBar else { return }
-        self.navigationController?.navigationBar.backgroundColor = .white
-        self.navigationController?.navigationBar.isTranslucent = false
-        self.navigationController?.navigationBar.prefersLargeTitles = false
+        navigationBar.backgroundColor = .white
+        navigationBar.prefersLargeTitles = false
         navigationItem.searchController = searchController
         navigationController?.setStatusBar(backgroundColor: .white)
         
@@ -95,21 +80,15 @@ class NewsViewController: UIViewController {
         ]
         navigationBar.titleTextAttributes = titleAttributes
         navigationBar.largeTitleTextAttributes = titleAttributes
+        */
     }
     
     func setupUI() {
         view.backgroundColor = .white
-        view.addSubview(categoryCollectionView)
         view.addSubview(newsTableView)
         view.addSubview(loadingIndicator)
         
-        
-        categoryCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        categoryCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        categoryCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        categoryCollectionView.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        
-        newsTableView.topAnchor.constraint(equalTo: categoryCollectionView.bottomAnchor, constant: 5).isActive = true
+        newsTableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         newsTableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         newsTableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         newsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
@@ -128,11 +107,6 @@ class NewsViewController: UIViewController {
     
     func handleRegisterCell() {
         newsTableView.register(NewsAppTableViewCell.self, forCellReuseIdentifier: NewsAppTableViewCell.cellID)
-    }
-    
-    @objc func refreshNews() {
-        let selectedCategory = viewModel.categories[categoryCollectionView.indexPathsForSelectedItems?.first?.item ?? 0]
-        fetchNewsForCategory(selectedCategory)
     }
     
     @objc func showFilterOptions() {

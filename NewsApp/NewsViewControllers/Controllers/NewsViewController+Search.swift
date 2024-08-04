@@ -17,28 +17,7 @@ extension NewsViewController: UISearchResultsUpdating, UISearchControllerDelegat
         }
         
         self.viewModel.isSearching = true
-        
-        /*
-        let transactions = self.viewModel.fetchedTransactions.filter({ (transaction: Transaction) -> Bool in
-            
-            var operatorName = ""
-            if let merchantID = transaction.merchantID, let operatorID = Int(merchantID) {
-                operatorName = LocalService.operatorName(operatorID: operatorID).uppercased()
-            }
-            
-            let transactionDate = DateManager.dayDateMonthTime.stringFrom(date: transaction.date)
-            
-            var transactionDateSettled = ""
-            if let dateSettled = transaction.dateSettled {
-                transactionDateSettled = DateManager.dayDateMonthTime.stringFrom(date: dateSettled)
-            }
-            
-            return transaction.merchantID!.lowercased().contains(query.trimmedWhitespaces.lowercased()))
-        })
-        
-        self.viewModel.searchedArticles.value = transactions
-        */
-        
+        viewModel.searchQuery = query
     }
     
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
@@ -61,7 +40,6 @@ extension NewsViewController: UISearchResultsUpdating, UISearchControllerDelegat
     
     private func clearSearchResults() {
         self.viewModel.isSearching = false
-        self.viewModel.searchedArticles?.removeAll()
-        self.newsTableView.reloadData()
+        self.viewModel.searchQuery = ""
     }
 }
