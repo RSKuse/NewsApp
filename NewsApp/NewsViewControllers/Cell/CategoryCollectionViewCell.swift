@@ -11,18 +11,24 @@ class CategoryCollectionViewCell: UICollectionViewCell {
     
     override var isSelected: Bool {
         didSet {
-            animateSelection()
+            animateOnSelection()
         }
     }
     
     override var isHighlighted: Bool {
         didSet {
-            UIView.animate(withDuration: 0.3, animations: {
-                self.contentView.transform = self.isHighlighted ? CGAffineTransform(scaleX: 0.9, y: 0.9) : .identity
-                self.layoutSubviews()
-            })
+            animateOnHighlight()
         }
     }
+    
+    lazy var categoryIconImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = UIImage(named: "ic_sports")
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
     
     lazy var categoryLabel: UILabel = {
         let label = UILabel()
@@ -31,6 +37,16 @@ class CategoryCollectionViewCell: UICollectionViewCell {
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }()
+    
+    lazy var categoryStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [categoryIconImageView, categoryLabel])
+        stackView.alignment = .center
+        stackView.distribution = .fillProportionally
+        stackView.axis = .horizontal
+        stackView.spacing = 4
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
     }()
     
     override init(frame: CGRect) {
@@ -43,11 +59,14 @@ class CategoryCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupUI() {
-        contentView.addSubview(categoryLabel)
+        contentView.addSubview(categoryStackView)
         
-        categoryLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
-        categoryLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8).isActive = true
-        categoryLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8).isActive = true
+        categoryIconImageView.heightAnchor.constraint(equalToConstant: 16).isActive = true
+        categoryIconImageView.widthAnchor.constraint(equalToConstant: 16).isActive = true
+        
+        categoryStackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+        categoryStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8).isActive = true
+        categoryStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8).isActive = true
         
         
         contentView.layer.cornerRadius = 15
@@ -70,12 +89,21 @@ class CategoryCollectionViewCell: UICollectionViewCell {
         categoryLabel.text = category.rawValue.capitalized
     }
     
-    private func animateSelection() {
-        UIView.animate(withDuration: 0.3, animations: {
+    private func animateOnSelection() {
+        UIView.animate(withDuration: 0.1, animations: {
             self.categoryLabel.textColor = self.isSelected ? .white : .black
-            self.contentView.backgroundColor = self.isSelected ? .black : .groupTableViewBackground
-//            contentView.backgroundColor = CategoryColors.color(for: category)
-            self.layoutSubviews()
-        })
+            self.backgroundColor = self.isSelected ? .black : .groupTableViewBackground
+            // contentView.backgroundColor = CategoryColors.color(for: category)
+            self.layoutIfNeeded()
+        }, completion: nil)
+    }
+    
+    private func animateOnHighlight() {
+        UIView.animate(withDuration: 0.1, animations: {
+            self.transform = self.isHighlighted ? CGAffineTransform(scaleX: 0.9, y: 0.9) : CGAffineTransform.identity
+            self.backgroundColor = self.isHighlighted ? UIColor.black : UIColor.groupTableViewBackground
+            self.categoryLabel.textColor = self.isHighlighted ? .white : .black
+            self.layoutIfNeeded()
+        }, completion: nil)
     }
 }
