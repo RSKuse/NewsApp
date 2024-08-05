@@ -25,8 +25,7 @@ class NewsCategoriesHeaderView: UIView {
     lazy var categoryCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 100,
-                                 height: 40)
+        layout.itemSize = CGSize(width: 100, height: 40)
         layout.minimumLineSpacing = 15
         layout.sectionInset = UIEdgeInsets(top: 5,
                                            left: 20,
