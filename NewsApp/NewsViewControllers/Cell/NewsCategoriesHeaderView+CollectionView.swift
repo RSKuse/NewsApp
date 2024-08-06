@@ -1,15 +1,14 @@
 //
-//  NewsViewController+CollectionView.swift
+//  NewsCategoriesHeaderView+CollectionView.swift
 //  NewsApp
 //
-//  Created by Reuben Simphiwe Kuse on 2024/08/01.
+//  Created by Reuben Simphiwe Kuse on 2024/08/06.
 //
 
 import Foundation
 import UIKit
+
 extension NewsCategoriesHeaderView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-/*
-extension NewsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout { fix/compatibility-issues:NewsApp/NewsViewControllers/Controllers/NewsViewController+CollectionView.swift
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return categories?.count ?? 0
     }
@@ -32,4 +31,3 @@ extension NewsViewController: UICollectionViewDelegate, UICollectionViewDataSour
         }
     }
 }
-*/

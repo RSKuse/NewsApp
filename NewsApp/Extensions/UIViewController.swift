@@ -3,6 +3,7 @@
 //  NewsApp
 //
 //  Created by Gugulethu Mhlanga on 2024/08/04.
+//  Created by Reuben Simphiwe Kuse on 2024/08/06.
 //
 
 import Foundation

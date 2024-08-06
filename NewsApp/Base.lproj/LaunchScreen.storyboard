@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23089" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23077"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,14 +21,15 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="goq-cO-WyL"/>
                                     <constraint firstAttribute="width" constant="100" id="jsv-cO-n6e"/>
-                                </constraints>
-                            </imageView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="news" translatesAutoresizingMaskIntoConstraints="NO" id="UNb-b7-Qvx">
+                                <rect key="frame" x="121.66666666666669" y="363.66666666666669" width="150" height="150.00000000000006"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="CKc-Xd-qjw"/>
+                                    <constraint firstAttribute="width" constant="150" id="PEU-Fk-7s3"/>
                             <constraint firstItem="1dz-EV-uOH" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="4nA-WM-OOS"/>
                             <constraint firstItem="1dz-EV-uOH" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="BoU-dw-csZ"/>
+                            <constraint firstItem="UNb-b7-Qvx" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="4sI-3c-KOt"/>
+                            <constraint firstItem="UNb-b7-Qvx" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="ISl-DT-Gix"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -38,6 +39,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ic_logo" width="3405" height="3405"/>
+        <image name="news" width="1024" height="1024"/>
     </resources>
 </document>
