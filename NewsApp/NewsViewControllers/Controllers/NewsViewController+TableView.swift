@@ -16,7 +16,10 @@ extension NewsViewController: UITableViewDelegate, UITableViewDataSource {
             return nil
         }
         let headerView = NewsCategoriesHeaderView()
+        
         headerView.categories = viewModel.categories
+        headerView.selectedCategory = viewModel.selectedCagory
+        
         headerView.didSelectCategory = { category in
             self.viewModel.selectedCagory = category
             self.fetchNewsForCategory(category)

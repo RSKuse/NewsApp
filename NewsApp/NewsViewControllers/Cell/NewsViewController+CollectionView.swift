@@ -20,7 +20,7 @@ extension NewsCategoriesHeaderView: UICollectionViewDelegate, UICollectionViewDa
         }
         
         let category = categories[indexPath.item]
-        cell.configure(with: category)
+        cell.configure(with: category, selectedCategory: selectedCategory)
         return cell
     }
     

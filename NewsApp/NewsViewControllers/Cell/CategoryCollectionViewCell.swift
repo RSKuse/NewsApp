@@ -86,8 +86,11 @@ class CategoryCollectionViewCell: UICollectionViewCell {
         */
     }
     
-    func configure(with category: NewsCategories) {
+    func configure(with category: NewsCategories, selectedCategory: NewsCategories?) {
         categoryLabel.text = category.rawValue.capitalized
+        self.categoryLabel.textColor = selectedCategory?.rawValue == category.rawValue ? .white : .black
+        self.categoryIconImageView.tintColor = selectedCategory?.rawValue == category.rawValue ? .white : .black
+        self.backgroundColor = selectedCategory?.rawValue == category.rawValue ? .black : .groupTableViewBackground
     }
     
     private func animateOnSelection() {
