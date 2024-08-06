@@ -8,6 +8,7 @@
 import Foundation
 
 enum NewsCategories: String {
+    case general
     case business
     case sports
     case politics
@@ -15,5 +16,4 @@ enum NewsCategories: String {
     case health
     case science
     case entertainment
-    case general
 }

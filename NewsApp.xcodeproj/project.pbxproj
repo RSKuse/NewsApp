@@ -3,10 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		453C15C52C5D173500126F01 /* NewsViewController+Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453C15C42C5D173500126F01 /* NewsViewController+Search.swift */; };
+		45BDA5642C5F52D100A0D915 /* NewsCategoriesHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BDA5632C5F52D100A0D915 /* NewsCategoriesHeaderView.swift */; };
+		45BDA5692C5F573F00A0D915 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BDA5682C5F573F00A0D915 /* UIViewController.swift */; };
 		F34B8B462C5B8E9F0001FF4A /* HttpMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34B8B452C5B8E9F0001FF4A /* HttpMethods.swift */; };
 		F34B8B482C5B91920001FF4A /* NewsCountry.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34B8B472C5B91920001FF4A /* NewsCountry.swift */; };
 		F34B8B4B2C5B925C0001FF4A /* NewCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34B8B4A2C5B925C0001FF4A /* NewCategories.swift */; };
@@ -32,6 +35,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		453C15C42C5D173500126F01 /* NewsViewController+Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsViewController+Search.swift"; sourceTree = "<group>"; };
+		45BDA5632C5F52D100A0D915 /* NewsCategoriesHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCategoriesHeaderView.swift; sourceTree = "<group>"; };
+		45BDA5682C5F573F00A0D915 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		F34B8B452C5B8E9F0001FF4A /* HttpMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpMethods.swift; sourceTree = "<group>"; };
 		F34B8B472C5B91920001FF4A /* NewsCountry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCountry.swift; sourceTree = "<group>"; };
 		F34B8B4A2C5B925C0001FF4A /* NewCategories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCategories.swift; sourceTree = "<group>"; };
@@ -58,6 +64,20 @@
 		F392414F2C5B8163001D8B48 /* UITableViewCellExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCellExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		45F2C75E2C62497600AF02EF /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				UserDefaultKeys.swift,
+			);
+			target = F35996132A5E004100256F6D /* NewsApp */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		45F2C75A2C62495F00AF02EF /* Managers */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (45F2C75E2C62497600AF02EF /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Managers; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		F35996112A5E004100256F6D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -73,8 +93,8 @@
 			isa = PBXGroup;
 			children = (
 				F34B8B512C5BA3680001FF4A /* ViewModel */,
-				F34B8B412C5B87100001FF4A /* Cell */,
 				F34B8B402C5B86CD0001FF4A /* Controllers */,
+				F34B8B412C5B87100001FF4A /* Cell */,
 			);
 			path = NewsViewControllers;
 			sourceTree = "<group>";
@@ -85,7 +105,7 @@
 				F359961B2A5E004100256F6D /* NewsViewController.swift */,
 				F34B8B542C5BAB320001FF4A /* NewsViewController+Networking.swift */,
 				F392414D2C5B807B001D8B48 /* NewsViewController+TableView.swift */,
-				F34B8B5A2C5C350C0001FF4A /* NewsViewController+CollectionView.swift */,
+				453C15C42C5D173500126F01 /* NewsViewController+Search.swift */,
 				F34B8B5E2C5C435D0001FF4A /* NewsViewController+PickerView.swift */,
 			);
 			path = Controllers;
@@ -95,6 +115,8 @@
 			isa = PBXGroup;
 			children = (
 				F359962B2A61A58D00256F6D /* NewsAppTableViewCell.swift */,
+				45BDA5632C5F52D100A0D915 /* NewsCategoriesHeaderView.swift */,
+				F34B8B5A2C5C350C0001FF4A /* NewsViewController+CollectionView.swift */,
 				F34B8B582C5C2EF40001FF4A /* CategoryCollectionViewCell.swift */,
 			);
 			path = Cell;
@@ -107,6 +129,7 @@
 				F392414F2C5B8163001D8B48 /* UITableViewCellExtension.swift */,
 				F34B8B602C5C44EF0001FF4A /* UICollectionViewCellExtension.swift */,
 				F34B8B562C5BBB570001FF4A /* UINavigationController.swift */,
+				45BDA5682C5F573F00A0D915 /* UIViewController.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -176,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				F35996172A5E004100256F6D /* AppDelegate.swift */,
+				45F2C75A2C62495F00AF02EF /* Managers */,
 				F34B8B3F2C5B86330001FF4A /* NewsViewControllers */,
 				F34B8B422C5B877C0001FF4A /* Extensions */,
 				F34B8B432C5B87AD0001FF4A /* Model */,
@@ -215,7 +239,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					F35996132A5E004100256F6D = {
 						CreatedOnToolsVersion = 14.3.1;
@@ -259,9 +283,11 @@
 			files = (
 				F359961C2A5E004100256F6D /* NewsViewController.swift in Sources */,
 				F35996182A5E004100256F6D /* AppDelegate.swift in Sources */,
+				453C15C52C5D173500126F01 /* NewsViewController+Search.swift in Sources */,
 				F34B8B4B2C5B925C0001FF4A /* NewCategories.swift in Sources */,
 				F34B8B592C5C2EF40001FF4A /* CategoryCollectionViewCell.swift in Sources */,
 				F34B8B5F2C5C435D0001FF4A /* NewsViewController+PickerView.swift in Sources */,
+				45BDA5692C5F573F00A0D915 /* UIViewController.swift in Sources */,
 				F34B8B462C5B8E9F0001FF4A /* HttpMethods.swift in Sources */,
 				F34B8B4D2C5B938C0001FF4A /* NewsType.swift in Sources */,
 				F34B8B4F2C5B99FE0001FF4A /* URLCenter.swift in Sources */,
@@ -272,6 +298,7 @@
 				F392411E2C59270E001D8B48 /* NewsModel.swift in Sources */,
 				F34B8B5B2C5C350C0001FF4A /* NewsViewController+CollectionView.swift in Sources */,
 				F34B8B482C5B91920001FF4A /* NewsCountry.swift in Sources */,
+				45BDA5642C5F52D100A0D915 /* NewsCategoriesHeaderView.swift in Sources */,
 				F359962C2A61A58D00256F6D /* NewsAppTableViewCell.swift in Sources */,
 				F34B8B612C5C44EF0001FF4A /* UICollectionViewCellExtension.swift in Sources */,
 				F39241242C5A25E3001D8B48 /* String.swift in Sources */,
@@ -298,6 +325,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -330,6 +358,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -358,6 +387,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -390,6 +420,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

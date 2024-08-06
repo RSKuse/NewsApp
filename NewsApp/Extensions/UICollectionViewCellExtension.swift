@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-extension CategoryCollectionViewCell {
+extension UICollectionViewCell {
    
     static var cellID: String {
         return String(describing: self)

@@ -9,6 +9,27 @@ import UIKit
 
 class CategoryCollectionViewCell: UICollectionViewCell {
     
+    override var isSelected: Bool {
+        didSet {
+            animateOnSelection()
+        }
+    }
+    
+    override var isHighlighted: Bool {
+        didSet {
+            animateOnHighlight()
+        }
+    }
+    
+    lazy var categoryIconImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = UIImage(named: "ic_sports")?.withRenderingMode(.alwaysTemplate)
+        imageView.tintColor = .black
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
     
     lazy var categoryLabel: UILabel = {
         let label = UILabel()
@@ -17,6 +38,16 @@ class CategoryCollectionViewCell: UICollectionViewCell {
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }()
+    
+    lazy var categoryStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [categoryIconImageView, categoryLabel])
+        stackView.alignment = .center
+        stackView.distribution = .fillProportionally
+        stackView.axis = .horizontal
+        stackView.spacing = 4
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
     }()
     
     override init(frame: CGRect) {
@@ -29,15 +60,20 @@ class CategoryCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupUI() {
-        contentView.addSubview(categoryLabel)
+        contentView.addSubview(categoryStackView)
         
-        categoryLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-        categoryLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
-        categoryLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8).isActive = true
-        categoryLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8).isActive = true
+        categoryIconImageView.heightAnchor.constraint(equalToConstant: 16).isActive = true
+        categoryIconImageView.widthAnchor.constraint(equalToConstant: 16).isActive = true
+        
+        categoryStackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+        categoryStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12).isActive = true
+        categoryStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12).isActive = true
         
         
-        contentView.layer.cornerRadius = 15
+        layer.cornerRadius = 14
+        backgroundColor = UIColor.groupTableViewBackground
+        
+        /*
         contentView.layer.borderWidth = 1
         contentView.layer.borderColor = UIColor.lightGray.cgColor
         contentView.backgroundColor = UIColor.systemGray5
@@ -47,24 +83,33 @@ class CategoryCollectionViewCell: UICollectionViewCell {
         contentView.layer.shadowOffset = CGSize(width: 0, height: 2)
         contentView.layer.shadowOpacity = 0.3
         contentView.layer.shadowRadius = 4
+        */
     }
     
-    override var isSelected: Bool {
-        didSet {
-            animateSelection()
-        }
-    }
-    
-    func configure(with category: NewsCategories) {
+    func configure(with category: NewsCategories, selectedCategory: NewsCategories?) {
         categoryLabel.text = category.rawValue.capitalized
-        contentView.backgroundColor = CategoryColors.color(for: category)
+        self.categoryLabel.textColor = selectedCategory?.rawValue == category.rawValue ? .white : .black
+        self.categoryIconImageView.tintColor = selectedCategory?.rawValue == category.rawValue ? .white : .black
+        self.backgroundColor = selectedCategory?.rawValue == category.rawValue ? .black : .groupTableViewBackground
     }
     
-    private func animateSelection() {
-        UIView.animate(withDuration: 0.3, animations: {
-            self.contentView.transform = self.isSelected ? CGAffineTransform(scaleX: 1.05, y: 1.05) : .identity
+    private func animateOnSelection() {
+        UIView.animate(withDuration: 0.1, animations: {
             self.categoryLabel.textColor = self.isSelected ? .white : .black
-            
-        })
+            self.categoryIconImageView.tintColor = self.isSelected ? .white : .black
+            self.backgroundColor = self.isSelected ? .black : .groupTableViewBackground
+            // backgroundColor = CategoryColors.color(for: category)
+            self.layoutIfNeeded()
+        }, completion: nil)
+    }
+    
+    private func animateOnHighlight() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.transform = self.isHighlighted ? CGAffineTransform(scaleX: 0.9, y: 0.9) : CGAffineTransform.identity
+            self.backgroundColor = self.isHighlighted ? UIColor.black : UIColor.groupTableViewBackground
+            self.categoryIconImageView.tintColor = self.isHighlighted ? .white : .black
+            self.categoryLabel.textColor = self.isHighlighted ? .white : .black
+            self.layoutIfNeeded()
+        }, completion: nil)
     }
 }
