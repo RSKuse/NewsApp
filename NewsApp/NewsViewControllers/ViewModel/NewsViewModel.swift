@@ -28,13 +28,10 @@ class NewsViewModel {
             }
             
             if !self.articles.isEmpty {
-                let searchedArticles = self.articles.filter(
-                    {
-                        $0.title?.lowercased() == searchQuery.lowercased()
-                    })
                 
-                print(searchedArticles.count)
-                
+                let searchedArticles = self.articles.filter({ (article: Article) -> Bool in
+                    return article.title?.lowercased().contains(searchQuery.lowercased()) ?? false
+                })
                 
                 self.searchedArticles = searchedArticles
                 self.didSearchArticles?(searchedArticles)
