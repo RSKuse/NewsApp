@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -63,6 +63,20 @@
 		F392414D2C5B807B001D8B48 /* NewsViewController+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsViewController+TableView.swift"; sourceTree = "<group>"; };
 		F392414F2C5B8163001D8B48 /* UITableViewCellExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCellExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		45F2C75E2C62497600AF02EF /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				UserDefaultKeys.swift,
+			);
+			target = F35996132A5E004100256F6D /* NewsApp */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		45F2C75A2C62495F00AF02EF /* Managers */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (45F2C75E2C62497600AF02EF /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Managers; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		F35996112A5E004100256F6D /* Frameworks */ = {
@@ -185,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				F35996172A5E004100256F6D /* AppDelegate.swift */,
+				45F2C75A2C62495F00AF02EF /* Managers */,
 				F34B8B3F2C5B86330001FF4A /* NewsViewControllers */,
 				F34B8B422C5B877C0001FF4A /* Extensions */,
 				F34B8B432C5B87AD0001FF4A /* Model */,

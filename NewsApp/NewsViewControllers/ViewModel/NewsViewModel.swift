@@ -45,8 +45,18 @@ class NewsViewModel {
     var articles: [Article] = []
     var didFetchArticles: (([Article]?) -> Void)?
     
-    func fetchTopHeadlinesNewsData(category: NewsCategories, country: NewsCountry = .za) {
-        let path = "\(NewsType.topHeadlines.rawValue)?country=\(country.rawValue)&category=\(category.rawValue)"
+    /**
+     Computed Propperties
+     */
+    var selectedCountry: NewsCountry {
+        if let country = UserDefaultStorage.country.fetchValue() {
+            return NewsCountry(rawValue: country) ?? .za
+        }
+        return .za
+    }
+    
+    func fetchTopHeadlinesNewsData(category: NewsCategories) {
+        let path = "\(NewsType.topHeadlines.rawValue)?country=\(selectedCountry.rawValue)&category=\(category.rawValue)"
         NewsService.shared.fetchData(method: .GET, baseURl: .newsUrl, path: path, model: NewsModel.self) { [weak self] result in
             guard let self = self else { return }
             DispatchQueue.main.async {

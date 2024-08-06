@@ -114,8 +114,11 @@ class NewsViewController: UIViewController {
         let alertController = UIAlertController(title: "Filter", message: "Choose a country", preferredStyle: .actionSheet)
         
         for country in viewModel.countries {
-            alertController.addAction(UIAlertAction(title: country.rawValue.uppercased(), style: .default, handler: { [weak self] _ in
-                self?.fetchNewsForCountry(country)
+            alertController.addAction(UIAlertAction(title: country.rawValue.uppercased(),
+                                                    style: .default,
+                                                    handler: { [weak self] _ in
+                UserDefaultStorage.country.storeValue(country.rawValue)
+                self?.fetchNewsForCountry()
             }))
         }
         

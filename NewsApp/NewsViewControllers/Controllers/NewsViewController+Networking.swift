@@ -47,7 +47,7 @@ extension NewsViewController {
         fetchNewsForCategory(selectedCategory)
     }
     
-    func fetchNewsForCountry(_ country: NewsCountry) {
+    func fetchNewsForCountry() {
         /**
          - The problem with this approach is that is uses the UI to check which article is selected. It should be using data instead
         loadingIndicator.startAnimating()
@@ -56,7 +56,7 @@ extension NewsViewController {
         */
         
         let selectedCategory = viewModel.selectedCagory
-        viewModel.fetchTopHeadlinesNewsData(category: selectedCategory, country: country)
+        viewModel.fetchTopHeadlinesNewsData(category: selectedCategory)
     }
     
     func fetchNewsForCategory(_ category: NewsCategories) {
