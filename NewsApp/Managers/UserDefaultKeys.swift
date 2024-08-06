@@ -14,6 +14,7 @@ enum UserDefaultStorage {
         switch self {
         case .country:
             UserDefaults.standard.set(value, forKey: "country")
+            
         }
     }
     
