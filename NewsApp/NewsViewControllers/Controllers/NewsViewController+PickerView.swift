@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 
+/*
 extension NewsViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -33,3 +34,4 @@ extension NewsViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         viewModel.fetchTopHeadlinesNewsData(category: selectedCategory, country: country)
     }
 }
+*/

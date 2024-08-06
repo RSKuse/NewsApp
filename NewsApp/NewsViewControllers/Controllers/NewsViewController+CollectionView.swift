@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+/*
 extension NewsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return categories.count
@@ -32,3 +33,4 @@ extension NewsViewController: UICollectionViewDelegate, UICollectionViewDataSour
         viewModel.fetchTopHeadlinesNewsData(category: category)
     }
 }
+*/
