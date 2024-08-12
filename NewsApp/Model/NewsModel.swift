@@ -68,19 +68,19 @@ enum Name: String, Codable {
     case theblockCo = "Theblock.co"
 }
 
-struct CategoryColors {
-    static let colors: [NewsCategories: UIColor] = [
-        .business: UIColor(red: 0.29, green: 0.69, blue: 0.87, alpha: 1.00), // Light Blue
-        .sports: UIColor(red: 0.94, green: 0.76, blue: 0.20, alpha: 1.00),   // Gold
-        .politics: UIColor(red: 0.76, green: 0.18, blue: 0.29, alpha: 1.00), // Red
-        .technology: UIColor(red: 0.38, green: 0.31, blue: 0.86, alpha: 1.00), // Purple
-        .health: UIColor(red: 0.47, green: 0.77, blue: 0.23, alpha: 1.00),   // Green
-        .science: UIColor(red: 0.13, green: 0.67, blue: 0.47, alpha: 1.00),  // Teal
-        .entertainment: UIColor(red: 0.91, green: 0.29, blue: 0.55, alpha: 1.00), // Pink
-        .general: UIColor(red: 0.48, green: 0.51, blue: 0.55, alpha: 1.00)   // Gray
-    ]
-    
-    static func color(for category: NewsCategories) -> UIColor {
-        return colors[category] ?? .systemGray // Fallback color
-    }
-}
+//struct CategoryColors {
+//    static let colors: [NewsCategories: UIColor] = [
+//        .business: UIColor(red: 0.29, green: 0.69, blue: 0.87, alpha: 1.00), // Light Blue
+//        .sports: UIColor(red: 0.94, green: 0.76, blue: 0.20, alpha: 1.00),   // Gold
+//        .politics: UIColor(red: 0.76, green: 0.18, blue: 0.29, alpha: 1.00), // Red
+//        .technology: UIColor(red: 0.38, green: 0.31, blue: 0.86, alpha: 1.00), // Purple
+//        .health: UIColor(red: 0.47, green: 0.77, blue: 0.23, alpha: 1.00),   // Green
+//        .science: UIColor(red: 0.13, green: 0.67, blue: 0.47, alpha: 1.00),  // Teal
+//        .entertainment: UIColor(red: 0.91, green: 0.29, blue: 0.55, alpha: 1.00), // Pink
+//        .general: UIColor(red: 0.48, green: 0.51, blue: 0.55, alpha: 1.00)   // Gray
+//    ]
+//    
+//    static func color(for category: NewsCategories) -> UIColor {
+//        return colors[category] ?? .systemGray // Fallback color
+//    }
+//}

@@ -22,8 +22,8 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="goofy" translatesAutoresizingMaskIntoConstraints="NO" id="ru5-8M-oYi">
-                                <rect key="frame" x="121.66666666666669" y="363.66666666666669" width="150" height="150.00000000000006"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="goofy" translatesAutoresizingMaskIntoConstraints="NO" id="ru5-8M-oYi">
+                                <rect key="frame" x="121" y="332" width="150" height="150.00000000000006"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="pRa-nJ-2ez"/>
                                     <constraint firstAttribute="width" constant="150" id="seY-ZC-4MX"/>
@@ -34,7 +34,7 @@
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Bcu-3y-fUS" firstAttribute="centerX" secondItem="obG-Y5-kRd" secondAttribute="centerX" id="5cz-MP-9tL"/>
-                            <constraint firstItem="obG-Y5-kRd" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" constant="20" symbolic="YES" id="SfN-ll-jLj"/>
+                            <constraint firstItem="obG-Y5-kRd" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" symbolic="YES" id="SfN-ll-jLj"/>
                             <constraint firstItem="ru5-8M-oYi" firstAttribute="centerY" secondItem="Bcu-3y-fUS" secondAttribute="centerY" id="VZV-nQ-DQ2"/>
                             <constraint firstAttribute="bottom" secondItem="obG-Y5-kRd" secondAttribute="bottom" constant="20" id="Y44-ml-fuU"/>
                             <constraint firstItem="ru5-8M-oYi" firstAttribute="centerX" secondItem="Bcu-3y-fUS" secondAttribute="centerX" id="s8J-gr-mzh"/>
