@@ -15,10 +15,10 @@ class SettingsViewController: UIViewController {
     
     weak var delegate: SettingsViewControllerDelegate?
     
-
+    
     let viewModel = NewsViewModel()
     var selectedCountry: NewsCountry?
-
+    
     lazy var countriesTableView: UITableView = {
         let tableView = UITableView()
         tableView.delegate = self
@@ -27,25 +27,25 @@ class SettingsViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
     }
-
+    
     func setupUI() {
         view.backgroundColor = .white
         title = "Settings"
         navigationItem.largeTitleDisplayMode = .never
         selectedCountry = viewModel.selectedCountry
         view.addSubview(countriesTableView)
-
-        NSLayoutConstraint.activate([
-            countriesTableView.topAnchor.constraint(equalTo: view.topAnchor),
-            countriesTableView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            countriesTableView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            countriesTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
+        
+        
+        countriesTableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        countriesTableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        countriesTableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        countriesTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
     }
 }
 
