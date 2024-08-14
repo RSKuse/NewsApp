@@ -69,7 +69,10 @@ class CategoryCollectionViewCell: UICollectionViewCell {
         categoryStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12).isActive = true
 
         layer.cornerRadius = 14
-        backgroundColor = UIColor.groupTableViewBackground
+        backgroundColor = UIColor.white
+        
+        categoryLabel.textColor = .black
+        categoryIconImageView.tintColor = .black
     }
 
     func configure(with category: NewsCategories, selectedCategory: NewsCategories?) {
@@ -95,16 +98,17 @@ class CategoryCollectionViewCell: UICollectionViewCell {
             categoryIconImageView.image = UIImage(named: "ic_general")?.withRenderingMode(.alwaysTemplate)
         }
 
-        self.categoryLabel.textColor = selectedCategory?.rawValue == category.rawValue ? .white : .black
-        self.categoryIconImageView.tintColor = selectedCategory?.rawValue == category.rawValue ? .white : .black
-        self.backgroundColor = selectedCategory?.rawValue == category.rawValue ? .black : .groupTableViewBackground
+        let isSelectedCategory = selectedCategory?.rawValue == category.rawValue
+        self.categoryLabel.textColor = isSelectedCategory ? .white : .black
+        self.categoryIconImageView.tintColor = isSelectedCategory ? .white : .black
+        self.backgroundColor = isSelectedCategory ? .black : UIColor(white: 0.9, alpha: 1.0)
     }
 
     private func animateOnSelection() {
         UIView.animate(withDuration: 0.1, animations: {
             self.categoryLabel.textColor = self.isSelected ? .white : .black
             self.categoryIconImageView.tintColor = self.isSelected ? .white : .black
-            self.backgroundColor = self.isSelected ? .black : .groupTableViewBackground
+            self.backgroundColor = self.isSelected ? .black : .white
             self.layoutIfNeeded()
         }, completion: nil)
     }
@@ -112,7 +116,7 @@ class CategoryCollectionViewCell: UICollectionViewCell {
     private func animateOnHighlight() {
         UIView.animate(withDuration: 0.3, animations: {
             self.transform = self.isHighlighted ? CGAffineTransform(scaleX: 0.9, y: 0.9) : CGAffineTransform.identity
-            self.backgroundColor = self.isHighlighted ? UIColor.black : UIColor.groupTableViewBackground
+            self.backgroundColor = self.isHighlighted ? UIColor.black : UIColor.white
             self.categoryIconImageView.tintColor = self.isHighlighted ? .white : .black
             self.categoryLabel.textColor = self.isHighlighted ? .white : .black
             self.layoutIfNeeded()

@@ -14,7 +14,6 @@ extension NewsViewController {
         viewModel.fetchTopHeadlinesNewsData(category: NewsCategories.general)
     }
     
-    
     func listenForErrorReturned() {
         
     }
@@ -27,6 +26,7 @@ extension NewsViewController {
             self.newsTableView.reloadData()
         }
     }
+
     
     func listenForSearchedArticles() {
         viewModel.didSearchArticles = { [weak self] news in
@@ -62,5 +62,17 @@ extension NewsViewController {
     func fetchNewsForCategory(_ category: NewsCategories) {
         loadingIndicator.startAnimating()
         viewModel.fetchTopHeadlinesNewsData(category: category)
+    }
+    func countryDidChange() {
+        updateSettingsButton()
+    }
+    func didSelectCountry(_ country: NewsCountry) {
+        fetchNewsForCountry(country)
+        updateSettingsButton()
+    }
+    
+    func fetchNewsForCountry(_ country: NewsCountry) {
+        UserDefaultStorage.country.storeValue(country.rawValue)
+        viewModel.fetchTopHeadlinesNewsData(category: viewModel.selectedCagory)
     }
 }
