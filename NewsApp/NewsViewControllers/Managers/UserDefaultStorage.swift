@@ -14,12 +14,10 @@ enum UserDefaultStorage {
         switch self {
         case .country:
             UserDefaults.standard.set(value, forKey: "country")
-            
         }
     }
     
     func fetchValue() -> String? {
         return UserDefaults.standard.value(forKey: "country") as? String
     }
-    
 }

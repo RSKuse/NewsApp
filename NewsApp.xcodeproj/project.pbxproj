@@ -33,6 +33,8 @@
 		F39241242C5A25E3001D8B48 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F39241232C5A25E3001D8B48 /* String.swift */; };
 		F392414E2C5B807B001D8B48 /* NewsViewController+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F392414D2C5B807B001D8B48 /* NewsViewController+TableView.swift */; };
 		F39241502C5B8163001D8B48 /* UITableViewCellExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F392414F2C5B8163001D8B48 /* UITableViewCellExtension.swift */; };
+		F3B6C3462C6D029500333DFF /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B6C3452C6D029500333DFF /* SettingsViewController.swift */; };
+		F3B6C3482C6D10AD00333DFF /* CountryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B6C3472C6D10AD00333DFF /* CountryTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +66,8 @@
 		F39241232C5A25E3001D8B48 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		F392414D2C5B807B001D8B48 /* NewsViewController+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsViewController+TableView.swift"; sourceTree = "<group>"; };
 		F392414F2C5B8163001D8B48 /* UITableViewCellExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCellExtension.swift; sourceTree = "<group>"; };
+		F3B6C3452C6D029500333DFF /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		F3B6C3472C6D10AD00333DFF /* CountryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				F359961B2A5E004100256F6D /* NewsViewController.swift */,
+				F3B6C3452C6D029500333DFF /* SettingsViewController.swift */,
 				F34B8B542C5BAB320001FF4A /* NewsViewController+Networking.swift */,
 				F392414D2C5B807B001D8B48 /* NewsViewController+TableView.swift */,
 				F34B8B622C6255960001FF4A /* NewsViewController+Search.swift */,
@@ -106,6 +111,7 @@
 				F359962B2A61A58D00256F6D /* NewsAppTableViewCell.swift */,
 				F34B8B582C5C2EF40001FF4A /* CategoryCollectionViewCell.swift */,
 				F34B8B642C6256530001FF4A /* NewsCategoriesHeaderView.swift */,
+				F3B6C3472C6D10AD00333DFF /* CountryTableViewCell.swift */,
 				F34B8B662C6256760001FF4A /* NewsCategoriesHeaderView+CollectionView.swift */,
 			);
 			path = Cell;
@@ -285,6 +291,8 @@
 				F34B8B592C5C2EF40001FF4A /* CategoryCollectionViewCell.swift in Sources */,
 				F34B8B5F2C5C435D0001FF4A /* NewsViewController+PickerView.swift in Sources */,
 				F34B8B462C5B8E9F0001FF4A /* HttpMethods.swift in Sources */,
+				F3B6C3482C6D10AD00333DFF /* CountryTableViewCell.swift in Sources */,
+				F3B6C3462C6D029500333DFF /* SettingsViewController.swift in Sources */,
 				F34B8B4D2C5B938C0001FF4A /* NewsType.swift in Sources */,
 				F34B8B4F2C5B99FE0001FF4A /* URLCenter.swift in Sources */,
 				F34B8B672C6256760001FF4A /* NewsCategoriesHeaderView+CollectionView.swift in Sources */,

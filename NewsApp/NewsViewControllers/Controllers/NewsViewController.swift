@@ -7,17 +7,29 @@
 
 import UIKit
 
-class NewsViewController: UIViewController {
+class NewsViewController: UIViewController, SettingsViewControllerDelegate {
     
     let viewModel = NewsViewModel()
     
     lazy var searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
-        searchController.searchBar.placeholder = "search by name or source"
+        searchController.searchBar.placeholder = "Search by name or source"
         searchController.searchBar.delegate = self
         searchController.searchResultsUpdater = self
         searchController.searchBar.backgroundColor = UIColor.white
         searchController.searchBar.tintColor = UIColor.black
+        
+        let placeholderAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.lightGray,
+            .font: UIFont.systemFont(ofSize: 14)
+        ]
+        let attributedPlaceholder = NSAttributedString(string: "Search by name or source", attributes: placeholderAttributes)
+        searchController.searchBar.searchTextField.attributedPlaceholder = attributedPlaceholder
+        
+        if let textField = searchController.searchBar.value(forKey: "searchField") as? UITextField,
+           let leftIconView = textField.leftView as? UIImageView {
+            leftIconView.tintColor = UIColor.lightGray
+        }
         searchController.hidesNavigationBarDuringPresentation = true
         return searchController
     }()
@@ -45,16 +57,19 @@ class NewsViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         setupNavigationBar()
-        setupFilterButton()
         handleRegisterCell()
         fetchNews()
         listenForNewsArticlesFetched()
         listenForSearchedArticles()
+        updateSettingsButton()
+        
+        //        setupFilterButton()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setupNavigationBar()
+        
     }
     
     func setupNavigationBar() {
@@ -63,24 +78,24 @@ class NewsViewController: UIViewController {
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
         
-        setNavigationTitle(withTitle: "Goofy News")
+        setNavigationTitle(withTitle: "Your News Daily")
         
         /*
-        self.title = "News"
-        guard let navigationBar = navigationController?.navigationBar else { return }
-        navigationBar.backgroundColor = .white
-        navigationBar.prefersLargeTitles = false
-        navigationItem.searchController = searchController
-        navigationController?.setStatusBar(backgroundColor: .white)
-        
-        // Custom title styling
-        let titleAttributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.systemFont(ofSize: 24, weight: .bold),
-            .foregroundColor: UIColor.black
-        ]
-        navigationBar.titleTextAttributes = titleAttributes
-        navigationBar.largeTitleTextAttributes = titleAttributes
-        */
+         self.title = "News"
+         guard let navigationBar = navigationController?.navigationBar else { return }
+         navigationBar.backgroundColor = .white
+         navigationBar.prefersLargeTitles = false
+         navigationItem.searchController = searchController
+         navigationController?.setStatusBar(backgroundColor: .white)
+         
+         // Custom title styling
+         let titleAttributes: [NSAttributedString.Key: Any] = [
+         .font: UIFont.systemFont(ofSize: 24, weight: .bold),
+         .foregroundColor: UIColor.black
+         ]
+         navigationBar.titleTextAttributes = titleAttributes
+         navigationBar.largeTitleTextAttributes = titleAttributes
+         */
     }
     
     func setupUI() {
@@ -96,34 +111,55 @@ class NewsViewController: UIViewController {
         loadingIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         loadingIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         
-        
         refreshControl.addTarget(self, action: #selector(refreshNews), for: .valueChanged)
     }
     
-    func setupFilterButton() {
-        let filterButton = UIBarButtonItem(title: "Filter", style: .plain, target: self, action: #selector(showFilterOptions))
-        navigationItem.rightBarButtonItem = filterButton
+    @objc func openSettings() {
+        let settingsVC = SettingsViewController()
+        settingsVC.delegate = self
+        navigationController?.pushViewController(settingsVC, animated: true)
     }
     
+    func updateSettingsButton() {
+        let selectedCountry = viewModel.selectedCountry
+        let flagImage = UIImage(named: "flag_\(selectedCountry.rawValue)")?.withRenderingMode(.alwaysOriginal)
+        let settingsButton = UIBarButtonItem(image: flagImage,
+                                             style: .plain,
+                                             target: self,
+                                             action: #selector(openSettings))
+        settingsButton.imageInsets = UIEdgeInsets(top: 5, left: 10, bottom: -10, right: -40)
+        navigationItem.rightBarButtonItem = settingsButton
+    }
     func handleRegisterCell() {
         newsTableView.register(NewsAppTableViewCell.self, forCellReuseIdentifier: NewsAppTableViewCell.cellID)
     }
-    
-    @objc func showFilterOptions() {
-        // Present filter options
-        let alertController = UIAlertController(title: "Filter", message: "Choose a country", preferredStyle: .actionSheet)
-        
-        for country in viewModel.countries {
-            alertController.addAction(UIAlertAction(title: country.rawValue.uppercased(),
-                                                    style: .default,
-                                                    handler: { [weak self] _ in
-                UserDefaultStorage.country.storeValue(country.rawValue)
-                self?.fetchNewsForCountry()
-            }))
-        }
-        
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
-        present(alertController, animated: true, completion: nil)
-    }
 }
+    
+    
+    
+//    func setupFilterButton() {
+//        let filterButton = UIBarButtonItem(title: "Filter", style: .plain, target: self, action: #selector(showFilterOptions))
+//        navigationItem.rightBarButtonItem = filterButton
+//    }
+    
+    
+//    @objc func showFilterOptions() {
+//        // Present filter options
+//        let alertController = UIAlertController(title: "Filter", message: "Choose a country", preferredStyle: .actionSheet)
+//        
+//        for country in viewModel.countries {
+//            alertController.addAction(UIAlertAction(title: country.rawValue.uppercased(),
+//                                                    style: .default,
+//                                                    handler: { [weak self] _ in
+//                UserDefaultStorage.country.storeValue(country.rawValue)
+//                self?.fetchNewsForCountry()
+//            }))
+//        }
+//        
+//        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+//        
+//        present(alertController, animated: true, completion: nil)
+//    }
+
+
+

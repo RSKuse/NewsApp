@@ -68,6 +68,15 @@ enum Name: String, Codable {
     case theblockCo = "Theblock.co"
 }
 
+
+
+
+
+
+
+
+
+
 //struct CategoryColors {
 //    static let colors: [NewsCategories: UIColor] = [
 //        .business: UIColor(red: 0.29, green: 0.69, blue: 0.87, alpha: 1.00), // Light Blue
