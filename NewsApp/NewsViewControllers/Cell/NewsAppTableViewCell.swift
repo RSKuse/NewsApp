@@ -10,7 +10,6 @@ import UIKit
 
 class NewsAppTableViewCell: UITableViewCell {
     
-    var likesCount = 0
     
     lazy var newsSourceImageView: UIImageView = {
         let imageView = UIImageView()

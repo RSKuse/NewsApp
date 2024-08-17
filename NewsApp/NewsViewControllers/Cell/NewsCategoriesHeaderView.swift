@@ -56,8 +56,8 @@ class NewsCategoriesHeaderView: UIView {
         addSubview(categoryCollectionView)
         
         categoryCollectionView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        categoryCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        categoryCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        categoryCollectionView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+        categoryCollectionView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
         categoryCollectionView.heightAnchor.constraint(equalToConstant: 40).isActive = true
     }
 }

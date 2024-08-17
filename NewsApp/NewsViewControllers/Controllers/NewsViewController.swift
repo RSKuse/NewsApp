@@ -62,8 +62,6 @@ class NewsViewController: UIViewController, SettingsViewControllerDelegate {
         listenForNewsArticlesFetched()
         listenForSearchedArticles()
         updateSettingsButton()
-        
-        //        setupFilterButton()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -79,6 +77,20 @@ class NewsViewController: UIViewController, SettingsViewControllerDelegate {
         navigationItem.hidesSearchBarWhenScrolling = false
         
         setNavigationTitle(withTitle: "Your News Daily")
+       
+        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        
+        let profileButton = UIButton(type: .custom)
+        profileButton.setImage(getProfileImage()?.circleImage(), for: .normal)
+        profileButton.frame = containerView.bounds
+        profileButton.layer.cornerRadius = 20
+        profileButton.layer.masksToBounds = true
+        profileButton.addTarget(self, action: #selector(openUserProfile), for: .touchUpInside)
+        
+        containerView.addSubview(profileButton)
+        
+        let profileBarButtonItem = UIBarButtonItem(customView: containerView)
+        navigationItem.leftBarButtonItem = profileBarButtonItem
         
         /*
          self.title = "News"
@@ -96,6 +108,21 @@ class NewsViewController: UIViewController, SettingsViewControllerDelegate {
          navigationBar.titleTextAttributes = titleAttributes
          navigationBar.largeTitleTextAttributes = titleAttributes
          */
+    }
+    
+    @objc func openUserProfile() {
+        let profileVC = UserProfileViewController()
+        navigationController?.pushViewController(profileVC, animated: true)
+    }
+    
+    func getProfileImage() -> UIImage? {
+        if let imageData = UserDefaults.standard.data(forKey: "profileImage") {
+            print("Image data found, creating UIImage")
+            return UIImage(data: imageData)?.circleImage()
+        } else {
+            print("No image data found, returning placeholder")
+            return UIImage(named: "profile_icon")?.circleImage()
+        }
     }
     
     func setupUI() {
@@ -127,11 +154,30 @@ class NewsViewController: UIViewController, SettingsViewControllerDelegate {
                                              style: .plain,
                                              target: self,
                                              action: #selector(openSettings))
-        settingsButton.imageInsets = UIEdgeInsets(top: 5, left: 10, bottom: -10, right: -40)
+        settingsButton.imageInsets = UIEdgeInsets(top: 0, left: 10, bottom: -10, right: -40)
         navigationItem.rightBarButtonItem = settingsButton
     }
     func handleRegisterCell() {
         newsTableView.register(NewsAppTableViewCell.self, forCellReuseIdentifier: NewsAppTableViewCell.cellID)
+    }
+}
+
+extension UIImage {
+
+    func circleImage() -> UIImage? {
+        let square = CGSize(width: min(size.width, size.height), height: min(size.width, size.height))
+        let imageView = UIImageView(frame: CGRect(origin: .zero, size: square))
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = square.width / 2
+        imageView.layer.masksToBounds = true
+        imageView.image = self
+
+        UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, false, scale)
+        guard let context = UIGraphicsGetCurrentContext() else { return nil }
+        imageView.layer.render(in: context)
+        let result = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return result
     }
 }
     

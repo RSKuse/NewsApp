@@ -46,24 +46,23 @@ class CountryTableViewCell: UITableViewCell {
         addSubview(flagImageView)
         addSubview(countryLabel)
         addSubview(checkmarkImageView)
-        
-        
+ 
         flagImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        flagImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20).isActive = true
+        flagImageView.leftAnchor.constraint(equalTo: leftAnchor, constant: 20).isActive = true
         flagImageView.widthAnchor.constraint(equalToConstant: 30).isActive = true
         flagImageView.heightAnchor.constraint(equalToConstant: 20).isActive = true
         
         countryLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        countryLabel.leadingAnchor.constraint(equalTo: flagImageView.trailingAnchor, constant: 20).isActive = true
+        countryLabel.leftAnchor.constraint(equalTo: flagImageView.rightAnchor, constant: 20).isActive = true
         
         checkmarkImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        checkmarkImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20).isActive = true
+        checkmarkImageView.rightAnchor.constraint(equalTo: rightAnchor, constant: -20).isActive = true
         
     }
     
     func configure(with country: NewsCountry, isSelected: Bool) {
         countryLabel.text = country.rawValue.uppercased()
-        flagImageView.image = UIImage(named: "flag_\(country.rawValue)") // This line sets the flag image
+        flagImageView.image = UIImage(named: "flag_\(country.rawValue)")
         checkmarkImageView.isHidden = !isSelected
     }
 }

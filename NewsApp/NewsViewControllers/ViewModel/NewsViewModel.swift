@@ -23,7 +23,7 @@ class NewsViewModel {
     var isSearching = false
     var searchedArticles: [Article] = []
     var didSearchArticles: (([Article]?) -> Void)?
-
+    
     var searchQuery: String = "" {
         didSet {
             if searchQuery.isEmpty {
@@ -57,8 +57,10 @@ class NewsViewModel {
     }
     
     func fetchTopHeadlinesNewsData(category: NewsCategories) {
-        // Check if articles are already cached for the selected category
-        if let cachedArticles = categoryArticlesCache[category] {
+        // Check if the cache should be ignored (e.g., when the country changes)
+        let shouldIgnoreCache = categoryArticlesCache[category]?.first?.source?.name != selectedCountry.rawValue
+        
+        if !shouldIgnoreCache, let cachedArticles = categoryArticlesCache[category] {
             print("Loaded cached articles for category: \(category.rawValue)")
             self.articles = cachedArticles
             self.didFetchArticles?(cachedArticles)

@@ -67,7 +67,8 @@ extension NewsViewController {
         updateSettingsButton()
     }
     func didSelectCountry(_ country: NewsCountry) {
-        fetchNewsForCountry(country)
+        UserDefaultStorage.country.storeValue(country.rawValue)
+        fetchNewsForCountry()
         updateSettingsButton()
     }
     
