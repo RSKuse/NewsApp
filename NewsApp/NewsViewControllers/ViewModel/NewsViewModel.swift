@@ -12,7 +12,7 @@ class NewsViewModel {
     var selectedCagory: NewsCategories = .general
     
     let categories: [NewsCategories] = [.business, .sports, .politics, .technology, .health, .science, .entertainment, .general]
-    let countries: [NewsCountry] = [.za, .us, .gb, .ca, .ch, .fr, .ru, .ae, .ar, .at, .au, .be, .bg, .br, .cn, .co, .cu, .cz, .de, .eg, .gr, .hk, .hu, .id, .ie, .il, .ind, .it, .jp, .kr, .lt, .lv, .ma, .mx, .my, .ng, .nl, .no, .nz, .ph, .pl, .pt, .ro, .rs, .se, .sg, .si, .sk, .th, .tr, .tw, .ua, .ve]
+    let countries: [NewsCountry] = [.za, .us, .gb, .ca, .ch, .fr, .ru, .ae, .ar, .at, .au, .be, .bg, .br, .cn, .co, .cu, .cz, .de, .eg, .gr, .hk, .hu, .id, .ie, .il, .india, .it, .jp, .kr, .lt, .lv, .ma, .mx, .my, .ng, .nl, .no, .nz, .ph, .pl, .pt, .ro, .rs, .se, .sg, .si, .sk, .th, .tr, .tw, .ua, .ve]
     
     // Cache for storing articles by category
     private var categoryArticlesCache: [NewsCategories: [Article]] = [:]

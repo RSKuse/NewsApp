@@ -19,6 +19,7 @@ class NewsViewController: UIViewController, SettingsViewControllerDelegate {
         searchController.searchBar.backgroundColor = UIColor.white
         searchController.searchBar.tintColor = UIColor.black
         
+        // Set placeholder attributes
         let placeholderAttributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.lightGray,
             .font: UIFont.systemFont(ofSize: 14)
@@ -26,10 +27,21 @@ class NewsViewController: UIViewController, SettingsViewControllerDelegate {
         let attributedPlaceholder = NSAttributedString(string: "Search by name or source", attributes: placeholderAttributes)
         searchController.searchBar.searchTextField.attributedPlaceholder = attributedPlaceholder
         
-        if let textField = searchController.searchBar.value(forKey: "searchField") as? UITextField,
-           let leftIconView = textField.leftView as? UIImageView {
-            leftIconView.tintColor = UIColor.lightGray
+        // Ensure the text color is black
+        if let textField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
+            textField.textColor = UIColor.black
+            
+            // Ensure the keyboard appearance is light
+            textField.keyboardAppearance = .light
+            
+            if let leftIconView = textField.leftView as? UIImageView {
+                leftIconView.tintColor = UIColor.lightGray
+            }
         }
+        
+        // Ensure the text input trait reflects correctly in the dark mode as well
+        searchController.searchBar.searchTextField.overrideUserInterfaceStyle = .light
+        
         searchController.hidesNavigationBarDuringPresentation = true
         return searchController
     }()
