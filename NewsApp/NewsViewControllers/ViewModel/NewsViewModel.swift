@@ -12,7 +12,7 @@ class NewsViewModel {
     var selectedCagory: NewsCategories = .general
     
     let categories: [NewsCategories] = [.business, .sports, .politics, .technology, .health, .science, .entertainment, .general]
-    let countries: [NewsCountry] = [.za, .us, .gb, .ca, .ch, .fr, .ru, .ae, .ar, .at, .au, .be, .bg, .br, .cn, .co, .cu, .cz, .de, .eg, .gr, .hk, .hu, .id, .ie, .il, .ind, .it, .jp, .kr, .lt, .lv, .ma, .mx, .my, .ng, .nl, .no, .nz, .ph, .pl, .pt, .ro, .rs, .se, .sg, .si, .sk, .th, .tr, .tw, .ua, .ve]
+    let countries: [NewsCountry] = [.za, .us, .gb, .ca, .ch, .fr, .ru, .ae, .ar, .at, .au, .be, .bg, .br, .cn, .co, .cu, .cz, .de, .eg, .gr, .hk, .hu, .id, .ie, .il, .india, .it, .jp, .kr, .lt, .lv, .ma, .mx, .my, .ng, .nl, .no, .nz, .ph, .pl, .pt, .ro, .rs, .se, .sg, .si, .sk, .th, .tr, .tw, .ua, .ve]
     
     // Cache for storing articles by category
     private var categoryArticlesCache: [NewsCategories: [Article]] = [:]
@@ -23,7 +23,7 @@ class NewsViewModel {
     var isSearching = false
     var searchedArticles: [Article] = []
     var didSearchArticles: (([Article]?) -> Void)?
-
+    
     var searchQuery: String = "" {
         didSet {
             if searchQuery.isEmpty {
@@ -57,8 +57,10 @@ class NewsViewModel {
     }
     
     func fetchTopHeadlinesNewsData(category: NewsCategories) {
-        // Check if articles are already cached for the selected category
-        if let cachedArticles = categoryArticlesCache[category] {
+        // Check if the cache should be ignored (e.g., when the country changes)
+        let shouldIgnoreCache = categoryArticlesCache[category]?.first?.source?.name != selectedCountry.rawValue
+        
+        if !shouldIgnoreCache, let cachedArticles = categoryArticlesCache[category] {
             print("Loaded cached articles for category: \(category.rawValue)")
             self.articles = cachedArticles
             self.didFetchArticles?(cachedArticles)

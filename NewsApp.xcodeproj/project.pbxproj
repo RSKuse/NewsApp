@@ -35,6 +35,7 @@
 		F39241502C5B8163001D8B48 /* UITableViewCellExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F392414F2C5B8163001D8B48 /* UITableViewCellExtension.swift */; };
 		F3B6C3462C6D029500333DFF /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B6C3452C6D029500333DFF /* SettingsViewController.swift */; };
 		F3B6C3482C6D10AD00333DFF /* CountryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B6C3472C6D10AD00333DFF /* CountryTableViewCell.swift */; };
+		F3CD43AC2C705A1F00D77450 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CD43AB2C705A1F00D77450 /* UserProfileViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +69,7 @@
 		F392414F2C5B8163001D8B48 /* UITableViewCellExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCellExtension.swift; sourceTree = "<group>"; };
 		F3B6C3452C6D029500333DFF /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		F3B6C3472C6D10AD00333DFF /* CountryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryTableViewCell.swift; sourceTree = "<group>"; };
+		F3CD43AB2C705A1F00D77450 /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 		F34B8B3F2C5B86330001FF4A /* NewsViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				F3CD43AA2C7059EF00D77450 /* UserProfile */,
 				F34B8B682C62569A0001FF4A /* Managers */,
 				F34B8B512C5BA3680001FF4A /* ViewModel */,
 				F34B8B412C5B87100001FF4A /* Cell */,
@@ -213,6 +216,14 @@
 			path = NewsApp;
 			sourceTree = "<group>";
 		};
+		F3CD43AA2C7059EF00D77450 /* UserProfile */ = {
+			isa = PBXGroup;
+			children = (
+				F3CD43AB2C705A1F00D77450 /* UserProfileViewController.swift */,
+			);
+			name = UserProfile;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -299,6 +310,7 @@
 				F39241222C5A2595001D8B48 /* NewsService.swift in Sources */,
 				F34B8B532C5BA6F80001FF4A /* NewsViewModel.swift in Sources */,
 				F34B8B6A2C6256AE0001FF4A /* UserDefaultStorage.swift in Sources */,
+				F3CD43AC2C705A1F00D77450 /* UserProfileViewController.swift in Sources */,
 				F34B8B552C5BAB320001FF4A /* NewsViewController+Networking.swift in Sources */,
 				F34B8B572C5BBB570001FF4A /* UINavigationController.swift in Sources */,
 				F392411E2C59270E001D8B48 /* NewsModel.swift in Sources */,

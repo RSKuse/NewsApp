@@ -28,7 +28,6 @@ struct Article: Codable {
     var urlToImage: String?
     var publishedAt: String?
     var content: String?
-    var likesCount: Int? = 0
 
     func getNewsSourceImage() -> UIImage? {
         guard let sourceId = source?.id else { return nil }
