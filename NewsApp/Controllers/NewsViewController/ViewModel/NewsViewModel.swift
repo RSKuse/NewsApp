@@ -47,13 +47,33 @@ class NewsViewModel {
     var didFetchArticles: (([Article]?) -> Void)?
     
     /**
-     Computed Propperties
+     Computed Propperties (variable that return something)
      */
     var selectedCountry: NewsCountry {
-        if let country = UserDefaultStorage.country.fetchValue() {
-            return NewsCountry(rawValue: country) ?? .za
+        /*
+        if let country = UserDefaultsManager.shared.fetchValue(withKey: .country) {
+            guard let countryString = country as? String else {
+                return .za
+            }
+            return NewsCountry(rawValue: countryString) ?? .za
+        }
+        */
+        if let country = UserDefaultsManager.shared.fetchValue(withKey: .country),
+           let countryString = country as? String {
+            return NewsCountry(rawValue: countryString) ?? .za
         }
         return .za
+    }
+    
+    /**
+     Computed Properties Example
+     */
+    var a = 29
+    var b: Int {
+        let g = 90
+        let f = 79
+        let division = 10 / 4
+        return (g + f) * division
     }
     
     func fetchTopHeadlinesNewsData(category: NewsCategories) {

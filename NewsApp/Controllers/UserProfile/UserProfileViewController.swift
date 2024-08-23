@@ -149,10 +149,11 @@ class UserProfileViewController: UIViewController, UIImagePickerControllerDelega
         ] as [String : Any]
         
         if let imageData = profileImageView.image?.jpegData(compressionQuality: 0.8) {
-            UserDefaults.standard.set(imageData, forKey: "profileImage")
+            UserDefaultsManager.shared.storeValue(imageData,
+                                                  key: UserDefaultsManager.UserDefaultKeys.profileImage)
         }
-        UserDefaults.standard.set(userProfile, forKey: "userProfile")
         
+        UserDefaultsManager.shared.storeValue(userProfile, key: .userProfile)
         navigationController?.popViewController(animated: true)
     }
     

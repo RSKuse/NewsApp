@@ -7,17 +7,25 @@
 
 import Foundation
 
-enum UserDefaultStorage {
-    case country
+// Fascade Pattern
+final class UserDefaultsManager {
     
-    func storeValue(_ value: String) {
-        switch self {
-        case .country:
-            UserDefaults.standard.set(value, forKey: "country")
-        }
+    // Singleton Pattern
+    static let shared = UserDefaultsManager()
+    
+    enum UserDefaultKeys: String {
+        case country
+        case profileImage
+        case userProfile
     }
     
-    func fetchValue() -> String? {
-        return UserDefaults.standard.value(forKey: "country") as? String
+    func storeValue(_ value: Any, key: UserDefaultKeys) {
+        UserDefaults.standard.set(value, forKey: key.rawValue)
     }
+    
+    func fetchValue(withKey key: UserDefaultKeys) -> Any? {
+        return UserDefaults.standard.value(forKey: key.rawValue) as? Any
+
+    }
+    
 }

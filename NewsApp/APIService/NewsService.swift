@@ -29,6 +29,11 @@ class NewsService {
             return
         }
         
+        // Check for network availability. And if there is a network error, you return the error.
+        /**
+         completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No network found. Please check your settings"])))
+         */
+        
         var request = URLRequest(url: url, timeoutInterval: Double.infinity)
         request.httpMethod = method.rawValue
         
