@@ -80,12 +80,12 @@ class UserProfileViewController: UIViewController, UIImagePickerControllerDelega
         return textView
     }()
     
-    lazy var saveButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Save", for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
+//    lazy var saveButton: UIButton = {
+//        let button = UIButton(type: .system)
+//        button.setTitle("Save", for: .normal)
+//        button.translatesAutoresizingMaskIntoConstraints = false
+//        return button
+//    }()
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -96,7 +96,11 @@ class UserProfileViewController: UIViewController, UIImagePickerControllerDelega
         profileImageView.isUserInteractionEnabled = true
         profileImageView.addGestureRecognizer(tapGesture)
         
-        saveButton.addTarget(self, action: #selector(saveProfile), for: .touchUpInside)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveProfile))
+        
+        // Dismissing keyboard when tapping outside textfields
+        let dismissKeyboardGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(dismissKeyboardGesture)
     }
     
     func setupUI() {
@@ -105,7 +109,7 @@ class UserProfileViewController: UIViewController, UIImagePickerControllerDelega
         view.addSubview(ageTextField)
         view.addSubview(genderSegmentedControl)
         view.addSubview(bioTextView)
-        view.addSubview(saveButton)
+//        view.addSubview(saveButton)
 
         profileImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40).isActive = true
         profileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -131,8 +135,8 @@ class UserProfileViewController: UIViewController, UIImagePickerControllerDelega
         bioTextView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
         bioTextView.heightAnchor.constraint(equalToConstant: 100).isActive = true
 
-        saveButton.topAnchor.constraint(equalTo: bioTextView.bottomAnchor, constant: 20).isActive = true
-        saveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//        saveButton.topAnchor.constraint(equalTo: bioTextView.bottomAnchor, constant: 20).isActive = true
+//        saveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
     }
     
@@ -145,10 +149,11 @@ class UserProfileViewController: UIViewController, UIImagePickerControllerDelega
         ] as [String : Any]
         
         if let imageData = profileImageView.image?.jpegData(compressionQuality: 0.8) {
-            UserDefaults.standard.set(imageData, forKey: "profileImage")
+            UserDefaultsManager.shared.storeValue(imageData,
+                                                  key: UserDefaultsManager.UserDefaultKeys.profileImage)
         }
-        UserDefaults.standard.set(userProfile, forKey: "userProfile")
         
+        UserDefaultsManager.shared.storeValue(userProfile, key: .userProfile)
         navigationController?.popViewController(animated: true)
     }
     
@@ -196,5 +201,8 @@ class UserProfileViewController: UIViewController, UIImagePickerControllerDelega
             profileImageView.image = originalImage
         }
         dismiss(animated: true, completion: nil)
+    }
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
     }
 }

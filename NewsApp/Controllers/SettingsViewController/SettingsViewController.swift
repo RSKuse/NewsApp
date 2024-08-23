@@ -7,6 +7,7 @@
 
 import UIKit
 
+// Delegate Pattern
 protocol SettingsViewControllerDelegate: AnyObject {
     func didSelectCountry(_ country: NewsCountry)
 }
@@ -68,7 +69,8 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedCountry = viewModel.countries[indexPath.row]
-        UserDefaultStorage.country.storeValue(selectedCountry.rawValue)
+        UserDefaultsManager.shared.storeValue(selectedCountry.rawValue,
+                                              key: UserDefaultsManager.UserDefaultKeys.country)
         delegate?.didSelectCountry(selectedCountry)
         navigationController?.popViewController(animated: true)
     }

@@ -11,7 +11,7 @@ extension NewsViewController {
     
     @objc func fetchNews() {
         loadingIndicator.startAnimating()
-        viewModel.fetchTopHeadlinesNewsData(category: NewsCategories.general)
+        viewModel.fetchTopHeadlinesNewsData(category: .general)
     }
     
     func listenForErrorReturned() {
@@ -67,13 +67,13 @@ extension NewsViewController {
         updateSettingsButton()
     }
     func didSelectCountry(_ country: NewsCountry) {
-        UserDefaultStorage.country.storeValue(country.rawValue)
+        UserDefaultsManager.shared.storeValue(country.rawValue, key: .country)
         fetchNewsForCountry()
         updateSettingsButton()
     }
     
     func fetchNewsForCountry(_ country: NewsCountry) {
-        UserDefaultStorage.country.storeValue(country.rawValue)
+        UserDefaultsManager.shared.storeValue(country.rawValue, key: .country)
         viewModel.fetchTopHeadlinesNewsData(category: viewModel.selectedCagory)
     }
 }
