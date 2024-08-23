@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MaterialActivityIndicator
 
 class NewsViewController: UIViewController, SettingsViewControllerDelegate {
     
@@ -59,8 +60,10 @@ class NewsViewController: UIViewController, SettingsViewControllerDelegate {
     
     let refreshControl = UIRefreshControl()
     
-    lazy var loadingIndicator: UIActivityIndicatorView = {
-        let indicator = UIActivityIndicatorView(style: .large)
+    lazy var loadingIndicator: MaterialActivityIndicatorView = {
+        let indicator = MaterialActivityIndicatorView()
+        indicator.color = .red
+        indicator.lineWidth = 2.0
         indicator.translatesAutoresizingMaskIntoConstraints = false
         return indicator
     }()

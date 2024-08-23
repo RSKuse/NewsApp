@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import Kingfisher
 
 class NewsAppTableViewCell: UITableViewCell {
     
@@ -127,17 +128,22 @@ class NewsAppTableViewCell: UITableViewCell {
         }
         
         if let imageUrl = article.urlToImage, let url = URL(string: imageUrl) {
-            DispatchQueue.global().async{
-                let data = try? Data(contentsOf: url)
-                if let imageData = data {
-                    DispatchQueue.main.async {
-                        self.newsArticleImageView.image = UIImage(data: imageData)
-                        self.newsArticleImageView.isHidden = false
-                    }
-                    
-                }
-                
-            }
+            self.newsArticleImageView.kf.setImage(with: url)
         }
+        
+        
+//        if let imageUrl = article.urlToImage, let url = URL(string: imageUrl) {
+//            DispatchQueue.global().async{
+//                let data = try? Data(contentsOf: url)
+//                if let imageData = data {
+//                    DispatchQueue.main.async {
+//                        self.newsArticleImageView.image = UIImage(data: imageData)
+//                        self.newsArticleImageView.isHidden = false
+//                    }
+//                    
+//                }
+//                
+//            }
+//        }
     }
 }
