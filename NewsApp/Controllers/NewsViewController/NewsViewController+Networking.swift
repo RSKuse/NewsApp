@@ -11,7 +11,7 @@ extension NewsViewController {
     
     @objc func fetchNews() {
         loadingIndicator.startAnimating()
-        viewModel.fetchTopHeadlinesNewsData(category: NewsCategories.general)
+        viewModel.fetchTopHeadlinesNewsData(category: .general)
     }
     
     func listenForErrorReturned() {

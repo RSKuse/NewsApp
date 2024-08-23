@@ -54,7 +54,7 @@
 		F34B8B622C6255960001FF4A /* NewsViewController+Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsViewController+Search.swift"; sourceTree = "<group>"; };
 		F34B8B642C6256530001FF4A /* NewsCategoriesHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCategoriesHeaderView.swift; sourceTree = "<group>"; };
 		F34B8B662C6256760001FF4A /* NewsCategoriesHeaderView+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsCategoriesHeaderView+CollectionView.swift"; sourceTree = "<group>"; };
-		F34B8B692C6256AE0001FF4A /* UserDefaultStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultStorage.swift; sourceTree = "<group>"; };
+		F34B8B692C6256AE0001FF4A /* UserDefaultStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserDefaultStorage.swift; path = ../../Managers/UserDefaultStorage.swift; sourceTree = "<group>"; };
 		F34B8B6B2C6256D50001FF4A /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		F35996142A5E004100256F6D /* Goofy News.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Goofy News.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F35996172A5E004100256F6D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -83,27 +83,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		F34B8B3F2C5B86330001FF4A /* NewsViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				F3CD43AA2C7059EF00D77450 /* UserProfile */,
-				F34B8B682C62569A0001FF4A /* Managers */,
-				F34B8B512C5BA3680001FF4A /* ViewModel */,
-				F34B8B412C5B87100001FF4A /* Cell */,
-				F34B8B402C5B86CD0001FF4A /* Controllers */,
-			);
-			path = NewsViewControllers;
-			sourceTree = "<group>";
-		};
 		F34B8B402C5B86CD0001FF4A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				F359961B2A5E004100256F6D /* NewsViewController.swift */,
-				F3B6C3452C6D029500333DFF /* SettingsViewController.swift */,
-				F34B8B542C5BAB320001FF4A /* NewsViewController+Networking.swift */,
-				F392414D2C5B807B001D8B48 /* NewsViewController+TableView.swift */,
-				F34B8B622C6255960001FF4A /* NewsViewController+Search.swift */,
-				F34B8B5E2C5C435D0001FF4A /* NewsViewController+PickerView.swift */,
+				F3CD43AA2C7059EF00D77450 /* UserProfile */,
+				F3CD43B42C78E4C100D77450 /* SettingsViewController */,
+				F3CD43B32C78E4BB00D77450 /* NewsViewController */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -182,7 +167,8 @@
 			children = (
 				F34B8B692C6256AE0001FF4A /* UserDefaultStorage.swift */,
 			);
-			path = Managers;
+			name = Managers;
+			path = NewsViewControllers/Managers;
 			sourceTree = "<group>";
 		};
 		F359960B2A5E004100256F6D = {
@@ -205,7 +191,8 @@
 			isa = PBXGroup;
 			children = (
 				F35996172A5E004100256F6D /* AppDelegate.swift */,
-				F34B8B3F2C5B86330001FF4A /* NewsViewControllers */,
+				F34B8B682C62569A0001FF4A /* Managers */,
+				F34B8B402C5B86CD0001FF4A /* Controllers */,
 				F34B8B422C5B877C0001FF4A /* Extensions */,
 				F34B8B432C5B87AD0001FF4A /* Model */,
 				F34B8B442C5B87BD0001FF4A /* APIService */,
@@ -221,7 +208,29 @@
 			children = (
 				F3CD43AB2C705A1F00D77450 /* UserProfileViewController.swift */,
 			);
-			name = UserProfile;
+			path = UserProfile;
+			sourceTree = "<group>";
+		};
+		F3CD43B32C78E4BB00D77450 /* NewsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				F34B8B412C5B87100001FF4A /* Cell */,
+				F34B8B512C5BA3680001FF4A /* ViewModel */,
+				F359961B2A5E004100256F6D /* NewsViewController.swift */,
+				F34B8B542C5BAB320001FF4A /* NewsViewController+Networking.swift */,
+				F392414D2C5B807B001D8B48 /* NewsViewController+TableView.swift */,
+				F34B8B622C6255960001FF4A /* NewsViewController+Search.swift */,
+				F34B8B5E2C5C435D0001FF4A /* NewsViewController+PickerView.swift */,
+			);
+			path = NewsViewController;
+			sourceTree = "<group>";
+		};
+		F3CD43B42C78E4C100D77450 /* SettingsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				F3B6C3452C6D029500333DFF /* SettingsViewController.swift */,
+			);
+			path = SettingsViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
