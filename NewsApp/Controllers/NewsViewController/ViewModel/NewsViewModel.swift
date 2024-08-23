@@ -76,6 +76,13 @@ class NewsViewModel {
         return (g + f) * division
     }
     
+    func addValueToB(f: Int, y: String) -> Int {
+        let g = 90
+//        let f = 79
+        let division = 10 / 4
+        return (g + f) * division
+    }
+    
     func fetchTopHeadlinesNewsData(category: NewsCategories) {
         // Check if the cache should be ignored (e.g., when the country changes)
         let shouldIgnoreCache = categoryArticlesCache[category]?.first?.source?.name != selectedCountry.rawValue
