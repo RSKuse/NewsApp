@@ -70,7 +70,7 @@ class NewsAppTableViewCell: UITableViewCell {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
-
+    
     lazy var timeStampLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
@@ -130,6 +130,8 @@ class NewsAppTableViewCell: UITableViewCell {
         if let imageUrl = article.urlToImage, let url = URL(string: imageUrl) {
             self.newsArticleImageView.kf.setImage(with: url)
         }
+    }
+}
         
         
 //        if let imageUrl = article.urlToImage, let url = URL(string: imageUrl) {
@@ -145,5 +147,3 @@ class NewsAppTableViewCell: UITableViewCell {
 //                
 //            }
 //        }
-    }
-}

@@ -8,27 +8,50 @@
 import Foundation
 
 enum PlistKeys: String {
-    case baseURL
-    case apiKey
+    case newsBaseURL
+    case weatherBaseURL
+    case newsApiKey
+    case weatherAPIKey
 }
 
 enum URLCenter {
     
     case newsUrl
+    case weatherURL
     
+    /**
+     - News API Information
+     */
     private var newsBaseURL: String {
-        return Bundle.main.object(forInfoDictionaryKey: PlistKeys.baseURL.rawValue) as? String ?? ""
+        return Bundle.main.object(forInfoDictionaryKey: PlistKeys.newsBaseURL.rawValue) as? String ?? ""
     }
     
     private var newsApiKey: String {
-        return Bundle.main.object(forInfoDictionaryKey: PlistKeys.apiKey.rawValue) as? String ?? ""
+        return Bundle.main.object(forInfoDictionaryKey: PlistKeys.newsApiKey.rawValue) as? String ?? ""
+    }
+    
+    
+    /**
+     - Weather API Information
+     */
+    private var weatherBaseURL: String {
+        return Bundle.main.object(forInfoDictionaryKey: PlistKeys.weatherBaseURL.rawValue) as? String ?? ""
+    }
+    
+    private var weatherApiKey: String {
+        return Bundle.main.object(forInfoDictionaryKey: PlistKeys.weatherAPIKey.rawValue) as? String ?? ""
     }
     
     func buildURL(withPath path: String) -> String {
         
         switch self {
         case .newsUrl:
-            return "\(newsBaseURL)/\(path)&apiKey=\(newsApiKey)"
+            let url = "\(newsBaseURL)/\(path)&apiKey=\(newsApiKey)"
+            print(url)
+            return url
+        case .weatherURL:
+            // lat=34.2232&long=93.54834
+            return "\(weatherBaseURL)?\(path)&apiKey=\(weatherApiKey)"
         }
     }
     

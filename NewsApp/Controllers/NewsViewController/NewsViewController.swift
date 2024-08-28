@@ -7,10 +7,13 @@
 
 import UIKit
 import MaterialActivityIndicator
+import ParallaxHeader
+import SafariServices
 
 class NewsViewController: UIViewController, SettingsViewControllerDelegate {
     
     let viewModel = NewsViewModel()
+    var parallaxHeaderArticle: Article?
     
     lazy var searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
@@ -47,6 +50,17 @@ class NewsViewController: UIViewController, SettingsViewControllerDelegate {
         return searchController
     }()
     
+    lazy var categoriesHeaderView: NewsCategoriesHeaderView = {
+        let headerView = NewsCategoriesHeaderView()
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        headerView.categories = viewModel.categories
+        headerView.didSelectCategory = { [weak self] category in
+            self?.viewModel.selectedCagory = category
+            self?.fetchNewsForCategory(category)
+        }
+        return headerView
+    }()
+    
     lazy var newsTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.delegate = self
@@ -68,21 +82,65 @@ class NewsViewController: UIViewController, SettingsViewControllerDelegate {
         return indicator
     }()
     
+    lazy var topHeaderlineImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        return imageView
+    }()
+    
+    lazy var headlineLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.font = UIFont.boldSystemFont(ofSize: 24)
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         setupNavigationBar()
+        setupParallaxHeader()
         handleRegisterCell()
         fetchNews()
         listenForNewsArticlesFetched()
         listenForSearchedArticles()
         updateSettingsButton()
     }
+ 
+    func setupParallaxHeader() {
+        topHeaderlineImageView.addSubview(headlineLabel)
+        
+        newsTableView.parallaxHeader.view = topHeaderlineImageView
+        newsTableView.parallaxHeader.height = 400
+        newsTableView.parallaxHeader.minimumHeight = 0
+        newsTableView.parallaxHeader.mode = .topFill
+        
+        headlineLabel.leadingAnchor.constraint(equalTo: topHeaderlineImageView.leadingAnchor, constant: 16).isActive = true
+        headlineLabel.trailingAnchor.constraint(equalTo: topHeaderlineImageView.trailingAnchor, constant: -16).isActive = true
+        headlineLabel.bottomAnchor.constraint(equalTo: topHeaderlineImageView.bottomAnchor, constant: -16).isActive = true
+        
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(parallaxHeaderTapped))
+        topHeaderlineImageView.isUserInteractionEnabled = true
+        topHeaderlineImageView.addGestureRecognizer(tapGesture)
+    }
+
+    @objc func parallaxHeaderTapped() {
+        guard let urlString = viewModel.parallaxHeaderArticle?.url, // Use the stored article
+              let url = URL(string: urlString) else {
+            print("URL is nil or invalid") // Debugging line
+            return
+        }
+        let safariController = SFSafariViewController(url: url)
+        present(safariController, animated: true, completion: nil)
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setupNavigationBar()
-        
     }
     
     func setupNavigationBar() {
@@ -106,23 +164,6 @@ class NewsViewController: UIViewController, SettingsViewControllerDelegate {
         
         let profileBarButtonItem = UIBarButtonItem(customView: containerView)
         navigationItem.leftBarButtonItem = profileBarButtonItem
-        
-        /*
-         self.title = "News"
-         guard let navigationBar = navigationController?.navigationBar else { return }
-         navigationBar.backgroundColor = .white
-         navigationBar.prefersLargeTitles = false
-         navigationItem.searchController = searchController
-         navigationController?.setStatusBar(backgroundColor: .white)
-         
-         // Custom title styling
-         let titleAttributes: [NSAttributedString.Key: Any] = [
-         .font: UIFont.systemFont(ofSize: 24, weight: .bold),
-         .foregroundColor: UIColor.black
-         ]
-         navigationBar.titleTextAttributes = titleAttributes
-         navigationBar.largeTitleTextAttributes = titleAttributes
-         */
     }
     
     @objc func openUserProfile() {
@@ -144,8 +185,15 @@ class NewsViewController: UIViewController, SettingsViewControllerDelegate {
         view.backgroundColor = .white
         view.addSubview(newsTableView)
         view.addSubview(loadingIndicator)
+        view.addSubview(categoriesHeaderView) // Add this line
         
-        newsTableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        // Set constraints for categoriesHeaderView
+        categoriesHeaderView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        categoriesHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        categoriesHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        categoriesHeaderView.heightAnchor.constraint(equalToConstant: 50).isActive = true // Adjust height as needed
+        
+        newsTableView.topAnchor.constraint(equalTo: categoriesHeaderView.bottomAnchor).isActive = true
         newsTableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         newsTableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         newsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
@@ -224,3 +272,4 @@ extension UIImage {
 
 
 
+//Yes thats what i want that The parallax header contains both the image and the article’s URL inside it, making the entire header clickable. Clicking anywhere within the parallax header, including on the image or the URL, will take the user directly to the article’s webpage.

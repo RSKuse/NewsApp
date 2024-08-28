@@ -1,20 +1,24 @@
 PODS:
   - Kingfisher (7.12.0)
   - MaterialActivityIndicator (0.0.6)
+  - ParallaxHeader (3.0.0)
 
 DEPENDENCIES:
   - Kingfisher
   - MaterialActivityIndicator
+  - ParallaxHeader
 
 SPEC REPOS:
   trunk:
     - Kingfisher
     - MaterialActivityIndicator
+    - ParallaxHeader
 
 SPEC CHECKSUMS:
   Kingfisher: 53a10ea35051a436b5fb626ca2dd8f3144d755e9
   MaterialActivityIndicator: 5061a52fadf7d22533734f2d34806311331bc424
+  ParallaxHeader: a343f55eb38f52a89c5820a77e14cf975b84e6aa
 
-PODFILE CHECKSUM: d99daa168e5121c89623b18da4ff4fc2eb71cb66
+PODFILE CHECKSUM: 459ecfb9eb0790fc7089fd8651d0310537faa014
 
 COCOAPODS: 1.15.2

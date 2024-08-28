@@ -12,6 +12,7 @@ extension NewsViewController {
     @objc func fetchNews() {
         loadingIndicator.startAnimating()
         viewModel.fetchTopHeadlinesNewsData(category: .general)
+        viewModel.fetchEverythingNews(category: .general)
     }
     
     func listenForErrorReturned() {
@@ -23,11 +24,17 @@ extension NewsViewController {
             guard let self else { return }
             self.loadingIndicator.stopAnimating()
             self.refreshControl.endRefreshing()
+            
+            if let article = self.viewModel.parallaxHeaderArticle,
+               let imageUrl = viewModel.topHeadlinesArticles.first?.urlToImage,
+                let url = URL(string: imageUrl) {
+                self.topHeaderlineImageView.kf.setImage(with: url)
+                self.headlineLabel.text = article.title
+            }
             self.newsTableView.reloadData()
         }
     }
 
-    
     func listenForSearchedArticles() {
         viewModel.didSearchArticles = { [weak self] news in
             guard let self else { return }
@@ -57,12 +64,15 @@ extension NewsViewController {
         
         let selectedCategory = viewModel.selectedCagory
         viewModel.fetchTopHeadlinesNewsData(category: selectedCategory)
+        viewModel.fetchEverythingNews(category: selectedCategory)
     }
     
     func fetchNewsForCategory(_ category: NewsCategories) {
         loadingIndicator.startAnimating()
         viewModel.fetchTopHeadlinesNewsData(category: category)
+        viewModel.fetchEverythingNews(category: category)
     }
+    
     func countryDidChange() {
         updateSettingsButton()
     }
@@ -75,5 +85,16 @@ extension NewsViewController {
     func fetchNewsForCountry(_ country: NewsCountry) {
         UserDefaultsManager.shared.storeValue(country.rawValue, key: .country)
         viewModel.fetchTopHeadlinesNewsData(category: viewModel.selectedCagory)
+        viewModel.fetchEverythingNews(category: viewModel.selectedCagory)
     }
+    
+//    func updateTopHeadlineUI(with article: Article) {
+//        // Load the image
+//        if let urlToImage = article.urlToImage {
+//            topHeaderlineImageView.loadImage(from: urlToImage)
+//        }
+//        
+//        // Set the URL on the button (and as the button's title)
+//        articleUrlButton.setTitle(article.url, for: .normal)
+//    }
 }

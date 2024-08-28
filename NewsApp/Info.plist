@@ -2,11 +2,15 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>weatherBaseURL</key>
+	<string>https://api.weather.org</string>
+	<key>weatherAPIKey</key>
+	<string>fjenodmasoiuxmwdp</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>apiKey</key>
+	<key>newsApiKey</key>
 	<string>7fcc5fd64d5f428aa1c7c7176527023b</string>
-	<key>baseURL</key>
+	<key>newsBaseURL</key>
 	<string>https://newsapi.org/v2</string>
 </dict>
 </plist>
