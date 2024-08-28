@@ -5,4 +5,5 @@ target 'NewsApp' do
   use_frameworks!
   pod 'Kingfisher'
   pod 'MaterialActivityIndicator'
+  pod 'ParallaxHeader'
 end

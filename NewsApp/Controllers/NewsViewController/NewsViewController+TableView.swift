@@ -11,21 +11,21 @@ import SafariServices
 
 extension NewsViewController: UITableViewDelegate, UITableViewDataSource {
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if viewModel.isSearching {
-            return nil
-        }
-        let headerView = NewsCategoriesHeaderView()
-        
-        headerView.categories = viewModel.categories
-        headerView.selectedCategory = viewModel.selectedCagory
-        
-        headerView.didSelectCategory = { category in
-            self.viewModel.selectedCagory = category
-            self.fetchNewsForCategory(category)
-        }
-        return headerView
-    }
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        if viewModel.isSearching {
+//            return nil
+//        }
+//        let headerView = NewsCategoriesHeaderView()
+//        
+//        headerView.categories = viewModel.categories
+//        headerView.selectedCategory = viewModel.selectedCagory
+//        
+//        headerView.didSelectCategory = { category in
+//            self.viewModel.selectedCagory = category
+//            self.fetchNewsForCategory(category)
+//        }
+//        return headerView
+//    }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return viewModel.isSearching ? 0.0 : 48.0

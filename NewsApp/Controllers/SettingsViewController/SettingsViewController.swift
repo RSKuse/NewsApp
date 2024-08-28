@@ -36,7 +36,7 @@ class SettingsViewController: UIViewController {
     
     func setupUI() {
         view.backgroundColor = .white
-        title = "Settings"
+        title = "Choose A Country"
         navigationItem.largeTitleDisplayMode = .never
         selectedCountry = viewModel.selectedCountry
         view.addSubview(countriesTableView)
