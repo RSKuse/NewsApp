@@ -69,7 +69,7 @@ class CategoryCollectionViewCell: UICollectionViewCell {
         categoryStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12).isActive = true
 
         layer.cornerRadius = 14
-        backgroundColor = UIColor.white
+        backgroundColor = UIColor(white: 0.9, alpha: 1.0)
         
         categoryLabel.textColor = .black
         categoryIconImageView.tintColor = .black
@@ -108,7 +108,7 @@ class CategoryCollectionViewCell: UICollectionViewCell {
         UIView.animate(withDuration: 0.1, animations: {
             self.categoryLabel.textColor = self.isSelected ? .white : .black
             self.categoryIconImageView.tintColor = self.isSelected ? .white : .black
-            self.backgroundColor = self.isSelected ? .black : .white
+            self.backgroundColor = self.isSelected ? .black : UIColor(white: 0.9, alpha: 1.0)
             self.layoutIfNeeded()
         }, completion: nil)
     }
@@ -116,7 +116,7 @@ class CategoryCollectionViewCell: UICollectionViewCell {
     private func animateOnHighlight() {
         UIView.animate(withDuration: 0.3, animations: {
             self.transform = self.isHighlighted ? CGAffineTransform(scaleX: 0.9, y: 0.9) : CGAffineTransform.identity
-            self.backgroundColor = self.isHighlighted ? UIColor.black : UIColor.white
+            self.backgroundColor = self.isHighlighted ? UIColor.black : UIColor(white: 0.9, alpha: 1.0)
             self.categoryIconImageView.tintColor = self.isHighlighted ? .white : .black
             self.categoryLabel.textColor = self.isHighlighted ? .white : .black
             self.layoutIfNeeded()

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension NewsViewController {
     
@@ -73,13 +74,19 @@ extension NewsViewController {
         viewModel.fetchEverythingNews(category: category)
     }
     
-    func countryDidChange() {
-        updateSettingsButton()
-    }
+//    func countryDidChange() {
+//        updateSettingsButton()
+//    }
     func didSelectCountry(_ country: NewsCountry) {
         UserDefaultsManager.shared.storeValue(country.rawValue, key: .country)
         fetchNewsForCountry()
-        updateSettingsButton()
+       // updateSettingsButton()
+        
+        // Update the custom view with the new country
+        if let countrySelectionView = navigationItem.rightBarButtonItem?.customView as? CountrySelectionView {
+            let flagImage = UIImage(named: "flag_\(country.rawValue)")
+            countrySelectionView.configure(flag: flagImage, countryCode: country.rawValue.uppercased())
+        }
     }
     
     func fetchNewsForCountry(_ country: NewsCountry) {
@@ -87,14 +94,5 @@ extension NewsViewController {
         viewModel.fetchTopHeadlinesNewsData(category: viewModel.selectedCagory)
         viewModel.fetchEverythingNews(category: viewModel.selectedCagory)
     }
-    
-//    func updateTopHeadlineUI(with article: Article) {
-//        // Load the image
-//        if let urlToImage = article.urlToImage {
-//            topHeaderlineImageView.loadImage(from: urlToImage)
-//        }
-//        
-//        // Set the URL on the button (and as the button's title)
-//        articleUrlButton.setTitle(article.url, for: .normal)
-//    }
+
 }

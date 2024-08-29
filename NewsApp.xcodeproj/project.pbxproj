@@ -38,6 +38,7 @@
 		F3CD43AC2C705A1F00D77450 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CD43AB2C705A1F00D77450 /* UserProfileViewController.swift */; };
 		F3F746E62C7E87BE008DF35D /* UIImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F746E52C7E87BE008DF35D /* UIImageView+Extensions.swift */; };
 		F3F746E82C7FE65B008DF35D /* UserProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F746E72C7FE65B008DF35D /* UserProfileEditViewController.swift */; };
+		F3F746EA2C80D437008DF35D /* CountrySelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F746E92C80D437008DF35D /* CountrySelectionView.swift */; };
 		FEFFD4EC103A43FE414D9F3F /* Pods_NewsApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 958F52312356DE1AA17958B8 /* Pods_NewsApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -78,6 +79,7 @@
 		F3CD43AB2C705A1F00D77450 /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		F3F746E52C7E87BE008DF35D /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
 		F3F746E72C7FE65B008DF35D /* UserProfileEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileEditViewController.swift; sourceTree = "<group>"; };
+		F3F746E92C80D437008DF35D /* CountrySelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountrySelectionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				F359962B2A61A58D00256F6D /* NewsAppTableViewCell.swift */,
+				F3F746E92C80D437008DF35D /* CountrySelectionView.swift */,
 				F34B8B582C5C2EF40001FF4A /* CategoryCollectionViewCell.swift */,
 				F34B8B642C6256530001FF4A /* NewsCategoriesHeaderView.swift */,
 				F3B6C3472C6D10AD00333DFF /* CountryTableViewCell.swift */,
@@ -380,6 +383,7 @@
 				F35996182A5E004100256F6D /* AppDelegate.swift in Sources */,
 				F34B8B632C6255960001FF4A /* NewsViewController+Search.swift in Sources */,
 				F34B8B4B2C5B925C0001FF4A /* NewCategories.swift in Sources */,
+				F3F746EA2C80D437008DF35D /* CountrySelectionView.swift in Sources */,
 				F34B8B6C2C6256D50001FF4A /* UIViewController.swift in Sources */,
 				F34B8B592C5C2EF40001FF4A /* CategoryCollectionViewCell.swift in Sources */,
 				F34B8B5F2C5C435D0001FF4A /* NewsViewController+PickerView.swift in Sources */,

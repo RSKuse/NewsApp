@@ -91,10 +91,25 @@ class NewsViewController: UIViewController, SettingsViewControllerDelegate {
     lazy var headlineLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        label.font = UIFont.boldSystemFont(ofSize: 24)
+        label.font = UIFont(name: "Georgia-BoldItalic", size: 20)
         label.numberOfLines = 0
         label.textAlignment = .center
+        label.backgroundColor = UIColor.black.withAlphaComponent(0.1)
         label.translatesAutoresizingMaskIntoConstraints = false
+        
+        label.layer.shadowColor = UIColor.black.cgColor
+        label.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
+        label.layer.shadowRadius = 3.0
+        label.layer.shadowOpacity = 0.7
+        label.layer.masksToBounds = false
+ 
+        let strokeTextAttributes: [NSAttributedString.Key : Any] = [
+            .strokeColor : UIColor.black,
+            .foregroundColor : UIColor.white,
+            .strokeWidth : -2.0
+        ]
+        label.attributedText = NSAttributedString(string: "Your Headline", attributes: strokeTextAttributes)
+        
         return label
     }()
 
@@ -107,7 +122,7 @@ class NewsViewController: UIViewController, SettingsViewControllerDelegate {
         fetchNews()
         listenForNewsArticlesFetched()
         listenForSearchedArticles()
-        updateSettingsButton()
+        //updateSettingsButton()
     }
  
     func setupParallaxHeader() {
@@ -151,19 +166,39 @@ class NewsViewController: UIViewController, SettingsViewControllerDelegate {
         
         setNavigationTitle(withTitle: "Your News Daily")
        
-        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        let profileContainerView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         
         let profileButton = UIButton(type: .custom)
         profileButton.setImage(getProfileImage()?.circleImage(), for: .normal)
-        profileButton.frame = containerView.bounds
+        profileButton.frame = profileContainerView.bounds
         profileButton.layer.cornerRadius = 20
         profileButton.layer.masksToBounds = true
         profileButton.addTarget(self, action: #selector(openUserProfile), for: .touchUpInside)
         
-        containerView.addSubview(profileButton)
+        profileContainerView.addSubview(profileButton)
         
-        let profileBarButtonItem = UIBarButtonItem(customView: containerView)
+        let profileBarButtonItem = UIBarButtonItem(customView: profileContainerView)
         navigationItem.leftBarButtonItem = profileBarButtonItem
+        
+
+        let countrySelectionView = CountrySelectionView(frame: CGRect(x: 0, y: 0, width: 100, height: 40))
+        let selectedCountry = viewModel.selectedCountry
+        //countrySelectionView.backgroundColor = UIColor.red.withAlphaComponent(0.3)
+        let flagImage = UIImage(named: "flag_\(selectedCountry.rawValue)")
+        countrySelectionView.configure(flag: flagImage, countryCode: selectedCountry.rawValue.uppercased())
+
+        // Set the onTap closure to open the settings
+        countrySelectionView.onTap = { [weak self] in
+            print("Navigating to settings")
+            self?.openSettings()
+        }
+
+        let countryBarButtonItem = UIBarButtonItem(customView: countrySelectionView)
+        countrySelectionView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        
+        // Re-assign the right bar button item
+        navigationItem.rightBarButtonItem = nil
+        navigationItem.rightBarButtonItem = countryBarButtonItem
     }
     
     @objc func openUserProfile() {
@@ -210,16 +245,16 @@ class NewsViewController: UIViewController, SettingsViewControllerDelegate {
         navigationController?.pushViewController(settingsVC, animated: true)
     }
     
-    func updateSettingsButton() {
-        let selectedCountry = viewModel.selectedCountry
-        let flagImage = UIImage(named: "flag_\(selectedCountry.rawValue)")?.withRenderingMode(.alwaysOriginal)
-        let settingsButton = UIBarButtonItem(image: flagImage,
-                                             style: .plain,
-                                             target: self,
-                                             action: #selector(openSettings))
-        settingsButton.imageInsets = UIEdgeInsets(top: 0, left: 10, bottom: -10, right: -40)
-        navigationItem.rightBarButtonItem = settingsButton
-    }
+//    func updateSettingsButton() {
+//        let selectedCountry = viewModel.selectedCountry
+//        let flagImage = UIImage(named: "flag_\(selectedCountry.rawValue)")?.withRenderingMode(.alwaysOriginal)
+//        let settingsButton = UIBarButtonItem(image: flagImage,
+//                                             style: .plain,
+//                                             target: self,
+//                                             action: #selector(openSettings))
+//        settingsButton.imageInsets = UIEdgeInsets(top: 0, left: 10, bottom: -10, right: -40)
+//        navigationItem.rightBarButtonItem = settingsButton
+//    }
     func handleRegisterCell() {
         newsTableView.register(NewsAppTableViewCell.self, forCellReuseIdentifier: NewsAppTableViewCell.cellID)
     }
@@ -270,6 +305,3 @@ extension UIImage {
 //        present(alertController, animated: true, completion: nil)
 //    }
 
-
-
-//Yes thats what i want that The parallax header contains both the image and the article’s URL inside it, making the entire header clickable. Clicking anywhere within the parallax header, including on the image or the URL, will take the user directly to the article’s webpage.
