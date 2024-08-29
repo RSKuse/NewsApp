@@ -425,8 +425,8 @@ class NewsViewModel {
             return "vdb"
 
         // General
-        case (.general, .us):
-            return "freedom"
+        case (.general, .za):
+            return "Vodacom"
         case (.general, .fr):
             return "eiffel"
         case (.general, .jp):
@@ -443,8 +443,8 @@ class NewsViewModel {
             return "great-wall"
         case (.general, .ru):
             return "red-square"
-        case (.general, .za):
-            return "table-mountain"
+        case (.general, .us):
+            return "freedom"
         case (.general, .au):
             return "sydney-opera-house"
         case (.general, .mx):

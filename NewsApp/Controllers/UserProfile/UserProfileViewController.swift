@@ -1,208 +1,286 @@
-//
-//  UserProfileViewController.swift
-//  NewsApp
-//
-//  Created by Reuben Simphiwe Kuse on 2024/08/17.
-//
-
-import Foundation
-import Foundation
 import UIKit
+import ParallaxHeader
 
-class UserProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class UserProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UserProfileEditDelegate {
+    
+    lazy var tableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .plain)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.separatorStyle = .none
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.backgroundColor = .systemBackground
+        return tableView
+    }()
     
     lazy var profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 50
-        imageView.layer.borderWidth = 2.0
-        imageView.layer.borderColor = UIColor.lightGray.cgColor
+        imageView.layer.cornerRadius = 70
+        imageView.layer.borderWidth = 3.0
+        imageView.layer.borderColor = UIColor.systemBackground.cgColor // Adapt to dark mode
         imageView.image = UIImage(named: "profile_icon")
+        imageView.isUserInteractionEnabled = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
-    lazy var nameTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "Enter your name"
-        textField.borderStyle = .roundedRect
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor.lightGray.cgColor
-        textField.layer.cornerRadius = 8
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.backgroundColor = .white
-        textField.textColor = .black
-        return textField
+    lazy var editProfileButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Edit Profile", for: .normal)
+        button.setTitleColor(.label, for: .normal) // Adapt to dark mode
+        button.backgroundColor = .systemBlue
+        button.layer.cornerRadius = 8
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.systemBlue.cgColor
+        button.addTarget(self, action: #selector(editProfileTapped), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
-    lazy var ageTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "Enter your age"
-        textField.keyboardType = .numberPad
-        textField.borderStyle = .roundedRect
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor.lightGray.cgColor
-        textField.layer.cornerRadius = 8
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.backgroundColor = .white
-        textField.textColor = .black
-        return textField
+    lazy var nameLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "Georgia", size: 28)
+        label.textAlignment = .left
+        label.textColor = .label // Adapt to dark mode
+        label.text = "Name"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
-    lazy var genderSegmentedControl: UISegmentedControl = {
-        let segmentedControl = UISegmentedControl(items: ["Male", "Female", "Other"])
-        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
-        segmentedControl.selectedSegmentTintColor = UIColor.systemBlue
-        
-        let normalTextAttributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.black
-        ]
-        let selectedTextAttributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.white
-        ]
-        segmentedControl.setTitleTextAttributes(normalTextAttributes, for: .normal)
-        segmentedControl.setTitleTextAttributes(selectedTextAttributes, for: .selected)
-        
-        return segmentedControl
+    lazy var ageLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue-Medium", size: 18)
+        label.textAlignment = .left
+        label.textColor = .secondaryLabel // Adapt to dark mode
+        label.text = "Age"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
-    lazy var bioTextView: UITextView = {
-        let textView = UITextView()
-        textView.text = "Enter your bio here..."
-        textView.font = UIFont.systemFont(ofSize: 16)
-        textView.layer.borderWidth = 1
-        textView.layer.borderColor = UIColor.lightGray.cgColor
-        textView.layer.cornerRadius = 8
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.backgroundColor = .white
-        textView.textColor = .black
-        return textView
+    lazy var bioLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "Georgia-Italic", size: 16)
+        label.textAlignment = .left
+        label.textColor = .secondaryLabel // Adapt to dark mode
+        label.numberOfLines = 0
+        label.text = "Bio"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
-//    lazy var saveButton: UIButton = {
-//        let button = UIButton(type: .system)
-//        button.setTitle("Save", for: .normal)
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//        return button
-//    }()
+    lazy var nameLabelAgeLabelAndBioLabelStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [nameLabel, ageLabel,bioLabel])
+        stackView.alignment = .leading
+        stackView.distribution = .fillProportionally
+        stackView.axis = .vertical
+        stackView.spacing = 10
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground // Adapt to dark mode
+        setupTableView()
+        setupParallaxHeader()
+        setupTapGestures()
         setupUI()
-        loadUserProfile()
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(changeProfilePicture))
-        profileImageView.isUserInteractionEnabled = true
-        profileImageView.addGestureRecognizer(tapGesture)
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveProfile))
-        
-        // Dismissing keyboard when tapping outside textfields
-        let dismissKeyboardGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        view.addGestureRecognizer(dismissKeyboardGesture)
+        loadSavedImages()
+        loadSavedProfileData()
     }
     
-    func setupUI() {
-        view.addSubview(profileImageView)
-        view.addSubview(nameTextField)
-        view.addSubview(ageTextField)
-        view.addSubview(genderSegmentedControl)
-        view.addSubview(bioTextView)
-//        view.addSubview(saveButton)
-
-        profileImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40).isActive = true
-        profileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        profileImageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        profileImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+    private func setupTableView() {
+        view.addSubview(tableView)
         
-        nameTextField.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 20).isActive = true
-        nameTextField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
-        nameTextField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
-        nameTextField.heightAnchor.constraint(equalToConstant: 40).isActive = true
-
-        ageTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 20).isActive = true
-        ageTextField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
-        ageTextField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
-        ageTextField.heightAnchor.constraint(equalToConstant: 40).isActive = true
-
-        genderSegmentedControl.topAnchor.constraint(equalTo: ageTextField.bottomAnchor, constant: 20).isActive = true
-        genderSegmentedControl.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
-        genderSegmentedControl.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
-
-        bioTextView.topAnchor.constraint(equalTo: genderSegmentedControl.bottomAnchor, constant: 20).isActive = true
-        bioTextView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
-        bioTextView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
-        bioTextView.heightAnchor.constraint(equalToConstant: 100).isActive = true
-
-//        saveButton.topAnchor.constraint(equalTo: bioTextView.bottomAnchor, constant: 20).isActive = true
-//        saveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         
     }
     
-    @objc func saveProfile() {
-        let userProfile = [
-            "name": nameTextField.text ?? "",
-            "age": ageTextField.text ?? "",
-            "gender": genderSegmentedControl.selectedSegmentIndex,
-            "bio": bioTextView.text ?? ""
-        ] as [String : Any]
+    private func setupUI() {
+        view.addSubview(nameLabelAgeLabelAndBioLabelStackView)
         
-        if let imageData = profileImageView.image?.jpegData(compressionQuality: 0.8) {
-            UserDefaultsManager.shared.storeValue(imageData,
-                                                  key: UserDefaultsManager.UserDefaultKeys.profileImage)
-        }
+        nameLabelAgeLabelAndBioLabelStackView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
+        nameLabelAgeLabelAndBioLabelStackView.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 20).isActive = true
         
-        UserDefaultsManager.shared.storeValue(userProfile, key: .userProfile)
-        navigationController?.popViewController(animated: true)
     }
     
-    func loadUserProfile() {
-        if let userProfile = UserDefaults.standard.dictionary(forKey: "userProfile") {
-            nameTextField.text = userProfile["name"] as? String
-            ageTextField.text = userProfile["age"] as? String
-            genderSegmentedControl.selectedSegmentIndex = userProfile["gender"] as? Int ?? 0
-            bioTextView.text = userProfile["bio"] as? String
-        }
+    private func setupParallaxHeader() {
+        let parallaxHeaderView = UIImageView()
+        parallaxHeaderView.image = UIImage(named: "background_image_placeholder")
+        parallaxHeaderView.contentMode = .scaleAspectFill
+        parallaxHeaderView.clipsToBounds = true
         
-        if let imageData = UserDefaults.standard.data(forKey: "profileImage") {
-            profileImageView.image = UIImage(data: imageData)
-        } else {
-            
-            profileImageView.image = UIImage(named: "profile_icon")?.circleImage()
-            
-        }
-        // Load existing user data if available and populate the UI elements
+        tableView.parallaxHeader.view = parallaxHeaderView
+        tableView.parallaxHeader.height = 300
+        tableView.parallaxHeader.minimumHeight = 100
+        tableView.parallaxHeader.mode = .fill
+        
+        parallaxHeaderView.addSubview(profileImageView)
+        
+        profileImageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        profileImageView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor).isActive = true
+        profileImageView.bottomAnchor.constraint(equalTo: tableView.bottomAnchor).isActive = true
+        profileImageView.widthAnchor.constraint(equalToConstant: 140).isActive = true
+        profileImageView.heightAnchor.constraint(equalToConstant: 140).isActive = true
+        
     }
-    func saveProfileImageToDisk(image: UIImage) {
-        if let data = image.jpegData(compressionQuality: 0.8) {
-            let filename = getDocumentsDirectory().appendingPathComponent("savedProfileImage.jpg")
-            try? data.write(to: filename)
-            print("Image saved at: \(filename.path)")
+    
+    private func setupTapGestures() {
+        let profileTapGesture = UITapGestureRecognizer(target: self, action: #selector(profileImageTapped))
+        profileImageView.addGestureRecognizer(profileTapGesture)
+        
+        let backgroundTapGesture = UITapGestureRecognizer(target: self, action: #selector(backgroundImageTapped))
+        if let parallaxView = tableView.parallaxHeader.view as? UIImageView {
+            parallaxView.isUserInteractionEnabled = true
+            parallaxView.addGestureRecognizer(backgroundTapGesture)
         }
     }
     
-    func getDocumentsDirectory() -> URL {
-        return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+    @objc private func profileImageTapped() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "View Profile Picture", style: .default, handler: { _ in
+            // Code to view profile picture
+        }))
+        alert.addAction(UIAlertAction(title: "Upload Profile Picture", style: .default, handler: { _ in
+            self.showImagePicker(for: .profileImage)
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
     
-    @objc func changeProfilePicture() {
-        let picker = UIImagePickerController()
-        picker.delegate = self
-        picker.allowsEditing = true
-        picker.sourceType = .photoLibrary
-        present(picker, animated: true, completion: nil)
+    @objc private func backgroundImageTapped() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "View Background Image", style: .default, handler: { _ in
+            // Code to view background image
+        }))
+        alert.addAction(UIAlertAction(title: "Upload Background Image", style: .default, handler: { _ in
+            self.showImagePicker(for: .backgroundImage)
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
+    
+    @objc private func editProfileTapped() {
+        let editProfileVC = UserProfileEditViewController()
+        editProfileVC.delegate = self
+        navigationController?.pushViewController(editProfileVC, animated: true)
+    }
+    
+    // MARK: - Image Picker
+    private func showImagePicker(for imageType: ImageType) {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.modalPresentationStyle = .fullScreen
+        present(imagePicker, animated: true, completion: nil)
+        
+        self.currentImageType = imageType
+    }
+    
+    // To keep track of the image type being edited
+    private enum ImageType {
+        case profileImage, backgroundImage
+    }
+    private var currentImageType: ImageType?
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let editedImage = info[.editedImage] as? UIImage {
-            profileImageView.image = editedImage
-        } else if let originalImage = info[.originalImage] as? UIImage {
-            profileImageView.image = originalImage
+        guard let selectedImage = info[.editedImage] as? UIImage else {
+            dismiss(animated: true, completion: nil)
+            return
         }
+        
+        if let imageType = currentImageType {
+            switch imageType {
+            case .profileImage:
+                profileImageView.image = selectedImage
+                saveImageToUserDefaults(image: selectedImage, key: "profileImage")
+            case .backgroundImage:
+                if let parallaxView = tableView.parallaxHeader.view as? UIImageView {
+                    parallaxView.image = selectedImage
+                }
+                saveImageToUserDefaults(image: selectedImage, key: "backgroundImage")
+            }
+        }
+        
         dismiss(animated: true, completion: nil)
     }
-    @objc private func dismissKeyboard() {
-        view.endEditing(true)
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    private func saveImageToUserDefaults(image: UIImage, key: String) {
+        if let imageData = image.jpegData(compressionQuality: 0.8) {
+            UserDefaults.standard.set(imageData, forKey: key)
+        }
+    }
+    
+    private func loadSavedImages() {
+        if let profileImageData = UserDefaults.standard.data(forKey: "profileImage"),
+           let profileImage = UIImage(data: profileImageData) {
+            profileImageView.image = profileImage
+        }
+        
+        if let backgroundImageData = UserDefaults.standard.data(forKey: "backgroundImage"),
+           let backgroundImage = UIImage(data: backgroundImageData) {
+            if let parallaxView = tableView.parallaxHeader.view as? UIImageView {
+                parallaxView.image = backgroundImage
+            }
+        }
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        cell.contentView.addSubview(editProfileButton)
+
+        editProfileButton.rightAnchor.constraint(equalTo: cell.contentView.rightAnchor, constant: -20).isActive = true
+        editProfileButton.topAnchor.constraint(equalTo: cell.contentView.topAnchor, constant: 20).isActive = true
+        editProfileButton.widthAnchor.constraint(equalToConstant: 115).isActive = true
+        editProfileButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        editProfileButton.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor, constant: -20).isActive = true
+        
+        return cell
+    }
+    
+    func didSaveProfile(_ profileInfo: [String: Any]) {
+        if let name = profileInfo["name"] as? String {
+            nameLabel.text = name
+        }
+        if let age = profileInfo["age"] as? String {
+            ageLabel.text = "Age: \(age)"
+        }
+        if let bio = profileInfo["bio"] as? String {
+            bioLabel.text = bio
+        }
+    }
+    
+    private func loadSavedProfileData() {
+        if let profileInfo = UserDefaults.standard.dictionary(forKey: "userProfile") as? [String: Any] {
+            if let name = profileInfo["name"] as? String {
+                nameLabel.text = name
+            }
+            if let age = profileInfo["age"] as? String {
+                ageLabel.text = "Age: \(age)"
+            }
+            if let bio = profileInfo["bio"] as? String {
+                bioLabel.text = bio
+            }
+            // Load other fields like bio if necessary
+        }
     }
 }
