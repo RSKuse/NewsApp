@@ -1,3 +1,12 @@
+
+//
+//  UserProfileViewController.swift
+//  NewsApp
+//
+//  Created by Reuben Simphiwe Kuse on 2024/08/29.
+//
+
+
 import UIKit
 import ParallaxHeader
 
@@ -128,7 +137,6 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         profileImageView.bottomAnchor.constraint(equalTo: tableView.bottomAnchor).isActive = true
         profileImageView.widthAnchor.constraint(equalToConstant: 140).isActive = true
         profileImageView.heightAnchor.constraint(equalToConstant: 140).isActive = true
-        
     }
     
     private func setupTapGestures() {
@@ -145,7 +153,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     @objc private func profileImageTapped() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "View Profile Picture", style: .default, handler: { _ in
-            // Code to view profile picture
+            self.viewImage(self.profileImageView.image)
         }))
         alert.addAction(UIAlertAction(title: "Upload Profile Picture", style: .default, handler: { _ in
             self.showImagePicker(for: .profileImage)
@@ -153,17 +161,32 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         present(alert, animated: true, completion: nil)
     }
-    
+
     @objc private func backgroundImageTapped() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "View Background Image", style: .default, handler: { _ in
-            // Code to view background image
+            if let parallaxView = self.tableView.parallaxHeader.view as? UIImageView {
+                self.viewImage(parallaxView.image)
+            }
         }))
         alert.addAction(UIAlertAction(title: "Upload Background Image", style: .default, handler: { _ in
             self.showImagePicker(for: .backgroundImage)
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         present(alert, animated: true, completion: nil)
+    }
+    
+    private func viewImage(_ image: UIImage?) {
+        guard let image = image else { return }
+
+        let imageViewController = ImageViewController()
+        imageViewController.image = image
+
+        // Embed the ImageViewController in a UINavigationController
+        let navigationController = UINavigationController(rootViewController: imageViewController)
+        navigationController.modalPresentationStyle = .fullScreen
+
+        present(navigationController, animated: true, completion: nil)
     }
     
     @objc private func editProfileTapped() {
@@ -184,7 +207,6 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         self.currentImageType = imageType
     }
     
-    // To keep track of the image type being edited
     private enum ImageType {
         case profileImage, backgroundImage
     }
@@ -280,7 +302,6 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             if let bio = profileInfo["bio"] as? String {
                 bioLabel.text = bio
             }
-            // Load other fields like bio if necessary
         }
     }
 }
