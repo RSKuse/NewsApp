@@ -37,6 +37,7 @@
 		F3B6C3482C6D10AD00333DFF /* CountryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B6C3472C6D10AD00333DFF /* CountryTableViewCell.swift */; };
 		F3CD43AC2C705A1F00D77450 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CD43AB2C705A1F00D77450 /* UserProfileViewController.swift */; };
 		F3F746E62C7E87BE008DF35D /* UIImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F746E52C7E87BE008DF35D /* UIImageView+Extensions.swift */; };
+		F3F746E82C7FE65B008DF35D /* UserProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F746E72C7FE65B008DF35D /* UserProfileEditViewController.swift */; };
 		FEFFD4EC103A43FE414D9F3F /* Pods_NewsApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 958F52312356DE1AA17958B8 /* Pods_NewsApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -76,6 +77,7 @@
 		F3B6C3472C6D10AD00333DFF /* CountryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryTableViewCell.swift; sourceTree = "<group>"; };
 		F3CD43AB2C705A1F00D77450 /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		F3F746E52C7E87BE008DF35D /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
+		F3F746E72C7FE65B008DF35D /* UserProfileEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileEditViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -233,6 +235,7 @@
 			isa = PBXGroup;
 			children = (
 				F3CD43AB2C705A1F00D77450 /* UserProfileViewController.swift */,
+				F3F746E72C7FE65B008DF35D /* UserProfileEditViewController.swift */,
 			);
 			path = UserProfile;
 			sourceTree = "<group>";
@@ -398,6 +401,7 @@
 				F3F746E62C7E87BE008DF35D /* UIImageView+Extensions.swift in Sources */,
 				F359962C2A61A58D00256F6D /* NewsAppTableViewCell.swift in Sources */,
 				F34B8B612C5C44EF0001FF4A /* UICollectionViewCellExtension.swift in Sources */,
+				F3F746E82C7FE65B008DF35D /* UserProfileEditViewController.swift in Sources */,
 				F39241242C5A25E3001D8B48 /* String.swift in Sources */,
 				F39241502C5B8163001D8B48 /* UITableViewCellExtension.swift in Sources */,
 				F392414E2C5B807B001D8B48 /* NewsViewController+TableView.swift in Sources */,
