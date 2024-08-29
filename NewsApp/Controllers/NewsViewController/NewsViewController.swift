@@ -94,7 +94,7 @@ class NewsViewController: UIViewController, SettingsViewControllerDelegate {
         label.font = UIFont(name: "Georgia-BoldItalic", size: 20)
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.backgroundColor = UIColor.black.withAlphaComponent(0.1)
+        //label.backgroundColor = UIColor.black.withAlphaComponent(0.1)
         label.translatesAutoresizingMaskIntoConstraints = false
         
         label.layer.shadowColor = UIColor.black.cgColor

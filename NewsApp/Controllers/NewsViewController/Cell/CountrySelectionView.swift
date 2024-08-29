@@ -58,28 +58,28 @@ class CountrySelectionView: UIView {
         addSubview(countryCodeLabel)
         addSubview(arrowImageView)
         
-        NSLayoutConstraint.activate([
-            flagImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            flagImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            flagImageView.widthAnchor.constraint(equalToConstant: 24),
-            flagImageView.heightAnchor.constraint(equalToConstant: 16),
-            
-            countryCodeLabel.leadingAnchor.constraint(equalTo: flagImageView.trailingAnchor, constant: 8),
-            countryCodeLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-            
-            arrowImageView.leadingAnchor.constraint(equalTo: countryCodeLabel.trailingAnchor, constant: 8),
-            arrowImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            arrowImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            arrowImageView.widthAnchor.constraint(equalToConstant: 12),
-            arrowImageView.heightAnchor.constraint(equalToConstant: 12)
-        ])
+        
+        flagImageView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        flagImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        flagImageView.widthAnchor.constraint(equalToConstant: 24).isActive = true
+        flagImageView.heightAnchor.constraint(equalToConstant: 16).isActive = true
+        
+        countryCodeLabel.leadingAnchor.constraint(equalTo: flagImageView.trailingAnchor, constant: 8).isActive = true
+        countryCodeLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        
+        arrowImageView.leadingAnchor.constraint(equalTo: countryCodeLabel.trailingAnchor, constant: 8).isActive = true
+        arrowImageView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        arrowImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        arrowImageView.widthAnchor.constraint(equalToConstant: 12).isActive = true
+        arrowImageView.heightAnchor.constraint(equalToConstant: 12).isActive = true
+        
     }
     
     private func setupTapGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         self.addGestureRecognizer(tapGesture)
     }
-
+    
     @objc private func handleTap() {
         print("CountrySelectionView tapped")  // Debugging print statement
         onTap?()

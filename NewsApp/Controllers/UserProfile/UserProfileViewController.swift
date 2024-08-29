@@ -9,6 +9,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         tableView.dataSource = self
         tableView.separatorStyle = .none
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.backgroundColor = .systemBackground
         return tableView
     }()
     
@@ -18,7 +19,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 70
         imageView.layer.borderWidth = 3.0
-        imageView.layer.borderColor = UIColor.white.cgColor
+        imageView.layer.borderColor = UIColor.systemBackground.cgColor // Adapt to dark mode
         imageView.image = UIImage(named: "profile_icon")
         imageView.isUserInteractionEnabled = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -28,7 +29,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     lazy var editProfileButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Edit Profile", for: .normal)
-        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.label, for: .normal) // Adapt to dark mode
         button.backgroundColor = .systemBlue
         button.layer.cornerRadius = 8
         button.layer.borderWidth = 1
@@ -42,7 +43,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         let label = UILabel()
         label.font = UIFont(name: "Georgia", size: 28)
         label.textAlignment = .left
-        label.textColor = .black
+        label.textColor = .label // Adapt to dark mode
         label.text = "Name"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -52,7 +53,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         let label = UILabel()
         label.font = UIFont(name: "HelveticaNeue-Medium", size: 18)
         label.textAlignment = .left
-        label.textColor = .gray
+        label.textColor = .secondaryLabel // Adapt to dark mode
         label.text = "Age"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -62,7 +63,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         let label = UILabel()
         label.font = UIFont(name: "Georgia-Italic", size: 16)
         label.textAlignment = .left
-        label.textColor = .gray
+        label.textColor = .secondaryLabel // Adapt to dark mode
         label.numberOfLines = 0
         label.text = "Bio"
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -81,7 +82,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground // Adapt to dark mode
         setupTableView()
         setupParallaxHeader()
         setupTapGestures()
