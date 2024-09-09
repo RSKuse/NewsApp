@@ -6,4 +6,5 @@ target 'NewsApp' do
   pod 'Kingfisher'
   pod 'MaterialActivityIndicator'
   pod 'ParallaxHeader'
+  pod 'lottie-ios'
 end

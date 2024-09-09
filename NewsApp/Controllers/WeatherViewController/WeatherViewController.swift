@@ -8,16 +8,33 @@
 import Foundation
 import UIKit
 import CoreLocation
+import AVKit // For background video
+import Lottie // For animated icons
 
 class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocationManagerDelegate {
     
     var weatherModel: WeatherModel?
+    var playerLooper: AVPlayerLooper?
+    var playerLayer: AVPlayerLayer?
+    
     var searchController: UISearchController!
     var cityName: String = "Durban"
     var searchWorkItem: DispatchWorkItem?
     var isFetchingWeather = false
     let locationManager = CLLocationManager()
     
+    lazy var backgroundImageView: UIImageView = {
+        let imageView = UIImageView(frame: UIScreen.main.bounds)
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        return imageView
+    }()
+    
+    lazy var lottieView: AnimationView = {
+        let animationView = AnimationView()
+        animationView.translatesAutoresizingMaskIntoConstraints = false
+        return animationView
+    }()
     
     lazy var cityLabel: UILabel = {
         let label = UILabel()
@@ -110,7 +127,7 @@ class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocati
     }
     
     private func setupUI() {
-        
+        view.addSubview(backgroundImageView)
         view.addSubview(cityLabel)
         view.addSubview(errorLabel)
         view.addSubview(weatherImageView)
@@ -118,6 +135,7 @@ class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocati
         view.addSubview(feelsLikeLabel)
         view.addSubview(minMaxTemperatureLabel)
         view.addSubview(descriptionLabel)
+        view.addSubview(lottieView)
         view.addSubview(humidityLabel)
         view.addSubview(windSpeedLabel)
         view.addSubview(pressureLabel)
@@ -150,6 +168,11 @@ class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocati
         descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         descriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
         
+        lottieView.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 20).isActive = true
+        lottieView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        lottieView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        lottieView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        
         humidityLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 10).isActive = true
         humidityLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         humidityLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
@@ -164,6 +187,48 @@ class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocati
         
         errorLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         errorLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5).isActive = true
+    }
+    
+    private func setWeatherBackground(for condition: String) {
+        switch condition.lowercased() {
+        case "clear":
+            setVideoBackground(with: "sunny.mp4")
+        case "rain":
+            setVideoBackground(with: "rainy.mp4")
+        case "clouds":
+            setVideoBackground(with: "cloudy.mp4")
+        default:
+            setVideoBackground(with: "default.mp4")
+        }
+    }
+    
+    private func setVideoBackground(with videoName: String) {
+        guard let path = Bundle.main.path(forResource: videoName, ofType: nil) else { return }
+        let player = AVQueuePlayer(items: [AVPlayerItem(url: URL(fileURLWithPath: path))])
+        playerLayer = AVPlayerLayer(player: player)
+        playerLooper = AVPlayerLooper(player: player, templateItem: AVPlayerItem(url: URL(fileURLWithPath: path)))
+        
+        playerLayer?.frame = view.bounds
+        playerLayer?.videoGravity = .resizeAspectFill
+        view.layer.insertSublayer(playerLayer!, at: 0)
+        player.play()
+    }
+    
+    private func setLottieAnimation(for condition: String) {
+        let animationName: String
+        switch condition.lowercased() {
+        case "clear":
+            animationName = "sunny"
+        case "rain":
+            animationName = "rainy"
+        case "clouds":
+            animationName = "cloudy"
+        default:
+            animationName = "defaultWeather"
+        }
+        
+        lottieView.animation = Animation.named(animationName)
+        lottieView.play()
     }
     
     private func setupSearchController() {
