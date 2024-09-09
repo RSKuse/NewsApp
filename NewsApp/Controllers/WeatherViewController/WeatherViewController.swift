@@ -8,14 +8,15 @@
 import Foundation
 import UIKit
 import CoreLocation
-import AVKit // For background video
-import Lottie // For animated icons
+import AVKit
+import Lottie
 
 class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocationManagerDelegate {
     
     var weatherModel: WeatherModel?
     var playerLooper: AVPlayerLooper?
     var playerLayer: AVPlayerLayer?
+
     
     var searchController: UISearchController!
     var cityName: String = "Durban"
@@ -189,30 +190,6 @@ class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocati
         errorLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5).isActive = true
     }
     
-    private func setWeatherBackground(for condition: String) {
-        switch condition.lowercased() {
-        case "clear":
-            setVideoBackground(with: "sunny.mp4")
-        case "rain":
-            setVideoBackground(with: "rainy.mp4")
-        case "clouds":
-            setVideoBackground(with: "cloudy.mp4")
-        default:
-            setVideoBackground(with: "default.mp4")
-        }
-    }
-    
-    private func setVideoBackground(with videoName: String) {
-        guard let path = Bundle.main.path(forResource: videoName, ofType: nil) else { return }
-        let player = AVQueuePlayer(items: [AVPlayerItem(url: URL(fileURLWithPath: path))])
-        playerLayer = AVPlayerLayer(player: player)
-        playerLooper = AVPlayerLooper(player: player, templateItem: AVPlayerItem(url: URL(fileURLWithPath: path)))
-        
-        playerLayer?.frame = view.bounds
-        playerLayer?.videoGravity = .resizeAspectFill
-        view.layer.insertSublayer(playerLayer!, at: 0)
-        player.play()
-    }
     
     private func setLottieAnimation(for condition: String) {
         let animationName: String

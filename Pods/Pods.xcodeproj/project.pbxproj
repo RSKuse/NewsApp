@@ -432,7 +432,7 @@
 /* Begin PBXFileReference section */
 		0198D09E6B93673615D3300DA88E7F37 /* EpoxyableView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EpoxyableView.swift; path = Sources/Private/EmbeddedLibraries/EpoxyCore/Views/EpoxyableView.swift; sourceTree = "<group>"; };
 		022FB5747945E973BA03B61FEFF5FA51 /* AnimationTextProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AnimationTextProvider.swift; path = Sources/Public/TextProvider/AnimationTextProvider.swift; sourceTree = "<group>"; };
-		02D433A214CF81E045C237ABB8CB21B3 /* ParallaxHeader */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = ParallaxHeader; path = ParallaxHeader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		02D433A214CF81E045C237ABB8CB21B3 /* ParallaxHeader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ParallaxHeader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		03EBB7F281AF4CA9294E22FF17CA211F /* ViewDifferentiatorProviding.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ViewDifferentiatorProviding.swift; path = Sources/Private/EmbeddedLibraries/EpoxyCore/Model/Providers/ViewDifferentiatorProviding.swift; sourceTree = "<group>"; };
 		048510D30E141096B20636402645BA37 /* KeyframeInterpolator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KeyframeInterpolator.swift; path = Sources/Private/Utility/Interpolatable/KeyframeInterpolator.swift; sourceTree = "<group>"; };
 		04901D148DCE8698EE83D919A82A69EF /* InterpolatableExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InterpolatableExtensions.swift; path = Sources/Private/Utility/Interpolatable/InterpolatableExtensions.swift; sourceTree = "<group>"; };
@@ -599,7 +599,7 @@
 		6221438D4FA7E35891137BA342DB381E /* ShapeAnimation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ShapeAnimation.swift; path = Sources/Private/CoreAnimation/Animations/ShapeAnimation.swift; sourceTree = "<group>"; };
 		62BD493F5396657E5EEB4A5BD1543A6B /* RetryStrategy.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RetryStrategy.swift; path = Sources/Networking/RetryStrategy.swift; sourceTree = "<group>"; };
 		6408809B122DC9B40F31D86BC9D1B496 /* Kingfisher.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Kingfisher.swift; path = Sources/General/Kingfisher.swift; sourceTree = "<group>"; };
-		646656C30DA46866739B0D47EC8CF1B8 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = Sources/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		646656C30DA46866739B0D47EC8CF1B8 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = Sources/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		64932C55A5B261B56B14F9ECC210DB21 /* ImageFormat.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImageFormat.swift; path = Sources/Image/ImageFormat.swift; sourceTree = "<group>"; };
 		6678C94B0F8B9A233918F04DB7EDBCF1 /* KeyframeGroup.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KeyframeGroup.swift; path = Sources/Private/Model/Keyframes/KeyframeGroup.swift; sourceTree = "<group>"; };
 		66E0421615941F980053185A215F57AE /* Vectors.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Vectors.swift; path = Sources/Public/Primitives/Vectors.swift; sourceTree = "<group>"; };
@@ -690,7 +690,7 @@
 		9C4872461DC1CF28E43D33422E0B330F /* MaterialActivityIndicator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MaterialActivityIndicator.swift; path = MaterialActivityIndicator/Classes/MaterialActivityIndicator.swift; sourceTree = "<group>"; };
 		9D3E172DB307ACBADFCC98BA75BAAD1E /* AVAssetImageDataProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AVAssetImageDataProvider.swift; path = Sources/General/ImageSource/AVAssetImageDataProvider.swift; sourceTree = "<group>"; };
 		9D4C3DE5ABC11BA2B0278A98D5CD0A72 /* DashPattern.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DashPattern.swift; path = Sources/Private/Model/Objects/DashPattern.swift; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9DB270A1CC969A9340E710FF54A1A857 /* PolygonNode.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PolygonNode.swift; path = Sources/Private/MainThread/NodeRenderSystem/Nodes/PathNodes/PolygonNode.swift; sourceTree = "<group>"; };
 		9DE9EE56FC586AC28E4189737AF4FC1C /* UIView+SwiftUIView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIView+SwiftUIView.swift"; path = "Sources/Private/EmbeddedLibraries/EpoxyCore/SwiftUI/UIView+SwiftUIView.swift"; sourceTree = "<group>"; };
 		9EA2AED4ED79BE8215FFA9ACF4D090AD /* AnimatedControl.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AnimatedControl.swift; path = Sources/Public/Controls/AnimatedControl.swift; sourceTree = "<group>"; };
@@ -762,7 +762,7 @@
 		C564170F2CD50B68A427CE1C7296B089 /* StrokeAnimation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StrokeAnimation.swift; path = Sources/Private/CoreAnimation/Animations/StrokeAnimation.swift; sourceTree = "<group>"; };
 		C5B25A18EFB0DBF8590CDDDE2D0F052F /* ImageCache.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImageCache.swift; path = Sources/Cache/ImageCache.swift; sourceTree = "<group>"; };
 		C5E5275AA8AB018D5CC494DE345342FD /* KFOptionsSetter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KFOptionsSetter.swift; path = Sources/General/KFOptionsSetter.swift; sourceTree = "<group>"; };
-		C62AEF394B888B8E1A0C3016D3AA3400 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = Sources/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		C62AEF394B888B8E1A0C3016D3AA3400 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = Sources/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		C64BE3BC383D16FAB807D8FD69D67614 /* ImageDrawing.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImageDrawing.swift; path = Sources/Image/ImageDrawing.swift; sourceTree = "<group>"; };
 		C8492F83C55EF07247EC0706E2B0E30E /* GIFAnimatedImage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GIFAnimatedImage.swift; path = Sources/Image/GIFAnimatedImage.swift; sourceTree = "<group>"; };
 		C94C7938E53633BAFEE31F52E07EB7B9 /* ExtensionHelpers.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExtensionHelpers.swift; path = Sources/Utility/ExtensionHelpers.swift; sourceTree = "<group>"; };
@@ -909,7 +909,6 @@
 				BFF42232F0BA70D75E42C05609F989A1 /* UIScrollView+ParallaxHeader.swift */,
 				AAB966CEF9104C7A4E2EF051201A604E /* Support Files */,
 			);
-			name = ParallaxHeader;
 			path = ParallaxHeader;
 			sourceTree = "<group>";
 		};
@@ -1210,7 +1209,6 @@
 				6AE1A19A8E3D1D71A18D8C5E3E1078E2 /* Resources */,
 				6E387F0B124E627D4FF8686721169004 /* Support Files */,
 			);
-			name = "lottie-ios";
 			path = "lottie-ios";
 			sourceTree = "<group>";
 		};
@@ -1278,7 +1276,7 @@
 				51BA97E8B5085EFFB47BC9C0B785CEA7 /* lottie-ios */,
 				62060F5D524AE8173817ADD9482A0FEB /* lottie-ios-LottiePrivacyInfo */,
 				27C947111F05E50E155DACD7C1FEB0A7 /* MaterialActivityIndicator */,
-				02D433A214CF81E045C237ABB8CB21B3 /* ParallaxHeader */,
+				02D433A214CF81E045C237ABB8CB21B3 /* ParallaxHeader.framework */,
 				39E3E5F872763E10C58E7DEF2B8ED837 /* Pods-NewsApp */,
 			);
 			name = Products;
@@ -1353,7 +1351,6 @@
 				9F1FA1F2EC4C47D48CF704CA1D26DFA2 /* UIBezierPath+Circle.swift */,
 				61CBE8F999260D1EF9522DDFBCCE90D5 /* Support Files */,
 			);
-			name = MaterialActivityIndicator;
 			path = MaterialActivityIndicator;
 			sourceTree = "<group>";
 		};
@@ -1445,7 +1442,6 @@
 				94214BA09266B9F16766A82EE9DFAA65 /* Resources */,
 				8C5B76BD266727BD5FAAF4BAD408ABCA /* Support Files */,
 			);
-			name = Kingfisher;
 			path = Kingfisher;
 			sourceTree = "<group>";
 		};
@@ -1586,7 +1582,7 @@
 			);
 			name = ParallaxHeader;
 			productName = ParallaxHeader;
-			productReference = 02D433A214CF81E045C237ABB8CB21B3 /* ParallaxHeader */;
+			productReference = 02D433A214CF81E045C237ABB8CB21B3 /* ParallaxHeader.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		BF2A15FEC3F3424BBC4B9AD5F86F2D54 /* lottie-ios-LottiePrivacyInfo */ = {
@@ -2229,7 +2225,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/ParallaxHeader/ParallaxHeader-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/ParallaxHeader/ParallaxHeader-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2659,7 +2655,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/ParallaxHeader/ParallaxHeader-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/ParallaxHeader/ParallaxHeader-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
