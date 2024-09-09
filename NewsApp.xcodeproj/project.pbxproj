@@ -40,6 +40,8 @@
 		F3F746E82C7FE65B008DF35D /* UserProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F746E72C7FE65B008DF35D /* UserProfileEditViewController.swift */; };
 		F3F746EA2C80D437008DF35D /* CountrySelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F746E92C80D437008DF35D /* CountrySelectionView.swift */; };
 		F3F746EC2C81069D008DF35D /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F746EB2C81069D008DF35D /* ImageViewController.swift */; };
+		F3F746F82C8B77E0008DF35D /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F746F72C8B77E0008DF35D /* WeatherViewController.swift */; };
+		F3F746FA2C8B78E3008DF35D /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F746F92C8B78E3008DF35D /* WeatherModel.swift */; };
 		FEFFD4EC103A43FE414D9F3F /* Pods_NewsApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 958F52312356DE1AA17958B8 /* Pods_NewsApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -82,6 +84,8 @@
 		F3F746E72C7FE65B008DF35D /* UserProfileEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileEditViewController.swift; sourceTree = "<group>"; };
 		F3F746E92C80D437008DF35D /* CountrySelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountrySelectionView.swift; sourceTree = "<group>"; };
 		F3F746EB2C81069D008DF35D /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
+		F3F746F72C8B77E0008DF35D /* WeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewController.swift; sourceTree = "<group>"; };
+		F3F746F92C8B78E3008DF35D /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +120,7 @@
 		F34B8B402C5B86CD0001FF4A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				F3F746FB2C8F133A008DF35D /* WeatherViewController */,
 				F3CD43AA2C7059EF00D77450 /* UserProfile */,
 				F3CD43B42C78E4C100D77450 /* SettingsViewController */,
 				F3CD43B32C78E4BB00D77450 /* NewsViewController */,
@@ -153,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				F392411D2C59270E001D8B48 /* NewsModel.swift */,
+				F3F746F92C8B78E3008DF35D /* WeatherModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -266,6 +272,14 @@
 				F3B6C3452C6D029500333DFF /* SettingsViewController.swift */,
 			);
 			path = SettingsViewController;
+			sourceTree = "<group>";
+		};
+		F3F746FB2C8F133A008DF35D /* WeatherViewController */ = {
+			isa = PBXGroup;
+			children = (
+				F3F746F72C8B77E0008DF35D /* WeatherViewController.swift */,
+			);
+			path = WeatherViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -387,10 +401,12 @@
 				F34B8B632C6255960001FF4A /* NewsViewController+Search.swift in Sources */,
 				F34B8B4B2C5B925C0001FF4A /* NewCategories.swift in Sources */,
 				F3F746EA2C80D437008DF35D /* CountrySelectionView.swift in Sources */,
+				F3F746F82C8B77E0008DF35D /* WeatherViewController.swift in Sources */,
 				F34B8B6C2C6256D50001FF4A /* UIViewController.swift in Sources */,
 				F34B8B592C5C2EF40001FF4A /* CategoryCollectionViewCell.swift in Sources */,
 				F34B8B5F2C5C435D0001FF4A /* NewsViewController+PickerView.swift in Sources */,
 				F34B8B462C5B8E9F0001FF4A /* HttpMethods.swift in Sources */,
+				F3F746FA2C8B78E3008DF35D /* WeatherModel.swift in Sources */,
 				F3B6C3482C6D10AD00333DFF /* CountryTableViewCell.swift in Sources */,
 				F3B6C3462C6D029500333DFF /* SettingsViewController.swift in Sources */,
 				F34B8B4D2C5B938C0001FF4A /* NewsType.swift in Sources */,

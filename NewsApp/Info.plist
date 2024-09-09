@@ -2,10 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string> We need your location to fetch weather information.</string>
 	<key>weatherBaseURL</key>
-	<string>https://api.weather.org</string>
+	<string>https://api.openweathermap.org/data/2.5/weather</string>
 	<key>weatherAPIKey</key>
-	<string>fjenodmasoiuxmwdp</string>
+	<string>e30d61c3b95b9cd03001746a214ea7b7</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>newsApiKey</key>

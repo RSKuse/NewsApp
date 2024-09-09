@@ -1,0 +1,330 @@
+//
+//  WeatherViewController.swift
+//  NewsApp
+//
+//  Created by Reuben Simphiwe Kuse on 2024/08/31.
+//
+
+import Foundation
+import UIKit
+import CoreLocation
+
+class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocationManagerDelegate {
+    
+    var weatherModel: WeatherModel?
+    var searchController: UISearchController!
+    var cityName: String = "Durban"
+    var searchWorkItem: DispatchWorkItem?
+    var isFetchingWeather = false
+    let locationManager = CLLocationManager()
+    
+
+    lazy var cityLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 36, weight: .medium)
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    lazy var weatherImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    lazy var temperatureLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 32, weight: .bold)
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    lazy var feelsLikeLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    lazy var minMaxTemperatureLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    lazy var descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    lazy var humidityLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    lazy var windSpeedLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    lazy var pressureLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    lazy var errorLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textAlignment = .center
+        label.textColor = .red
+        label.isHidden = true
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        setupUI()
+        setupSearchController()
+        setupLocationManager()
+    }
+    
+    private func setupUI() {
+        
+        view.addSubview(cityLabel)
+        view.addSubview(errorLabel)
+        view.addSubview(weatherImageView)
+        view.addSubview(temperatureLabel)
+        view.addSubview(feelsLikeLabel)
+        view.addSubview(minMaxTemperatureLabel)
+        view.addSubview(descriptionLabel)
+        view.addSubview(humidityLabel)
+        view.addSubview(windSpeedLabel)
+        view.addSubview(pressureLabel)
+        setConstraints()
+    }
+    
+    private func setConstraints() {
+        
+        cityLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true
+        cityLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+
+        weatherImageView.topAnchor.constraint(equalTo: cityLabel.bottomAnchor, constant: 20).isActive = true
+        weatherImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        weatherImageView.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        weatherImageView.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        
+        temperatureLabel.topAnchor.constraint(equalTo: weatherImageView.bottomAnchor, constant: 20).isActive = true
+        temperatureLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        temperatureLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+
+        feelsLikeLabel.topAnchor.constraint(equalTo: temperatureLabel.bottomAnchor, constant: 10).isActive = true
+        feelsLikeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        feelsLikeLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        
+        minMaxTemperatureLabel.topAnchor.constraint(equalTo: feelsLikeLabel.bottomAnchor, constant: 10).isActive = true
+        minMaxTemperatureLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        minMaxTemperatureLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        
+        descriptionLabel.topAnchor.constraint(equalTo: minMaxTemperatureLabel.bottomAnchor, constant: 10).isActive = true
+        descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        descriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        
+        humidityLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 10).isActive = true
+        humidityLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        humidityLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        
+        windSpeedLabel.topAnchor.constraint(equalTo: humidityLabel.bottomAnchor, constant: 10).isActive = true
+        windSpeedLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        windSpeedLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        
+        pressureLabel.topAnchor.constraint(equalTo: windSpeedLabel.bottomAnchor, constant: 10).isActive = true
+        pressureLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        pressureLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        
+        errorLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        errorLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5).isActive = true
+    }
+    
+    private func setupSearchController() {
+        searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search for a city"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+    }
+    
+    private func setupLocationManager() {
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation() // Start fetching the location
+    }
+
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first {
+            locationManager.stopUpdatingLocation()
+
+            let lat = location.coordinate.latitude
+            let lon = location.coordinate.longitude
+            
+            print("Location coordinates fetched: lat = \(lat), lon = \(lon)")
+            let geocoder = CLGeocoder()
+            geocoder.reverseGeocodeLocation(location) { [weak self] (placemarks, error) in
+                if let error = error {
+                    print("Reverse geocoding error: \(error.localizedDescription)")
+                    self?.showError("Unable to fetch city name")
+                    return
+                }
+                if let placemark = placemarks?.first, let city = placemark.locality {
+                    // Update the cityLabel with the detected city name
+                    print("Detected city name: \(city)") // Debug statement to check city
+                    DispatchQueue.main.async {
+                        self?.cityLabel.text = city
+                    }
+                    // Fetch weather data using the detected coordinates
+                    self?.fetchWeatherData(for: lat, lon: lon)
+                } else {
+                    self?.showError("City name not found")
+                }
+            }
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Failed to get user location: \(error.localizedDescription)")
+        showError("Unable to get location. Please enable location services.")
+    }
+
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .denied || status == .restricted {
+            // If location permission is denied, show an error
+            showError("Location services are disabled. Please enable them in settings.")
+        } else if status == .authorizedWhenInUse || status == .authorizedAlways {
+            // Location access was granted, start updating location
+            locationManager.startUpdatingLocation()
+        }
+    }
+
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let query = searchController.searchBar.text, !query.isEmpty else { return }
+
+        searchWorkItem?.cancel()
+
+        let workItem = DispatchWorkItem { [weak self] in
+            self?.fetchWeatherData(for: query)
+        }
+        searchWorkItem = workItem
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: workItem) // 0.5-second debounce
+    }
+
+    private func fetchWeatherData(for lat: Double, lon: Double) {
+        print("Fetching weather data for coordinates: lat = \(lat), lon = \(lon)")
+        NewsService.shared.fetchWeatherData(latitude: lat, longitude: lon) { [weak self] result in
+            switch result {
+            case .success(let weatherModel):
+                DispatchQueue.main.async {
+                    if weatherModel.cod == "404" {
+                        self?.showError("Location not found")
+                    } else {
+                        self?.errorLabel.isHidden = true
+                        self?.updateUI(with: weatherModel)
+                    }
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    self?.showError("Error fetching weather: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+
+    private func fetchWeatherData(for city: String) {
+        NewsService.shared.fetchWeatherData(city: city) { [weak self] result in
+            switch result {
+            case .success(let weatherModel):
+                DispatchQueue.main.async {
+                    if weatherModel.cod == "404" {
+                        self?.showError("City not found")
+                    } else {
+                        self?.errorLabel.isHidden = true
+                        self?.updateUI(with: weatherModel)
+                    }
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    self?.showError("Error fetching weather: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    
+    private func showError(_ message: String) {
+        errorLabel.isHidden = false
+        errorLabel.text = message
+    }
+    
+    private func updateUI(with model: WeatherModel) {
+        if let cityName = model.name {
+            cityLabel.text = cityName
+        }
+        
+        guard let tempKelvin = model.main?.temp else { return }
+        let temperatureInCelsius = tempKelvin - 273.15
+        temperatureLabel.text = String(format: "%.1f°C", temperatureInCelsius)
+
+        if let feelsLike = model.main?.feelsLike {
+            let feelsLikeCelsius = feelsLike - 273.15
+            feelsLikeLabel.text = String(format: "Feels Like: %.1f°C", feelsLikeCelsius)
+        }
+        
+        if let tempMin = model.main?.tempMin, let tempMax = model.main?.tempMax {
+            let tempMinCelsius = tempMin - 273.15
+            let tempMaxCelsius = tempMax - 273.15
+            minMaxTemperatureLabel.text = String(format: "Min: %.1f°C / Max: %.1f°C", tempMinCelsius, tempMaxCelsius)
+        }
+
+        if let weatherDescription = model.weather?.first?.description {
+            descriptionLabel.text = weatherDescription.capitalized
+        }
+
+        if let icon = model.weather?.first?.icon {
+            let iconUrl = URL(string: "https://openweathermap.org/img/wn/\(icon)@2x.png")
+            weatherImageView.kf.setImage(with: iconUrl)
+        }
+
+        if let humidity = model.main?.humidity {
+            humidityLabel.text = "Humidity: \(humidity)%"
+        }
+        
+        if let windSpeed = model.wind?.speed {
+            let windSpeedKmH = windSpeed * 3.6 // Convert m/s to km/h
+            windSpeedLabel.text = String(format: "Wind Speed: %.1f km/h", windSpeedKmH)
+        }
+        
+        if let pressure = model.main?.pressure {
+            pressureLabel.text = "Pressure: \(pressure) hPa"
+        }
+    }
+}

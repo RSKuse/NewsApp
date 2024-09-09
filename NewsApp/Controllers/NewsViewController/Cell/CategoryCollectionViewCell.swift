@@ -94,6 +94,8 @@ class CategoryCollectionViewCell: UICollectionViewCell {
             categoryIconImageView.image = UIImage(named: "ic_science")?.withRenderingMode(.alwaysTemplate)
         case .entertainment:
             categoryIconImageView.image = UIImage(named: "ic_entertainment")?.withRenderingMode(.alwaysTemplate)
+        case .weather:
+            categoryIconImageView.image = UIImage(named: "ic_business2")?.withRenderingMode(.alwaysTemplate)
         default:
             categoryIconImageView.image = UIImage(named: "ic_general")?.withRenderingMode(.alwaysTemplate)
         }

@@ -56,7 +56,12 @@ class NewsViewController: UIViewController, SettingsViewControllerDelegate {
         headerView.categories = viewModel.categories
         headerView.didSelectCategory = { [weak self] category in
             self?.viewModel.selectedCagory = category
-            self?.fetchNewsForCategory(category)
+            if category == .weather {
+                let weatherVC = WeatherViewController()
+                self?.navigationController?.pushViewController(weatherVC, animated: true)
+            } else {
+                self?.fetchNewsForCategory(category)
+            }
         }
         return headerView
     }()
@@ -245,16 +250,6 @@ class NewsViewController: UIViewController, SettingsViewControllerDelegate {
         navigationController?.pushViewController(settingsVC, animated: true)
     }
     
-//    func updateSettingsButton() {
-//        let selectedCountry = viewModel.selectedCountry
-//        let flagImage = UIImage(named: "flag_\(selectedCountry.rawValue)")?.withRenderingMode(.alwaysOriginal)
-//        let settingsButton = UIBarButtonItem(image: flagImage,
-//                                             style: .plain,
-//                                             target: self,
-//                                             action: #selector(openSettings))
-//        settingsButton.imageInsets = UIEdgeInsets(top: 0, left: 10, bottom: -10, right: -40)
-//        navigationItem.rightBarButtonItem = settingsButton
-//    }
     func handleRegisterCell() {
         newsTableView.register(NewsAppTableViewCell.self, forCellReuseIdentifier: NewsAppTableViewCell.cellID)
     }
