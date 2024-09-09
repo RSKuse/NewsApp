@@ -18,7 +18,7 @@ class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocati
     var isFetchingWeather = false
     let locationManager = CLLocationManager()
     
-
+    
     lazy var cityLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 36, weight: .medium)
@@ -128,7 +128,7 @@ class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocati
         
         cityLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true
         cityLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-
+        
         weatherImageView.topAnchor.constraint(equalTo: cityLabel.bottomAnchor, constant: 20).isActive = true
         weatherImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         weatherImageView.widthAnchor.constraint(equalToConstant: 150).isActive = true
@@ -137,7 +137,7 @@ class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocati
         temperatureLabel.topAnchor.constraint(equalTo: weatherImageView.bottomAnchor, constant: 20).isActive = true
         temperatureLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         temperatureLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-
+        
         feelsLikeLabel.topAnchor.constraint(equalTo: temperatureLabel.bottomAnchor, constant: 10).isActive = true
         feelsLikeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         feelsLikeLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
@@ -181,11 +181,11 @@ class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocati
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation() // Start fetching the location
     }
-
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
             locationManager.stopUpdatingLocation()
-
+            
             let lat = location.coordinate.latitude
             let lon = location.coordinate.longitude
             
@@ -216,7 +216,7 @@ class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocati
         print("Failed to get user location: \(error.localizedDescription)")
         showError("Unable to get location. Please enable location services.")
     }
-
+    
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .denied || status == .restricted {
             // If location permission is denied, show an error
@@ -226,19 +226,19 @@ class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocati
             locationManager.startUpdatingLocation()
         }
     }
-
+    
     func updateSearchResults(for searchController: UISearchController) {
         guard let query = searchController.searchBar.text, !query.isEmpty else { return }
-
+        
         searchWorkItem?.cancel()
-
+        
         let workItem = DispatchWorkItem { [weak self] in
             self?.fetchWeatherData(for: query)
         }
         searchWorkItem = workItem
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: workItem) // 0.5-second debounce
     }
-
+    
     private func fetchWeatherData(for lat: Double, lon: Double) {
         print("Fetching weather data for coordinates: lat = \(lat), lon = \(lon)")
         NewsService.shared.fetchWeatherData(latitude: lat, longitude: lon) { [weak self] result in
@@ -246,7 +246,7 @@ class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocati
             case .success(let weatherModel):
                 DispatchQueue.main.async {
                     if weatherModel.cod == "404" {
-                        self?.showError("Location not found")
+                        self?.showError("Location not found. The city may not have weather data available.")
                     } else {
                         self?.errorLabel.isHidden = true
                         self?.updateUI(with: weatherModel)
@@ -254,19 +254,23 @@ class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocati
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
-                    self?.showError("Error fetching weather: \(error.localizedDescription)")
+                    if let urlError = error as? URLError {
+                        self?.showError("Network error. Please check your internet connection.")
+                    } else {
+                        self?.showError("Error fetching weather: \(error.localizedDescription). Try searching for another location.")
+                    }
                 }
             }
         }
     }
-
+    
     private func fetchWeatherData(for city: String) {
         NewsService.shared.fetchWeatherData(city: city) { [weak self] result in
             switch result {
             case .success(let weatherModel):
                 DispatchQueue.main.async {
                     if weatherModel.cod == "404" {
-                        self?.showError("City not found")
+                        self?.showError("Location not found. The city may not have weather data available.")
                     } else {
                         self?.errorLabel.isHidden = true
                         self?.updateUI(with: weatherModel)
@@ -274,11 +278,16 @@ class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocati
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
-                    self?.showError("Error fetching weather: \(error.localizedDescription)")
+                    if let urlError = error as? URLError {
+                        self?.showError("Network error. Please check your internet connection.")
+                    } else {
+                        self?.showError("Error fetching weather: \(error.localizedDescription). Try searching for another location.")
+                    }
                 }
             }
         }
     }
+    
     
     private func showError(_ message: String) {
         errorLabel.isHidden = false
@@ -293,7 +302,7 @@ class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocati
         guard let tempKelvin = model.main?.temp else { return }
         let temperatureInCelsius = tempKelvin - 273.15
         temperatureLabel.text = String(format: "%.1f°C", temperatureInCelsius)
-
+        
         if let feelsLike = model.main?.feelsLike {
             let feelsLikeCelsius = feelsLike - 273.15
             feelsLikeLabel.text = String(format: "Feels Like: %.1f°C", feelsLikeCelsius)
@@ -304,16 +313,16 @@ class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocati
             let tempMaxCelsius = tempMax - 273.15
             minMaxTemperatureLabel.text = String(format: "Min: %.1f°C / Max: %.1f°C", tempMinCelsius, tempMaxCelsius)
         }
-
+        
         if let weatherDescription = model.weather?.first?.description {
             descriptionLabel.text = weatherDescription.capitalized
         }
-
+        
         if let icon = model.weather?.first?.icon {
             let iconUrl = URL(string: "https://openweathermap.org/img/wn/\(icon)@2x.png")
             weatherImageView.kf.setImage(with: iconUrl)
         }
-
+        
         if let humidity = model.main?.humidity {
             humidityLabel.text = "Humidity: \(humidity)%"
         }
