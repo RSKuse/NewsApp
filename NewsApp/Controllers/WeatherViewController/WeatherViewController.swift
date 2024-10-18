@@ -19,7 +19,7 @@ class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocati
 
     
     var searchController: UISearchController!
-    var cityName: String = "Durban"
+    var cityName: String = ""
     var searchWorkItem: DispatchWorkItem?
     var isFetchingWeather = false
     let locationManager = CLLocationManager()
@@ -31,11 +31,14 @@ class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocati
         return imageView
     }()
     
-    lazy var lottieView: AnimationView = {
-        let animationView = AnimationView()
-        animationView.translatesAutoresizingMaskIntoConstraints = false
-        return animationView
-    }()
+    lazy var lottieView: LottieAnimationView = {
+            let animationView = LottieAnimationView(name: "check-mark-success")
+            animationView.contentMode = .scaleAspectFit
+            animationView.loopMode = .playOnce
+            animationView.animationSpeed = 0.8
+            animationView.translatesAutoresizingMaskIntoConstraints = false
+            return animationView
+        }()
     
     lazy var cityLabel: UILabel = {
         let label = UILabel()
@@ -125,6 +128,15 @@ class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocati
         setupUI()
         setupSearchController()
         setupLocationManager()
+        playLottieAnimation()
+    }
+    private func playLottieAnimation() {
+        guard let animation = LottieAnimation.named("cloudy") else {
+            print("Lottie animation not found")
+            return
+        }
+        lottieView.animation = animation
+        lottieView.play()
     }
     
     private func setupUI() {
@@ -189,24 +201,63 @@ class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocati
         errorLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         errorLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5).isActive = true
     }
+
     
-    
-    private func setLottieAnimation(for condition: String) {
-        let animationName: String
-        switch condition.lowercased() {
-        case "clear":
-            animationName = "sunny"
-        case "rain":
-            animationName = "rainy"
-        case "clouds":
-            animationName = "cloudy"
-        default:
-            animationName = "defaultWeather"
-        }
-        
-        lottieView.animation = Animation.named(animationName)
-        lottieView.play()
-    }
+    /*
+     private func setWeatherBackground(for condition: String) {
+         switch condition.lowercased() {
+         case "clear sky.mp4":
+             setVideoBackground(with: "clear_sky.mp4")  // Ensure file name matches
+         case "overcast clouds":
+             setVideoBackground(with: "overcast_clouds.mp4")
+         case "clouds":
+             setVideoBackground(with: "cloudy.mp4")  // Ensure this file exists
+         default:
+             setVideoBackground(with: "default.mp4")
+         }
+     }
+     
+     private func setVideoBackground(with videoName: String) {
+         guard let path = Bundle.main.path(forResource: videoName, ofType: nil) else {
+             print("Video file not found: \(videoName)")
+             return
+         }
+         print("Video file path: \(path)")  // Log the file path to verify it's found
+         
+         let player = AVQueuePlayer(items: [AVPlayerItem(url: URL(fileURLWithPath: path))])
+         playerLayer = AVPlayerLayer(player: player)
+         playerLooper = AVPlayerLooper(player: player, templateItem: AVPlayerItem(url: URL(fileURLWithPath: path)))
+         
+         playerLayer?.frame = view.bounds
+         playerLayer?.videoGravity = .resizeAspectFill
+         view.layer.insertSublayer(playerLayer!, at: 0)
+         player.play()
+     }
+     
+     private func setLottieAnimation(for condition: String) {
+         let animationName: String
+         switch condition.lowercased() {
+         case "clear sky.json":
+             animationName = "clear sky.json"
+         case "overcast clouds":
+             animationName = "overcast_clouds"
+         case "clouds":
+             animationName = "cloudy.mp4"
+         default:
+             animationName = "defaultWeather"
+         }
+
+         print("Trying to load Lottie animation: \(animationName)")
+         if let animation = LottieAnimation.named(animationName) {
+             lottieView.animation = animation
+             lottieView.play()
+         } else {
+             print("Lottie animation not found: \(animationName)")
+         }
+     }
+     
+     */
+
     
     private func setupSearchController() {
         searchController = UISearchController(searchResultsController: nil)
@@ -288,7 +339,7 @@ class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocati
             case .success(let weatherModel):
                 DispatchQueue.main.async {
                     if weatherModel.cod == "404" {
-                        self?.showError("Location not found. The city may not have weather data available.")
+                        self?.showError("The city may not have weather data available.")
                     } else {
                         self?.errorLabel.isHidden = true
                         self?.updateUI(with: weatherModel)
@@ -312,7 +363,7 @@ class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocati
             case .success(let weatherModel):
                 DispatchQueue.main.async {
                     if weatherModel.cod == "404" {
-                        self?.showError("Location not found. The city may not have weather data available.")
+                        self?.showError("The city may not have weather data available.")
                     } else {
                         self?.errorLabel.isHidden = true
                         self?.updateUI(with: weatherModel)
@@ -344,6 +395,12 @@ class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocati
         guard let tempKelvin = model.main?.temp else { return }
         let temperatureInCelsius = tempKelvin - 273.15
         temperatureLabel.text = String(format: "%.1f°C", temperatureInCelsius)
+        
+        if let weatherCondition = model.weather?.first?.main {
+//            setWeatherBackground(for: weatherCondition)  // Set dynamic background
+//            setLottieAnimation(for: weatherCondition)   // Set Lottie animation
+        }
+
         
         if let feelsLike = model.main?.feelsLike {
             let feelsLikeCelsius = feelsLike - 273.15
