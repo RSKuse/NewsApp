@@ -19,6 +19,7 @@ struct NewsModel: Codable {
     var articles: [Article]?
 }
 
+
 struct Article: Codable {
     var source: Source?
     var author: String?

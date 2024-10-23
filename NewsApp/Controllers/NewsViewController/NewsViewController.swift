@@ -23,7 +23,7 @@ class NewsViewController: UIViewController, SettingsViewControllerDelegate {
         searchController.searchBar.backgroundColor = UIColor.white
         searchController.searchBar.tintColor = UIColor.black
         
-        // Set placeholder attributes
+  
         let placeholderAttributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.lightGray,
             .font: UIFont.systemFont(ofSize: 14)
@@ -31,11 +31,11 @@ class NewsViewController: UIViewController, SettingsViewControllerDelegate {
         let attributedPlaceholder = NSAttributedString(string: "Search by name or source", attributes: placeholderAttributes)
         searchController.searchBar.searchTextField.attributedPlaceholder = attributedPlaceholder
         
-        // Ensure the text color is black
+
         if let textField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
             textField.textColor = UIColor.black
             
-            // Ensure the keyboard appearance is light
+
             textField.keyboardAppearance = .light
             
             if let leftIconView = textField.leftView as? UIImageView {
@@ -43,7 +43,6 @@ class NewsViewController: UIViewController, SettingsViewControllerDelegate {
             }
         }
         
-        // Ensure the text input trait reflects correctly in the dark mode as well
         searchController.searchBar.searchTextField.overrideUserInterfaceStyle = .light
         
         searchController.hidesNavigationBarDuringPresentation = true
@@ -56,7 +55,12 @@ class NewsViewController: UIViewController, SettingsViewControllerDelegate {
         headerView.categories = viewModel.categories
         headerView.didSelectCategory = { [weak self] category in
             self?.viewModel.selectedCagory = category
-            self?.fetchNewsForCategory(category)
+            if category == .weather {
+                let weatherVC = WeatherViewController()
+                self?.navigationController?.pushViewController(weatherVC, animated: true)
+            } else {
+                self?.fetchNewsForCategory(category)
+            }
         }
         return headerView
     }()
@@ -187,7 +191,6 @@ class NewsViewController: UIViewController, SettingsViewControllerDelegate {
         let flagImage = UIImage(named: "flag_\(selectedCountry.rawValue)")
         countrySelectionView.configure(flag: flagImage, countryCode: selectedCountry.rawValue.uppercased())
 
-        // Set the onTap closure to open the settings
         countrySelectionView.onTap = { [weak self] in
             print("Navigating to settings")
             self?.openSettings()
@@ -196,7 +199,6 @@ class NewsViewController: UIViewController, SettingsViewControllerDelegate {
         let countryBarButtonItem = UIBarButtonItem(customView: countrySelectionView)
         countrySelectionView.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
-        // Re-assign the right bar button item
         navigationItem.rightBarButtonItem = nil
         navigationItem.rightBarButtonItem = countryBarButtonItem
     }
@@ -245,16 +247,6 @@ class NewsViewController: UIViewController, SettingsViewControllerDelegate {
         navigationController?.pushViewController(settingsVC, animated: true)
     }
     
-//    func updateSettingsButton() {
-//        let selectedCountry = viewModel.selectedCountry
-//        let flagImage = UIImage(named: "flag_\(selectedCountry.rawValue)")?.withRenderingMode(.alwaysOriginal)
-//        let settingsButton = UIBarButtonItem(image: flagImage,
-//                                             style: .plain,
-//                                             target: self,
-//                                             action: #selector(openSettings))
-//        settingsButton.imageInsets = UIEdgeInsets(top: 0, left: 10, bottom: -10, right: -40)
-//        navigationItem.rightBarButtonItem = settingsButton
-//    }
     func handleRegisterCell() {
         newsTableView.register(NewsAppTableViewCell.self, forCellReuseIdentifier: NewsAppTableViewCell.cellID)
     }

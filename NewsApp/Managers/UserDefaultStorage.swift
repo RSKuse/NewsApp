@@ -27,5 +27,4 @@ final class UserDefaultsManager {
         return UserDefaults.standard.value(forKey: key.rawValue) as? Any
 
     }
-    
 }

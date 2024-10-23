@@ -1,24 +1,28 @@
 PODS:
   - Kingfisher (7.12.0)
+  - lottie-ios (4.5.0)
   - MaterialActivityIndicator (0.0.6)
   - ParallaxHeader (3.0.0)
 
 DEPENDENCIES:
   - Kingfisher
+  - lottie-ios
   - MaterialActivityIndicator
   - ParallaxHeader
 
 SPEC REPOS:
   trunk:
     - Kingfisher
+    - lottie-ios
     - MaterialActivityIndicator
     - ParallaxHeader
 
 SPEC CHECKSUMS:
   Kingfisher: 53a10ea35051a436b5fb626ca2dd8f3144d755e9
+  lottie-ios: a881093fab623c467d3bce374367755c272bdd59
   MaterialActivityIndicator: 5061a52fadf7d22533734f2d34806311331bc424
   ParallaxHeader: a343f55eb38f52a89c5820a77e14cf975b84e6aa
 
-PODFILE CHECKSUM: 459ecfb9eb0790fc7089fd8651d0310537faa014
+PODFILE CHECKSUM: c2d5a7cebf981cb4e246084df4dc0ecc7d9e876f
 
 COCOAPODS: 1.15.2

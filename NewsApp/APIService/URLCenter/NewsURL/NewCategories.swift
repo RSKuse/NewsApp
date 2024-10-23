@@ -16,4 +16,5 @@ enum NewsCategories: String {
     case health
     case science
     case entertainment
+    case weather
 }
