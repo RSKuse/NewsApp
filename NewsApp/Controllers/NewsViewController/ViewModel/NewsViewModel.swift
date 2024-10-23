@@ -137,27 +137,6 @@ class NewsViewModel {
         }
     }
     
-    func fetchWeatherData() {
-        let path = "lat=34.2232&long=93.54834"
-        NewsService.shared.fetchData(method: .POST,
-                                     baseURl: .weatherURL,
-                                     path: path,
-                                     model: NewsModel.self) { [weak self] result in
-            guard let self = self else { return }
-//            DispatchQueue.main.async {
-//                switch result {
-//                case .success(let news):
-//                    self.articles = news.articles ?? []
-//                    self.categoryArticlesCache[category] = news.articles ?? []
-//                    self.didFetchArticles?(news.articles)
-//                    print("Fetched and cached articles for category: \(category.rawValue)")
-//                case .failure(let error):
-//                    print(error.localizedDescription)
-//                }
-//            }
-        }
-    }
-
     func getSingleWord(forCategory category: NewsCategories, andCountry country: NewsCountry) -> String {
         switch (category, country) {
         // Sports

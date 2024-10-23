@@ -334,7 +334,12 @@ class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocati
     
     private func fetchWeatherData(for lat: Double, lon: Double) {
         print("Fetching weather data for coordinates: lat = \(lat), lon = \(lon)")
-        NewsService.shared.fetchWeatherData(latitude: lat, longitude: lon) { [weak self] result in
+        
+        let path = "lat=\(lat)&lon=\(lon)"
+            NewsService.shared.fetchData(method: .GET,
+                                         baseURl: .weatherURL,
+                                         path: path,
+                                         model: WeatherModel.self) { [weak self] result in
             switch result {
             case .success(let weatherModel):
                 DispatchQueue.main.async {
@@ -358,8 +363,12 @@ class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocati
     }
     
     private func fetchWeatherData(for city: String) {
-        NewsService.shared.fetchWeatherData(city: city) { [weak self] result in
-            switch result {
+        
+        let path = "q=\(city)"
+            NewsService.shared.fetchData(method: .GET,
+                                         baseURl: .weatherURL,
+                                         path: path,
+                                         model: WeatherModel.self) { [weak self] result in            switch result {
             case .success(let weatherModel):
                 DispatchQueue.main.async {
                     if weatherModel.cod == "404" {

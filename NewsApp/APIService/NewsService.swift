@@ -17,6 +17,9 @@ class NewsService {
     /**
      - Generic API call
      */
+    
+
+    
     func fetchData<Model: Decodable>(method: HTTPMethods,
                                      baseURl: URLCenter,
                                      path: String,
@@ -24,6 +27,7 @@ class NewsService {
                                      completion: @escaping (Result<Model, Error>) -> Void) {
         
         let urlString = baseURl.buildURL(withPath: path)
+        print(urlString)
         guard let url = URL(string: urlString) else {
             // completion(.failure(Error))
             return
@@ -64,68 +68,6 @@ class NewsService {
             }
         }
         
-        task.resume()
-    }
-    
-    func fetchWeatherData(city: String, completion: @escaping (Result<WeatherModel, Error>) -> Void) {
-        let apiKey = Bundle.main.object(forInfoDictionaryKey: PlistKeys.weatherAPIKey.rawValue) as? String ?? ""
-        let baseURL = Bundle.main.object(forInfoDictionaryKey: PlistKeys.weatherBaseURL.rawValue) as? String ?? ""
-        
-        let urlString = "\(baseURL)?q=\(city)&appid=\(apiKey)"
-        
-        guard let url = URL(string: urlString) else {
-            completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])))
-            return
-        }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-            guard let data = data else {
-                completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No data"])))
-                return
-            }
-            do {
-                let weatherModel = try JSONDecoder().decode(WeatherModel.self, from: data)
-                completion(.success(weatherModel))
-            } catch {
-                completion(.failure(error))
-            }
-        }
-        task.resume()
-    }
-    func fetchWeatherData(latitude: Double, longitude: Double, completion: @escaping (Result<WeatherModel, Error>) -> Void) {
-        let apiKey = Bundle.main.object(forInfoDictionaryKey: PlistKeys.weatherAPIKey.rawValue) as? String ?? ""
-        let baseURL = Bundle.main.object(forInfoDictionaryKey: PlistKeys.weatherBaseURL.rawValue) as? String ?? ""
-        
-        let urlString = "\(baseURL)?lat=\(latitude)&lon=\(longitude)&appid=\(apiKey)"
-        
-        guard let url = URL(string: urlString) else { return }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-            guard let data = data else {
-                completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No data"])))
-                return
-            }
-            do {
-                let weatherModel = try JSONDecoder().decode(WeatherModel.self, from: data)
-                completion(.success(weatherModel))
-            } catch {
-                completion(.failure(error))
-            }
-        }
         task.resume()
     }
 }
