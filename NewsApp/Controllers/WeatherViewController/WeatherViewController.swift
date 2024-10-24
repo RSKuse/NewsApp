@@ -16,7 +16,7 @@ class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocati
     var weatherModel: WeatherModel?
     var playerLooper: AVPlayerLooper?
     var playerLayer: AVPlayerLayer?
-
+    
     
     var searchController: UISearchController!
     var cityName: String = ""
@@ -32,13 +32,14 @@ class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocati
     }()
     
     lazy var lottieView: LottieAnimationView = {
-            let animationView = LottieAnimationView(name: "check-mark-success")
-            animationView.contentMode = .scaleAspectFit
-            animationView.loopMode = .playOnce
-            animationView.animationSpeed = 0.8
-            animationView.translatesAutoresizingMaskIntoConstraints = false
-            return animationView
-        }()
+        let animationView = LottieAnimationView(name: "check-mark-success")
+        animationView.contentMode = .scaleAspectFit
+        animationView.loopMode = .loop
+        animationView.play()
+        animationView.animationSpeed = 0.8
+        animationView.translatesAutoresizingMaskIntoConstraints = false
+        return animationView
+    }()
     
     lazy var cityLabel: UILabel = {
         let label = UILabel()
@@ -129,12 +130,14 @@ class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocati
         setupSearchController()
         setupLocationManager()
         playLottieAnimation()
+        lottieView.play()
     }
     private func playLottieAnimation() {
         guard let animation = LottieAnimation.named("cloudy") else {
             print("Lottie animation not found")
             return
         }
+        
         lottieView.animation = animation
         lottieView.play()
     }
@@ -201,63 +204,6 @@ class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocati
         errorLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         errorLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5).isActive = true
     }
-
-    
-    /*
-     private func setWeatherBackground(for condition: String) {
-         switch condition.lowercased() {
-         case "clear sky.mp4":
-             setVideoBackground(with: "clear_sky.mp4")  // Ensure file name matches
-         case "overcast clouds":
-             setVideoBackground(with: "overcast_clouds.mp4")
-         case "clouds":
-             setVideoBackground(with: "cloudy.mp4")  // Ensure this file exists
-         default:
-             setVideoBackground(with: "default.mp4")
-         }
-     }
-     
-     private func setVideoBackground(with videoName: String) {
-         guard let path = Bundle.main.path(forResource: videoName, ofType: nil) else {
-             print("Video file not found: \(videoName)")
-             return
-         }
-         print("Video file path: \(path)")  // Log the file path to verify it's found
-         
-         let player = AVQueuePlayer(items: [AVPlayerItem(url: URL(fileURLWithPath: path))])
-         playerLayer = AVPlayerLayer(player: player)
-         playerLooper = AVPlayerLooper(player: player, templateItem: AVPlayerItem(url: URL(fileURLWithPath: path)))
-         
-         playerLayer?.frame = view.bounds
-         playerLayer?.videoGravity = .resizeAspectFill
-         view.layer.insertSublayer(playerLayer!, at: 0)
-         player.play()
-     }
-     
-     private func setLottieAnimation(for condition: String) {
-         let animationName: String
-         switch condition.lowercased() {
-         case "clear sky.json":
-             animationName = "clear sky.json"
-         case "overcast clouds":
-             animationName = "overcast_clouds"
-         case "clouds":
-             animationName = "cloudy.mp4"
-         default:
-             animationName = "defaultWeather"
-         }
-
-         print("Trying to load Lottie animation: \(animationName)")
-         if let animation = LottieAnimation.named(animationName) {
-             lottieView.animation = animation
-             lottieView.play()
-         } else {
-             print("Lottie animation not found: \(animationName)")
-         }
-     }
-     
-     */
-
     
     private func setupSearchController() {
         searchController = UISearchController(searchResultsController: nil)
@@ -334,7 +280,12 @@ class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocati
     
     private func fetchWeatherData(for lat: Double, lon: Double) {
         print("Fetching weather data for coordinates: lat = \(lat), lon = \(lon)")
-        NewsService.shared.fetchWeatherData(latitude: lat, longitude: lon) { [weak self] result in
+        
+        let path = "lat=\(lat)&lon=\(lon)"
+        NewsService.shared.fetchData(method: .GET,
+                                     baseURl: .weatherURL,
+                                     path: path,
+                                     model: WeatherModel.self) { [weak self] result in
             switch result {
             case .success(let weatherModel):
                 DispatchQueue.main.async {
@@ -358,26 +309,30 @@ class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocati
     }
     
     private func fetchWeatherData(for city: String) {
-        NewsService.shared.fetchWeatherData(city: city) { [weak self] result in
-            switch result {
-            case .success(let weatherModel):
-                DispatchQueue.main.async {
-                    if weatherModel.cod == "404" {
-                        self?.showError("The city may not have weather data available.")
-                    } else {
-                        self?.errorLabel.isHidden = true
-                        self?.updateUI(with: weatherModel)
-                    }
-                }
-            case .failure(let error):
-                DispatchQueue.main.async {
-                    if let urlError = error as? URLError {
-                        self?.showError("Network error. Please check your internet connection.")
-                    } else {
-                        self?.showError("Error fetching weather: \(error.localizedDescription). Try searching for another location.")
-                    }
-                }
-            }
+        
+        let path = "q=\(city)"
+        NewsService.shared.fetchData(method: .GET,
+                                     baseURl: .weatherURL,
+                                     path: path,
+                                     model: WeatherModel.self) { [weak self] result in            switch result {
+                                     case .success(let weatherModel):
+                                         DispatchQueue.main.async {
+                                             if weatherModel.cod == "404" {
+                                                 self?.showError("The city may not have weather data available.")
+                                             } else {
+                                                 self?.errorLabel.isHidden = true
+                                                 self?.updateUI(with: weatherModel)
+                                             }
+                                         }
+                                     case .failure(let error):
+                                         DispatchQueue.main.async {
+                                             if let urlError = error as? URLError {
+                                                 self?.showError("Network error. Please check your internet connection.")
+                                             } else {
+                                                 self?.showError("Error fetching weather: \(error.localizedDescription). Try searching for another location.")
+                                             }
+                                         }
+                                     }
         }
     }
     
@@ -397,10 +352,10 @@ class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocati
         temperatureLabel.text = String(format: "%.1f°C", temperatureInCelsius)
         
         if let weatherCondition = model.weather?.first?.main {
-//            setWeatherBackground(for: weatherCondition)  // Set dynamic background
-//            setLottieAnimation(for: weatherCondition)   // Set Lottie animation
+            //            setWeatherBackground(for: weatherCondition)  // Set dynamic background
+            //            setLottieAnimation(for: weatherCondition)   // Set Lottie animation
         }
-
+        
         
         if let feelsLike = model.main?.feelsLike {
             let feelsLikeCelsius = feelsLike - 273.15

@@ -12,6 +12,7 @@ enum PlistKeys: String {
     case weatherBaseURL
     case newsApiKey
     case weatherAPIKey
+
 }
 
 enum URLCenter {
@@ -29,7 +30,6 @@ enum URLCenter {
     private var newsApiKey: String {
         return Bundle.main.object(forInfoDictionaryKey: PlistKeys.newsApiKey.rawValue) as? String ?? ""
     }
-    
     
     /**
      - Weather API Information
@@ -51,7 +51,18 @@ enum URLCenter {
             return url
         case .weatherURL:
             // lat=34.2232&long=93.54834
-            return "\(weatherBaseURL)?\(path)&apiKey=\(weatherApiKey)"
+            return "\(weatherBaseURL)?\(path)&appid=\(weatherApiKey)"
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
         }
     }
 }
