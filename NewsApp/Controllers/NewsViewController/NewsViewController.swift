@@ -270,30 +270,5 @@ extension UIImage {
         return result
     }
 }
-    
-    
-    
-//    func setupFilterButton() {
-//        let filterButton = UIBarButtonItem(title: "Filter", style: .plain, target: self, action: #selector(showFilterOptions))
-//        navigationItem.rightBarButtonItem = filterButton
-//    }
-    
-    
-//    @objc func showFilterOptions() {
-//        // Present filter options
-//        let alertController = UIAlertController(title: "Filter", message: "Choose a country", preferredStyle: .actionSheet)
-//        
-//        for country in viewModel.countries {
-//            alertController.addAction(UIAlertAction(title: country.rawValue.uppercased(),
-//                                                    style: .default,
-//                                                    handler: { [weak self] _ in
-//                UserDefaultStorage.country.storeValue(country.rawValue)
-//                self?.fetchNewsForCountry()
-//            }))
-//        }
-//        
-//        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-//        
-//        present(alertController, animated: true, completion: nil)
-//    }
+
 
