@@ -221,6 +221,27 @@ class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocati
         locationManager.startUpdatingLocation() // Start fetching the location
     }
     
+    func getConditionName(for weatherId: Int) -> String {
+        switch weatherId {
+        case 200...232:
+            return "thunderstorm"
+        case 300...321:
+            return "drizzle"
+        case 500...531:
+            return "rain"
+        case 600...622:
+            return "snow"
+        case 701...781:
+            return "atmosphere" // Mist, smoke, etc.
+        case 800:
+            return "clear"
+        case 801...804:
+            return "clouds"
+        default:
+            return "unknown"
+        }
+    }
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
             locationManager.stopUpdatingLocation()
@@ -350,12 +371,16 @@ class WeatherViewController: UIViewController, UISearchResultsUpdating, CLLocati
         guard let tempKelvin = model.main?.temp else { return }
         let temperatureInCelsius = tempKelvin - 273.15
         temperatureLabel.text = String(format: "%.1f°C", temperatureInCelsius)
-        
         if let weatherCondition = model.weather?.first?.main {
             //            setWeatherBackground(for: weatherCondition)  // Set dynamic background
             //            setLottieAnimation(for: weatherCondition)   // Set Lottie animation
         }
         
+        if let weatherId = model.weather?.first?.id {
+            let conditionName = getConditionName(for: weatherId)
+            print("Condition Name: \(conditionName)")
+            // Use conditionName to set dynamic UI elements
+        }
         
         if let feelsLike = model.main?.feelsLike {
             let feelsLikeCelsius = feelsLike - 273.15
