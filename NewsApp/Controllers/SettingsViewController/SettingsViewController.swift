@@ -10,6 +10,7 @@ import UIKit
 // Delegate Pattern
 protocol SettingsViewControllerDelegate: AnyObject {
     func didSelectCountry(_ country: NewsCountry)
+    
 }
 
 class SettingsViewController: UIViewController {
@@ -69,8 +70,7 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedCountry = viewModel.countries[indexPath.row]
-        UserDefaultsManager.shared.storeValue(selectedCountry.rawValue,
-                                              key: UserDefaultsManager.UserDefaultKeys.country)
+        UserDefaultsManager.shared.storeValue(selectedCountry.rawValue, key: .country)
         delegate?.didSelectCountry(selectedCountry)
         navigationController?.popViewController(animated: true)
     }

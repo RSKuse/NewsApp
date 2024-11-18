@@ -100,6 +100,7 @@ class NewsViewModel {
         } else {
             // If not cached, fetch from network
             let path = "\(NewsType.topHeadlines.rawValue)?country=\(selectedCountry.rawValue)&category=\(category.rawValue)"
+            print("Fetching fresh articles for \(category.rawValue) in \(selectedCountry.rawValue)")
             NewsService.shared.fetchData(method: .GET, baseURl: .newsUrl, path: path, model: NewsModel.self) { [weak self] result in
                 guard let self = self else { return }
                 DispatchQueue.main.async {

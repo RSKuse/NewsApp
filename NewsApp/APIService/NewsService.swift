@@ -53,7 +53,7 @@ class NewsService {
             }
             
             do {
-                // Print the raw JSON response
+            
                 if let json = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) {
                     print("JSON Response: \(json)")
                 } else {
