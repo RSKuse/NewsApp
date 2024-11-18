@@ -54,15 +54,6 @@ enum URLCenter {
             return "\(weatherBaseURL)?\(path)&appid=\(weatherApiKey)"
             
             
-            
-            
-            
-            
-            
-            
-            
-            
-            
         }
     }
 }
