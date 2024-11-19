@@ -27,9 +27,10 @@ class NewsService {
                                      completion: @escaping (Result<Model, Error>) -> Void) {
         
         let urlString = baseURl.buildURL(withPath: path)
-        print(urlString)
+        print("API URL: \(urlString)")
         guard let url = URL(string: urlString) else {
             // completion(.failure(Error))
+            print("Invalid URL: \(urlString)")
             return
         }
         
@@ -43,11 +44,13 @@ class NewsService {
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
+                print("Error: \(error.localizedDescription)")
                 completion(.failure(error))
                 return
             }
             
             guard let data = data else {
+                print("No data received")
                 completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No data"])))
                 return
             }
@@ -61,6 +64,7 @@ class NewsService {
                 }
                 
                 let apiData = try JSONDecoder().decode(Model.self, from: data)
+                print("Response JSON: \(apiData)")
                 completion(.success(apiData))
             } catch {
                 print("Decoding error: \(error.localizedDescription)")

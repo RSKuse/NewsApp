@@ -129,6 +129,10 @@ class NewsAppTableViewCell: UITableViewCell {
         
         if let imageUrl = article.urlToImage, let url = URL(string: imageUrl) {
             self.newsArticleImageView.kf.setImage(with: url)
+            self.newsArticleImageView.isHidden = false
+        } else {
+            self.newsArticleImageView.image = UIImage(named: "placeholder")
+            self.newsArticleImageView.isHidden = false
         }
     }
 }
