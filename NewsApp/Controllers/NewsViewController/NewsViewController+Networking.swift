@@ -78,6 +78,7 @@ extension NewsViewController {
 //        updateSettingsButton()
 //    }
     func didSelectCountry(_ country: NewsCountry) {
+        print("Selected Country: \(country.rawValue)")
         UserDefaultsManager.shared.storeValue(country.rawValue, key: .country)
         fetchNewsForCountry()
        // updateSettingsButton()

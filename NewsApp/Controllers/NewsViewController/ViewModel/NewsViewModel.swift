@@ -90,7 +90,6 @@ class NewsViewModel {
     }
     
     func fetchTopHeadlinesNewsData(category: NewsCategories) {
-        // Check if the cache should be ignored (e.g., when the country changes)
         let shouldIgnoreCache = categoryArticlesCache[category]?.first?.source?.name != selectedCountry.rawValue
         
         if !shouldIgnoreCache, let cachedArticles = categoryArticlesCache[category] {
@@ -98,20 +97,26 @@ class NewsViewModel {
             self.articles = cachedArticles
             self.didFetchArticles?(cachedArticles)
         } else {
-            // If not cached, fetch from network
             let path = "\(NewsType.topHeadlines.rawValue)?country=\(selectedCountry.rawValue)&category=\(category.rawValue)"
             print("Fetching fresh articles for \(category.rawValue) in \(selectedCountry.rawValue)")
+            
             NewsService.shared.fetchData(method: .GET, baseURl: .newsUrl, path: path, model: NewsModel.self) { [weak self] result in
                 guard let self = self else { return }
                 DispatchQueue.main.async {
                     switch result {
                     case .success(let news):
-                        self.articles = news.articles ?? []
-                        self.categoryArticlesCache[category] = news.articles ?? []
-                        self.didFetchArticles?(news.articles)
-                        print("Fetched and cached articles for category: \(category.rawValue)")
+                        if news.totalResults == 0 {
+                            print("No articles found. Fetching fallback data.")
+                            let fallbackPath = "\(NewsType.everything.rawValue)?q=general"
+                            self.fetchFallbackArticles(fallbackPath: fallbackPath)
+                        } else {
+                            self.articles = news.articles ?? []
+                            self.categoryArticlesCache[category] = news.articles ?? []
+                            self.didFetchArticles?(news.articles)
+                            print("Fetched and cached articles for category: \(category.rawValue)")
+                        }
                     case .failure(let error):
-                        print(error.localizedDescription)
+                        print("Error fetching top headlines: \(error.localizedDescription)")
                     }
                 }
             }
@@ -127,19 +132,71 @@ class NewsViewModel {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let news):
-                    self.topHeadlinesArticles = news.articles ?? []
-                    self.parallaxHeaderArticle = news.articles?.first
-                    self.didFetchArticles?(news.articles)
-                    print("Fetched and cached articles for category: \(category.rawValue)")
+                    if news.totalResults == 0 {
+                        print("No articles found for the selected country or category.")
+                        // Handle fallback logic
+                        let fallbackPath = "\(NewsType.everything.rawValue)?q=general"
+                        self.fetchFallbackArticles(fallbackPath: fallbackPath)
+                    } else {
+                        self.topHeadlinesArticles = news.articles ?? []
+                        self.parallaxHeaderArticle = news.articles?.first
+                        self.didFetchArticles?(news.articles)
+                        print("Fetched and cached articles for category: \(category.rawValue)")
+                    }
                 case .failure(let error):
-                    print(error.localizedDescription)
+                    print("Error fetching articles: \(error.localizedDescription)")
                 }
             }
         }
     }
     
+    func fetchFallbackArticles(fallbackPath: String) {
+        NewsService.shared.fetchData(method: .GET, baseURl: .newsUrl, path: fallbackPath, model: NewsModel.self) { [weak self] result in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let fallbackNews):
+                    self.articles = fallbackNews.articles ?? []
+                    self.didFetchArticles?(fallbackNews.articles)
+                case .failure(let error):
+                    print("Fallback error: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    
+    func fetchNewsForCountry(_ country: NewsCountry) {
+        UserDefaultsManager.shared.storeValue(country.rawValue, key: .country)
+        categoryArticlesCache.removeAll() // Clear cache
+        fetchTopHeadlinesNewsData(category: selectedCagory)
+        fetchEverythingNews(category: selectedCagory)
+    }
+    
     func getSingleWord(forCategory category: NewsCategories, andCountry country: NewsCountry) -> String {
         switch (category, country) {
+       
+//        case .success(let news):
+//            if news.totalResults == 0 {
+//                print("No articles found for the selected country or category.")
+//                let searchValue = getSingleWord(forCategory: category, andCountry: selectedCountry)
+//                let fallbackPath = "\(NewsType.everything.rawValue)?q=\(searchValue)"
+//                NewsService.shared.fetchData(method: .GET, baseURl: .newsUrl, path: fallbackPath, model: NewsModel.self) { [weak self] result in
+//                    guard let self = self else { return }
+//                    DispatchQueue.main.async {
+//                        switch result {
+//                        case .success(let fallbackNews):
+//                            self.articles = fallbackNews.articles ?? []
+//                            self.didFetchArticles?(fallbackNews.articles)
+//                        case .failure(let error):
+//                            print("Fallback error: \(error.localizedDescription)")
+//                        }
+//                    }
+//                }
+//            } else {
+//                self.articles = news.articles ?? []
+//                self.categoryArticlesCache[category] = news.articles ?? []
+//                self.didFetchArticles?(news.articles)
+//            }
         // Sports
         case (.sports, .us):
             return "lebron-james"
@@ -485,5 +542,8 @@ class NewsViewModel {
         default:
             return "news"
         }
+        
+        
     }
+    
 }
