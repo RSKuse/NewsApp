@@ -42,7 +42,6 @@ class SettingsViewController: UIViewController {
         selectedCountry = viewModel.selectedCountry
         view.addSubview(countriesTableView)
         
-        
         countriesTableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         countriesTableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         countriesTableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
