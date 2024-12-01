@@ -222,9 +222,8 @@ class NewsViewController: UIViewController, SettingsViewControllerDelegate {
         view.backgroundColor = .white
         view.addSubview(newsTableView)
         view.addSubview(loadingIndicator)
-        view.addSubview(categoriesHeaderView) // Add this line
+        view.addSubview(categoriesHeaderView)
         
-        // Set constraints for categoriesHeaderView
         categoriesHeaderView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         categoriesHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         categoriesHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true

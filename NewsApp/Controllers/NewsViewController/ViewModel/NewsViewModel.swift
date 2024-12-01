@@ -175,28 +175,6 @@ class NewsViewModel {
     func getSingleWord(forCategory category: NewsCategories, andCountry country: NewsCountry) -> String {
         switch (category, country) {
        
-//        case .success(let news):
-//            if news.totalResults == 0 {
-//                print("No articles found for the selected country or category.")
-//                let searchValue = getSingleWord(forCategory: category, andCountry: selectedCountry)
-//                let fallbackPath = "\(NewsType.everything.rawValue)?q=\(searchValue)"
-//                NewsService.shared.fetchData(method: .GET, baseURl: .newsUrl, path: fallbackPath, model: NewsModel.self) { [weak self] result in
-//                    guard let self = self else { return }
-//                    DispatchQueue.main.async {
-//                        switch result {
-//                        case .success(let fallbackNews):
-//                            self.articles = fallbackNews.articles ?? []
-//                            self.didFetchArticles?(fallbackNews.articles)
-//                        case .failure(let error):
-//                            print("Fallback error: \(error.localizedDescription)")
-//                        }
-//                    }
-//                }
-//            } else {
-//                self.articles = news.articles ?? []
-//                self.categoryArticlesCache[category] = news.articles ?? []
-//                self.didFetchArticles?(news.articles)
-//            }
         // Sports
         case (.sports, .us):
             return "lebron-james"
